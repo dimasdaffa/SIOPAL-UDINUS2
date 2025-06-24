@@ -31,11 +31,11 @@ class KeyboardResource extends Resource
 
     protected static ?string $modelLabel = 'Keyboard';
 
-    protected static ?string $cluster = AllHardware::class;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    // protected static ?string $cluster = AllHardware::class;
 
-    protected static ?int $navigationSort = 7 ;
+    protected static ?int $navigationSort = 8 ;
 
     public static function form(Form $form): Form
     {

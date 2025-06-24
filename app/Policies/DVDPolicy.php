@@ -15,7 +15,7 @@ class DVDPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_d::v::d');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -23,7 +23,7 @@ class DVDPolicy
      */
     public function view(User $user, DVD $dVD): bool
     {
-        return $user->can('view_d::v::d');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -31,7 +31,7 @@ class DVDPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_d::v::d');
+        return true; // Allow all users to create hardware
     }
 
     /**
@@ -39,7 +39,7 @@ class DVDPolicy
      */
     public function update(User $user, DVD $dVD): bool
     {
-        return $user->can('update_d::v::d');
+        return true; // Allow all users to update hardware
     }
 
     /**
@@ -47,7 +47,7 @@ class DVDPolicy
      */
     public function delete(User $user, DVD $dVD): bool
     {
-        return $user->can('delete_d::v::d');
+        return true; // Allow all users to delete hardware
     }
 
     /**
@@ -55,7 +55,7 @@ class DVDPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_d::v::d');
+        return true; // Allow all users to bulk delete hardware
     }
 
     /**
@@ -63,7 +63,7 @@ class DVDPolicy
      */
     public function forceDelete(User $user, DVD $dVD): bool
     {
-        return $user->can('force_delete_d::v::d');
+        return true; // Allow all users to force delete hardware
     }
 
     /**
@@ -71,7 +71,7 @@ class DVDPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_d::v::d');
+        return true; // Allow all users to bulk force delete hardware
     }
 
     /**
@@ -79,7 +79,7 @@ class DVDPolicy
      */
     public function restore(User $user, DVD $dVD): bool
     {
-        return $user->can('restore_d::v::d');
+        return true; // Allow all users to restore hardware
     }
 
     /**
@@ -87,7 +87,7 @@ class DVDPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_d::v::d');
+        return true; // Allow all users to bulk restore hardware
     }
 
     /**
@@ -95,7 +95,7 @@ class DVDPolicy
      */
     public function replicate(User $user, DVD $dVD): bool
     {
-        return $user->can('replicate_d::v::d');
+        return true; // Allow all users to replicate hardware
     }
 
     /**
@@ -103,6 +103,6 @@ class DVDPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_d::v::d');
+        return true; // Allow all users to reorder hardware
     }
 }

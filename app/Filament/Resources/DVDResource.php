@@ -32,9 +32,7 @@ class DVDResource extends Resource
 
     protected static ?string $modelLabel = 'DVD';
 
-    protected static ?string $cluster = AllHardware::class;
-
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
     protected static ?int $navigationSort = 6;
 

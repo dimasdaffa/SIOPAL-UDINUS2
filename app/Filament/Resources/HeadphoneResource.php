@@ -32,11 +32,9 @@ class HeadphoneResource extends Resource
 
     protected static ?string $modelLabel = 'Headphone';
 
-    protected static ?string $cluster = AllHardware::class;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
-
-    protected static ?int $navigationSort = 10;
+    protected static ?int $navigationSort = 11;
 
     public static function form(Form $form): Form
     {

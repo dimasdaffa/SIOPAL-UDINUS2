@@ -15,7 +15,7 @@ class MonitorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_monitor');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -23,7 +23,7 @@ class MonitorPolicy
      */
     public function view(User $user, Monitor $monitor): bool
     {
-        return $user->can('view_monitor');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -31,7 +31,7 @@ class MonitorPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_monitor');
+        return true; // Allow all users to create hardware
     }
 
     /**
@@ -39,7 +39,7 @@ class MonitorPolicy
      */
     public function update(User $user, Monitor $monitor): bool
     {
-        return $user->can('update_monitor');
+        return true; // Allow all users to update hardware
     }
 
     /**
@@ -47,7 +47,7 @@ class MonitorPolicy
      */
     public function delete(User $user, Monitor $monitor): bool
     {
-        return $user->can('delete_monitor');
+        return true; // Allow all users to delete hardware
     }
 
     /**
@@ -55,7 +55,7 @@ class MonitorPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_monitor');
+        return true; // Allow all users to bulk delete hardware
     }
 
     /**
@@ -63,7 +63,7 @@ class MonitorPolicy
      */
     public function forceDelete(User $user, Monitor $monitor): bool
     {
-        return $user->can('force_delete_monitor');
+        return true; // Allow all users to force delete hardware
     }
 
     /**
@@ -71,7 +71,7 @@ class MonitorPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_monitor');
+        return true; // Allow all users to bulk force delete hardware
     }
 
     /**
@@ -79,7 +79,7 @@ class MonitorPolicy
      */
     public function restore(User $user, Monitor $monitor): bool
     {
-        return $user->can('restore_monitor');
+        return true; // Allow all users to restore hardware
     }
 
     /**
@@ -87,7 +87,7 @@ class MonitorPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_monitor');
+        return true; // Allow all users to bulk restore hardware
     }
 
     /**
@@ -95,7 +95,7 @@ class MonitorPolicy
      */
     public function replicate(User $user, Monitor $monitor): bool
     {
-        return $user->can('replicate_monitor');
+        return true; // Allow all users to replicate hardware
     }
 
     /**
@@ -103,6 +103,6 @@ class MonitorPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_monitor');
+        return true; // Allow all users to reorder hardware
     }
 }

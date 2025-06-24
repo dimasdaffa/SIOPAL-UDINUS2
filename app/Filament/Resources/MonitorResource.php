@@ -32,11 +32,11 @@ class MonitorResource extends Resource
 
     protected static ?string $modelLabel = 'Monitor';
 
-    protected static ?string $cluster = AllHardware::class;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    // protected static ?string $cluster = AllHardware::class;
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 10;
 
     public static function form(Form $form): Form
     {

@@ -34,13 +34,9 @@ class PenyimpananResource extends Resource
 
     protected static ?string $modelLabel = 'Penyimpanan';
 
-    // protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static ?string $cluster = AllHardware::class;
-
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
-
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 5;
 
     public static function form(Form $form): Form
     {

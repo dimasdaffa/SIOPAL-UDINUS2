@@ -30,11 +30,11 @@ class PSUResource extends Resource
 
     protected static ?string $modelLabel = 'PSU';
 
-    protected static ?string $cluster = AllHardware::class;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    // protected static ?string $cluster = AllHardware::class;
 
-    protected static ?int $navigationSort = 11;
+    protected static ?int $navigationSort = 7;
 
     public static function form(Form $form): Form
     {
@@ -134,8 +134,8 @@ class PSUResource extends Resource
     {
         return [
             'index' => Pages\ListPSUS::route('/'),
-            // 'create' => Pages\CreatePSU::route('/create'),
-            // 'edit' => Pages\EditPSU::route('/{record}/edit'),
+            'create' => Pages\CreatePSU::route('/create'),
+            'edit' => Pages\EditPSU::route('/{record}/edit'),
         ];
     }
 }

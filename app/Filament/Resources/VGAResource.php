@@ -33,9 +33,9 @@ class VGAResource extends Resource
 
     protected static ?string $modelLabel = 'VGA';
 
-    protected static ?string $cluster = AllHardware::class;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    // protected static ?string $cluster = AllHardware::class;
 
     protected static ?int $navigationSort = 4;
 

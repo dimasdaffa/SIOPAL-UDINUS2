@@ -6,12 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,12 +31,8 @@ class User extends Authenticatable
 
     public function canAccessPanel(): bool
     {
-        // Only allow in production environment
-        if (app()->environment('production')) {
-            // Check if user has super_admin role
-            return $this->hasRole('super_admin');
-        }
-        return true; // Allow all users in local environment
+        // Allow all users to access panel since we removed role-based access
+        return true;
     }
 
     /**

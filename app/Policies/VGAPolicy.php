@@ -15,7 +15,7 @@ class VGAPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->can('view_any_v::g::a');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -23,7 +23,7 @@ class VGAPolicy
      */
     public function view(User $user, VGA $vGA): bool
     {
-        return $user->can('view_v::g::a');
+        return true; // Allow all users to view hardware
     }
 
     /**
@@ -31,7 +31,7 @@ class VGAPolicy
      */
     public function create(User $user): bool
     {
-        return $user->can('create_v::g::a');
+        return true; // Allow all users to create hardware
     }
 
     /**
@@ -39,7 +39,7 @@ class VGAPolicy
      */
     public function update(User $user, VGA $vGA): bool
     {
-        return $user->can('update_v::g::a');
+        return true; // Allow all users to update hardware
     }
 
     /**
@@ -47,7 +47,7 @@ class VGAPolicy
      */
     public function delete(User $user, VGA $vGA): bool
     {
-        return $user->can('delete_v::g::a');
+        return true; // Allow all users to delete hardware
     }
 
     /**
@@ -55,7 +55,7 @@ class VGAPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return $user->can('delete_any_v::g::a');
+        return true; // Allow all users to bulk delete hardware
     }
 
     /**
@@ -63,7 +63,7 @@ class VGAPolicy
      */
     public function forceDelete(User $user, VGA $vGA): bool
     {
-        return $user->can('force_delete_v::g::a');
+        return true; // Allow all users to force delete hardware
     }
 
     /**
@@ -71,7 +71,7 @@ class VGAPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return $user->can('force_delete_any_v::g::a');
+        return true; // Allow all users to bulk force delete hardware
     }
 
     /**
@@ -79,7 +79,7 @@ class VGAPolicy
      */
     public function restore(User $user, VGA $vGA): bool
     {
-        return $user->can('restore_v::g::a');
+        return true; // Allow all users to restore hardware
     }
 
     /**
@@ -87,7 +87,7 @@ class VGAPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return $user->can('restore_any_v::g::a');
+        return true; // Allow all users to bulk restore hardware
     }
 
     /**
@@ -95,7 +95,7 @@ class VGAPolicy
      */
     public function replicate(User $user, VGA $vGA): bool
     {
-        return $user->can('replicate_v::g::a');
+        return true; // Allow all users to replicate hardware
     }
 
     /**
@@ -103,6 +103,6 @@ class VGAPolicy
      */
     public function reorder(User $user): bool
     {
-        return $user->can('reorder_v::g::a');
+        return true; // Allow all users to reorder hardware
     }
 }

@@ -20,6 +20,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        // "bezhansalleh/filament-shield    ": "^3.3",
     }
 }

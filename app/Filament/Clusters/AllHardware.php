@@ -17,4 +17,7 @@ class AllHardware extends Cluster
 
     // To explain in the navigation what this cluster is for
     protected static ?string $navigationGroup = 'MASTER DATA';
+
+    // Disable cluster navigation to prevent route conflicts
+    protected static bool $shouldRegisterNavigation = false;
 }

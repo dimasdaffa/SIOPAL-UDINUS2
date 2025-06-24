@@ -31,11 +31,7 @@ class MotherboardResource extends Resource
 
     protected static ?string $modelLabel = 'Motherboard';
 
-    // protected static ?string $navigationGroup = 'DATA HARDWARE';
-
-    protected static ?string $cluster = AllHardware::class;
-
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
     protected static ?int $navigationSort = 1;
 

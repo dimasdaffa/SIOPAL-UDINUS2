@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Clusters\AllHardware;
 use App\Filament\Resources\ProcessorResource\Pages;
 use App\Filament\Resources\ProcessorResource\RelationManagers;
 use App\Models\Processor;
@@ -30,11 +29,7 @@ class ProcessorResource extends Resource
 
     protected static ?string $modelLabel = 'Processor';
 
-    // protected static ?string $navigationGroup = 'DATA HARDWARE';
-
-    protected static ?string $cluster = AllHardware::class;
-
-    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    protected static ?string $navigationGroup = 'DATA HARDWARE';
 
     protected static ?int $navigationSort = 2;
 
