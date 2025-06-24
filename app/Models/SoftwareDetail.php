@@ -11,7 +11,18 @@ class SoftwareDetail extends Model
     use HasFactory;
 
     protected $table = 'software_details';
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'nama',
+        'versi',
+        'keterangan',
+        'jenis_lisensi',
+        'nomor_lisensi',
+        'tanggal_kadaluarsa'
+    ];
+
+    protected $casts = [
+        'tanggal_kadaluarsa' => 'date'
+    ];
 
     public function inventory(): MorphOne
     {

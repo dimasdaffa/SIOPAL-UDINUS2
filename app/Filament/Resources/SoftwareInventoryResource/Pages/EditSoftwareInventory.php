@@ -18,20 +18,34 @@ class EditSoftwareInventory extends EditRecord
         ];
     }
 
-    protected function fillForm(): void
+    protected function mutateFormDataBeforeFill(array $data): array
     {
-        parent::fillForm();
-        $this->form->fill(['details' => $this->record->inventoriable->toArray()]);
+        // Load data dari relasi inventoriable ke dalam form details
+        if ($this->record->inventoriable) {
+            $data['details'] = $this->record->inventoriable->toArray();
+        }
+
+        return $data;
     }
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
-        $detailsData = $data['details'];
+        $detailsData = $data['details'] ?? [];
         unset($data['details']);
 
-        $record->inventoriable->update($detailsData);
+        // Update data pada tabel software_details
+        if ($record->inventoriable && !empty($detailsData)) {
+            $record->inventoriable->update($detailsData);
+        }
+
+        // Update data pada tabel inventories
         $record->update($data);
 
         return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
     }
 }

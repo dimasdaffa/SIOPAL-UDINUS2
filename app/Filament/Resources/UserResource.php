@@ -73,9 +73,6 @@ class UserResource extends Resource
                     ->label('Tanggal Keluar')
                     ->native(false)
                     ->nullable(),
-                Forms\Components\CheckboxList::make('roles')
-                    ->relationship('roles', 'name')
-                    ->searchable(),
             ]);
     }
 
@@ -95,8 +92,8 @@ class UserResource extends Resource
                     ->label('NPP/NIM')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('roles.name')
-                    ->label('Roles')
+                Tables\Columns\TextColumn::make('no_phone')
+                    ->label('No HP')
                     ->searchable()
                     ->sortable(),
             ])

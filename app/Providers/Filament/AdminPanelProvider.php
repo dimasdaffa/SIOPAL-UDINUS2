@@ -35,8 +35,11 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => '#104b8f',
             ])
+            ->databaseNotifications()
+            ->databaseNotificationsPolling('3s')
+            ->favicon(url('images/udinus.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
@@ -62,6 +65,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 $initialGroups = [
+
+                    NavigationGroup::make('Pelaporan PTPP')
+                        ->items([
+                            NavigationItem::make('PTTP SKT')
+                                ->icon('heroicon-o-document-text')
+                                ->url(\App\Filament\Resources\LaporPtppResource::getUrl())
+                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\LaporPtppResource::getRouteBaseName() . '.*')),
+                        ]),
                     // Add Master Data group with static resources
                     NavigationGroup::make('MASTER DATA')
                         ->items([
@@ -142,13 +153,7 @@ class AdminPanelProvider extends PanelProvider
                         ]),
 
                     // Add Pelaporan PTPP group
-                    NavigationGroup::make('Pelaporan PTPP')
-                        ->items([
-                            NavigationItem::make('PTTP SKT')
-                                ->icon('heroicon-o-document-text')
-                                ->url(\App\Filament\Resources\LaporPtppResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\LaporPtppResource::getRouteBaseName() . '.*')),
-                        ]),
+
                 ];
 
                 $labItems = [];
@@ -161,17 +166,17 @@ class AdminPanelProvider extends PanelProvider
                             NavigationItem::make('Inventaris PC')
                                 ->icon('heroicon-o-computer-desktop')
                                 ->url(fn() => PCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName().'.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                                ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
 
                             NavigationItem::make('Inventaris Non-PC')
                                 ->icon('heroicon-o-cpu-chip')
                                 ->url(fn() => NonPCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName().'.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                                ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
 
                             NavigationItem::make('Inventaris Software')
                                 ->icon('heroicon-o-code-bracket-square')
                                 ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName().'.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                                ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
                         ]);
                 }
 

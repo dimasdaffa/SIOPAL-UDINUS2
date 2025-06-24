@@ -27,4 +27,9 @@ class CreatePCInventory extends CreateRecord
         // 4. Buat record inventaris
         return static::getModel()::create($data);
     }
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

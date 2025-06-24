@@ -43,19 +43,38 @@ class SoftwareInventoryResource extends Resource
                             ->relationship('laboratorium', 'ruang')
                             ->required()
                             ->preload()
-                            ->searchable(),
-                        TextInput::make('kode_inventaris')
-                            ->label('Kode Inventaris')
-                            ->required()
-                            ->unique(table: Inventory::class, column: 'kode_inventaris', ignoreRecord: true),
+                            ->searchable()
+                            ->live()
+                            ->afterStateUpdated(function ($state, $set) {
+                                if ($state) {
+                                    // Ambil nama laboratorium
+                                    $laboratorium = \App\Models\Laboratorium::find($state);
+                                    $namaLab = $laboratorium ? strtoupper($laboratorium->ruang) : 'LAB';
+
+                                    // Hitung nomor urut Software untuk lab ini
+                                    $existingSoftware = \App\Models\Inventory::where('laboratorium_id', $state)
+                                        ->where('inventoriable_type', 'App\Models\SoftwareDetail')
+                                        ->whereNotNull('kode_inventaris')
+                                        ->count();
+
+                                    $nomorUrut = str_pad($existingSoftware + 1, 2, '0', STR_PAD_LEFT);
+
+                                    // Set nomor inventaris yang akan di-generate
+                                    $set('preview_kode_inventaris', "UDN/LABKOM/INV/SOFTWARE/{$namaLab}/{$nomorUrut}");
+                                } else {
+                                    $set('preview_kode_inventaris', null);
+                                }
+                            }),
+                        TextInput::make('preview_kode_inventaris')
+                            ->label('No Inventaris (Preview)')
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->placeholder('Pilih laboratorium terlebih dahulu')
+                            ->helperText('Nomor inventaris yang akan di-generate otomatis')
+                            ->extraAttributes(['style' => 'background-color: #f3f4f6; font-weight: 500;']),
                         TextInput::make('nama_barang')
                             ->label('Nama Software')
                             ->required(),
-                        DatePicker::make('tanggal_pengadaan'),
-                        Select::make('kondisi')
-                            ->options(['Baik' => 'Baik', 'Rusak Ringan' => 'Rusak Ringan', 'Rusak Berat' => 'Rusak Berat', 'Dalam Perbaikan' => 'Dalam Perbaikan'])
-                            ->required()
-                            ->default('Baik'),
                     ])->columns(2),
 
                 Section::make('Detail Lisensi')
