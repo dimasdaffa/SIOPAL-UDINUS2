@@ -91,70 +91,90 @@ class PCInventoryResource extends Resource
                         Grid::make(3)->schema([
                             Select::make('details.processor_id')
                                 ->label('Processor')
-                                ->options(\App\Models\Processor::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Processor::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Processor'),
                             Select::make('details.motherboard_id')
                                 ->label('Motherboard')
-                                ->options(\App\Models\Motherboard::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Motherboard::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Motherboard'),
                             Select::make('details.ram_id')
                                 ->label('RAM')
-                                ->options(\App\Models\RAM::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\RAM::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih RAM'),
                             Select::make('details.penyimpanan_id')
                                 ->label('Penyimpanan')
-                                ->options(\App\Models\Penyimpanan::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Penyimpanan::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Penyimpanan'),
                             Select::make('details.vga_id')
                                 ->label('VGA')
-                                ->options(\App\Models\VGA::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\VGA::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih VGA'),
                             Select::make('details.psu_id')
                                 ->label('PSU')
-                                ->options(\App\Models\PSU::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\PSU::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih PSU'),
                             Select::make('details.keyboard_id')
                                 ->label('Keyboard')
-                                ->options(\App\Models\Keyboard::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Keyboard::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Keyboard'),
                             Select::make('details.mouse_id')
                                 ->label('Mouse')
-                                ->options(\App\Models\Mouse::pluck('tipe', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Mouse::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Mouse'),
                             Select::make('details.monitor_id')
                                 ->label('Monitor')
-                                ->options(\App\Models\Monitor::pluck('nama', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Monitor::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->required()
                                 ->placeholder('Pilih Monitor'),
                             Select::make('details.dvd_id')
                                 ->label('DVD (Optional)')
-                                ->options(\App\Models\DVD::pluck('dvd', 'id'))
+                                ->options(function () {
+                                    return \App\Models\DVD::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->nullable()
@@ -162,7 +182,9 @@ class PCInventoryResource extends Resource
                                 ->helperText('Pilih DVD jika PC memiliki drive DVD'),
                             Select::make('details.headphone_id')
                                 ->label('Headphone (Optional)')
-                                ->options(\App\Models\Headphone::pluck('nama', 'id'))
+                                ->options(function () {
+                                    return \App\Models\Headphone::all()->pluck('full_name', 'id');
+                                })
                                 ->searchable()
                                 ->preload()
                                 ->nullable()

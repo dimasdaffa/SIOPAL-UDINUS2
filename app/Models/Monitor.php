@@ -17,6 +17,14 @@ class Monitor extends Model
         'stok',
     ];
 
+    /**
+     * Accessor untuk mendapatkan nama lengkap (merk + nama + ukuran)
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->merk . '-' . $this->nama . '-' . $this->ukuran . 'inch';
+    }
+
     protected static function boot()
     {
         parent::boot();

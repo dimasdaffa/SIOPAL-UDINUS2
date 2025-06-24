@@ -15,6 +15,14 @@ class Headphone extends Model
         'stok',
     ];
 
+    /**
+     * Accessor untuk mendapatkan nama lengkap (merk + nama)
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->merk . '-' . $this->nama;
+    }
+
     protected static function boot()
     {
         parent::boot();

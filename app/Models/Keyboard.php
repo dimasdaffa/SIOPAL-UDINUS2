@@ -14,6 +14,14 @@ class Keyboard extends Model
         'stok',
     ];
 
+    /**
+     * Accessor untuk mendapatkan nama lengkap (merk + tipe)
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->merk . '-' . $this->tipe;
+    }
+
     protected static function boot()
     {
         parent::boot();

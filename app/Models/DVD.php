@@ -15,6 +15,14 @@ class DVD extends Model
         'stok',
     ];
 
+    /**
+     * Accessor untuk mendapatkan nama lengkap (merk + dvd)
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->merk . '-' . $this->dvd;
+    }
+
     protected static function boot()
     {
         parent::boot();

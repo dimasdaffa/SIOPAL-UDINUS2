@@ -17,6 +17,14 @@ class Penyimpanan extends Model
         'tahun'
     ];
 
+    /**
+     * Accessor untuk mendapatkan nama lengkap (merk + tipe + kapasitas)
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->merk . '-' . $this->tipe . '-' . $this->kapasitas . 'GB';
+    }
+
     // Auto-generate Nomor Inventaris sebelum menyimpan
     protected static function boot()
     {
