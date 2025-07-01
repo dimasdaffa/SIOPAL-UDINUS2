@@ -37,7 +37,7 @@ class NonPCInventoryResource extends Resource
     {
         return $form
             ->schema([
-                Section::make('Informasi Umum Barang')
+                Section::make('Informasi Umum Non-PC')
                     ->schema([
                         Select::make('laboratorium_id')
                             ->label('Laboratorium')
@@ -46,6 +46,33 @@ class NonPCInventoryResource extends Resource
                             ->preload()
                             ->searchable()
                             ->live()
+                            ->default(function () {
+                                // Auto-fill berdasarkan URL parameter jika ada
+                                $labId = request()->input('tableFilters.laboratorium.value')
+                                    ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                                if ($labId) {
+                                    return (int) $labId;
+                                }
+                                return null;
+                            })
+                            ->afterStateHydrated(function ($component, $state) {
+                                // Hook ini dipanggil setelah form dimuat
+                                if (!$state) {
+                                    $labId = request()->input('tableFilters.laboratorium.value')
+                                        ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                                    if ($labId) {
+                                        $component->state((int) $labId);
+                                    }
+                                }
+                            })
+                            ->hidden(function () {
+                                // Sembunyikan field jika ada parameter lab di URL
+                                $labId = request()->input('tableFilters.laboratorium.value')
+                                    ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+                                return (bool) $labId;
+                            })
                             ->afterStateUpdated(function ($state, $set) {
                                 if ($state) {
                                     // Ambil nama laboratorium
@@ -61,7 +88,7 @@ class NonPCInventoryResource extends Resource
                                     $nomorUrut = str_pad($existingNonPCs + 1, 2, '0', STR_PAD_LEFT);
 
                                     // Set nomor inventaris yang akan di-generate
-                                    $set('preview_kode_inventaris', "UDN/LABKOM/INV/NON-PC/{$namaLab}/{$nomorUrut}");
+                                    $set('preview_kode_inventaris', "UDN/LABKOM/INV/NPC/{$namaLab}/{$nomorUrut}");
                                 } else {
                                     $set('preview_kode_inventaris', null);
                                 }
@@ -81,7 +108,28 @@ class NonPCInventoryResource extends Resource
                             ->options(['Baik' => 'Baik', 'Rusak Ringan' => 'Rusak Ringan', 'Rusak Berat' => 'Rusak Berat', 'Dalam Perbaikan' => 'Dalam Perbaikan'])
                             ->required()
                             ->default('Baik'),
-                    ])->columns(2),
+                    ])->columns(2)
+                    ->extraAttributes(function () {
+                        // Auto-trigger afterStateUpdated untuk preview kode inventaris
+                        $labId = request()->input('tableFilters.laboratorium.value')
+                            ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                        if ($labId) {
+                            return [
+                                'x-data' => '{
+                                    init() {
+                                        this.$nextTick(() => {
+                                            const labSelect = this.$el.querySelector(\'[wire\\:model*="laboratorium_id"]\');
+                                            if (labSelect && labSelect.value) {
+                                                labSelect.dispatchEvent(new Event(\'change\', { bubbles: true }));
+                                            }
+                                        });
+                                    }
+                                }'
+                            ];
+                        }
+                        return [];
+                    }),
 
                 Section::make('Detail Barang')
                     ->schema([

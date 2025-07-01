@@ -11,6 +11,18 @@ class CreatePCInventory extends CreateRecord
 {
     protected static string $resource = PCInventoryResource::class;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        // Ambil lab ID dari URL parameter jika ada
+        $labId = request()->get('tableFilters')['laboratorium']['value'] ?? null;
+
+        if ($labId) {
+            $data['laboratorium_id'] = $labId;
+        }
+
+        return $data;
+    }
+
     protected function handleRecordCreation(array $data): Model
     {
         // 1. Ambil data detail dari form

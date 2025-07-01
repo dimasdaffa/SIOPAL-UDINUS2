@@ -12,6 +12,18 @@ class CreateNonPCInventory extends CreateRecord
 {
     protected static string $resource = NonPCInventoryResource::class;
 
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        // Ambil lab ID dari URL parameter jika ada
+        $labId = request()->get('tableFilters')['laboratorium']['value'] ?? null;
+
+        if ($labId) {
+            $data['laboratorium_id'] = $labId;
+        }
+
+        return $data;
+    }
+
     protected function handleRecordCreation(array $data): Model
     {
         $detailsData = $data['details'];

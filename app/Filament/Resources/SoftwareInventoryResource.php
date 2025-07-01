@@ -45,6 +45,33 @@ class SoftwareInventoryResource extends Resource
                             ->preload()
                             ->searchable()
                             ->live()
+                            ->default(function () {
+                                // Auto-fill berdasarkan URL parameter jika ada
+                                $labId = request()->input('tableFilters.laboratorium.value')
+                                    ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                                if ($labId) {
+                                    return (int) $labId;
+                                }
+                                return null;
+                            })
+                            ->afterStateHydrated(function ($component, $state) {
+                                // Hook ini dipanggil setelah form dimuat
+                                if (!$state) {
+                                    $labId = request()->input('tableFilters.laboratorium.value')
+                                        ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                                    if ($labId) {
+                                        $component->state((int) $labId);
+                                    }
+                                }
+                            })
+                            ->hidden(function () {
+                                // Sembunyikan field jika ada parameter lab di URL
+                                $labId = request()->input('tableFilters.laboratorium.value')
+                                    ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+                                return (bool) $labId;
+                            })
                             ->afterStateUpdated(function ($state, $set) {
                                 if ($state) {
                                     // Ambil nama laboratorium
@@ -75,7 +102,28 @@ class SoftwareInventoryResource extends Resource
                         TextInput::make('nama_barang')
                             ->label('Nama Software')
                             ->required(),
-                    ])->columns(2),
+                    ])->columns(2)
+                    ->extraAttributes(function () {
+                        // Auto-trigger afterStateUpdated untuk preview kode inventaris
+                        $labId = request()->input('tableFilters.laboratorium.value')
+                            ?? request()->input('tableFilters')['laboratorium']['value'] ?? null;
+
+                        if ($labId) {
+                            return [
+                                'x-data' => '{
+                                    init() {
+                                        this.$nextTick(() => {
+                                            const labSelect = this.$el.querySelector(\'[wire\\:model*="laboratorium_id"]\');
+                                            if (labSelect && labSelect.value) {
+                                                labSelect.dispatchEvent(new Event(\'change\', { bubbles: true }));
+                                            }
+                                        });
+                                    }
+                                }'
+                            ];
+                        }
+                        return [];
+                    }),
 
                 Section::make('Detail Lisensi')
                     ->schema([
