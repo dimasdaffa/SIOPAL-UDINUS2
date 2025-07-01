@@ -13,6 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -64,6 +65,7 @@ class UserResource extends Resource
                     ->image()
                     ->directory('laboran-photos') // Simpan foto di storage/app/public/laboran-photos
                     ->nullable()
+                    ->preserveFilenames()
                     ->columnSpanFull(),
                 DatePicker::make('tanggal_masuk')
                     ->label('Tanggal Masuk')
@@ -96,6 +98,8 @@ class UserResource extends Resource
                     ->label('No HP')
                     ->searchable()
                     ->sortable(),
+                ImageColumn::make('foto')
+                    ->circular(),
             ])
             ->filters([
                 //
