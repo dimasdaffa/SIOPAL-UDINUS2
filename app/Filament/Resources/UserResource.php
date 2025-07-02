@@ -15,6 +15,8 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
@@ -98,11 +100,74 @@ class UserResource extends Resource
                     ->label('No HP')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('tanggal_masuk')
+                    ->label('Tanggal Masuk')
+                    ->date()
+                    ->sortable(),
                 ImageColumn::make('foto')
                     ->circular(),
             ])
             ->filters([
-                //
+                // Filter untuk semester (ganjil/genap)
+                Filter::make('semester')
+                    ->form([
+                        Select::make('semester_type')
+                            ->label('Tipe Semester')
+                            ->options([
+                                'odd' => 'Ganjil (September-Februari)',
+                                'even' => 'Genap (Maret-Agustus)',
+                            ]),
+                        Select::make('tahun_akademik')
+                            ->label('Tahun Akademik')
+                            ->options(function () {
+                                $years = [];
+                                for ($year = 2020; $year <= 2030; $year++) {
+                                    $nextYear = $year + 1;
+                                    $years["$year-$nextYear"] = "$year/$nextYear";
+                                }
+                                return $years;
+                            }),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['semester_type'] && $data['tahun_akademik'],
+                                function (Builder $query) use ($data) {
+                                    // Parse tahun akademik
+                                    $years = explode('-', $data['tahun_akademik']);
+                                    $startYear = (int)$years[0];
+                                    $endYear = (int)$years[1];
+
+                                    if ($data['semester_type'] === 'odd') {
+                                        // Semester ganjil: September-Februari (tahun berikutnya)
+                                        $startDate = "$startYear-09-01"; // 1 September
+                                        $endDate = "$endYear-02-28";     // 28/29 Februari tahun berikutnya
+                                    } else {
+                                        // Semester genap: Maret-Agustus
+                                        $startDate = "$startYear-03-01"; // 1 Maret
+                                        $endDate = "$startYear-08-31";   // 31 Agustus
+                                    }
+
+                                    return $query->whereDate('tanggal_masuk', '>=', $startDate)
+                                                ->whereDate('tanggal_masuk', '<=', $endDate);
+                                }
+                            );
+                    })
+                    ->indicateUsing(function (array $data): array {
+                        $indicators = [];
+                        if ($data['semester_type'] ?? null) {
+                            $semesterText = $data['semester_type'] === 'odd' ? 'Ganjil' : 'Genap';
+                            $indicators['semester_type'] = "Semester: $semesterText";
+                        }
+
+                        if ($data['tahun_akademik'] ?? null) {
+                            $years = explode('-', $data['tahun_akademik']);
+                            $academicYear = $years[0] . '/' . $years[1];
+                            $indicators['tahun_akademik'] = "Tahun Akademik: $academicYear";
+                        }
+
+                        return $indicators;
+                    }),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
