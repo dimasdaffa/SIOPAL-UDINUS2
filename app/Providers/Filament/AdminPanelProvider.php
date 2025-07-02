@@ -2,9 +2,13 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Dashboard;
 use App\Filament\Resources\PCInventoryResource;
 use App\Filament\Resources\NonPCInventoryResource;
 use App\Filament\Resources\SoftwareInventoryResource;
+use App\Filament\Widgets\CalendarWidget;
+use App\Filament\Widgets\StatsOverviewWidget;
+use App\Filament\Widgets\WelcomeWidget;
 use App\Models\Laboratorium;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -43,11 +47,12 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class, // Menggunakan Dashboard kustom kita
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
-                // ...
+                WelcomeWidget::class,
+                StatsOverviewWidget::class,
+                CalendarWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -65,6 +70,14 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
                 $initialGroups = [
+                    // Tambahkan Dashboard di awal navigasi
+                    NavigationGroup::make('Menu Utama')
+                        ->items([
+                            NavigationItem::make('Dashboard')
+                                ->icon('heroicon-o-home')
+                                ->url(fn() => Dashboard::getUrl())
+                                ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.dashboard')),
+                        ]),
 
                     NavigationGroup::make('Pelaporan PTPP')
                         ->items([
@@ -94,7 +107,7 @@ class AdminPanelProvider extends PanelProvider
                         ]),
 
                     // Add Data Hardware group with all hardware resources
-                    NavigationGroup::make('DATA HARDWARE')
+                    NavigationGroup::make('Data Hardware')
                         ->items([
                             NavigationItem::make('Motherboard')
                                 ->icon('mdi-chip')

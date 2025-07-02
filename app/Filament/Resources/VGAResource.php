@@ -33,7 +33,7 @@ class VGAResource extends Resource
 
     protected static ?string $modelLabel = 'VGA';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     // protected static ?string $cluster = AllHardware::class;
 

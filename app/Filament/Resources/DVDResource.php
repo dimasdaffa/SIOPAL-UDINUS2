@@ -32,7 +32,7 @@ class DVDResource extends Resource
 
     protected static ?string $modelLabel = 'DVD';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     protected static ?int $navigationSort = 6;
 

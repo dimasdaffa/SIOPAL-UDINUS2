@@ -34,7 +34,7 @@ class PenyimpananResource extends Resource
 
     protected static ?string $modelLabel = 'Penyimpanan';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     protected static ?int $navigationSort = 5;
 

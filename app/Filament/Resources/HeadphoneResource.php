@@ -32,7 +32,7 @@ class HeadphoneResource extends Resource
 
     protected static ?string $modelLabel = 'Headphone';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     protected static ?int $navigationSort = 11;
 

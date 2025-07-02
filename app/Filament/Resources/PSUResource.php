@@ -30,7 +30,7 @@ class PSUResource extends Resource
 
     protected static ?string $modelLabel = 'PSU';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     // protected static ?string $cluster = AllHardware::class;
 

@@ -9,16 +9,15 @@ Route::get('/login', function () {
     return Redirect::route('filament.admin.pages.dashboard');
 })->name('login');
 
-
+Route::get('/', function () {
+    return Redirect::route('filament.admin.pages.dashboard');
+});
 
 Route::get('/ptpp/view/{id}', function ($id) {
     $data = lapor_ptpp::findOrFail($id);
     return view('admin.perbaikan_pencegahan', compact('data'));
 })->name('admin.perbaikan_pencegahan');
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
 Route::get('/layanan', function () {
     return view('layanan');
 })->name('layanan');

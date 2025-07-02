@@ -32,7 +32,7 @@ class MonitorResource extends Resource
 
     protected static ?string $modelLabel = 'Monitor';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     // protected static ?string $cluster = AllHardware::class;
 

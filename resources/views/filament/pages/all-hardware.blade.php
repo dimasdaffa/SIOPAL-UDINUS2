@@ -1,3 +1,3 @@
-<x-filament-panels::page>
-
-</x-filament-panels::page>
+<div class="fi-page">
+    {{-- Konten halaman hardware akan ditampilkan oleh Filament secara otomatis --}}
+</div>

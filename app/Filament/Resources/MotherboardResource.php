@@ -31,7 +31,7 @@ class MotherboardResource extends Resource
 
     protected static ?string $modelLabel = 'Motherboard';
 
-    protected static ?string $navigationGroup = 'DATA HARDWARE';
+    protected static ?string $navigationGroup = 'Data Hardware';
 
     protected static ?int $navigationSort = 1;
 
