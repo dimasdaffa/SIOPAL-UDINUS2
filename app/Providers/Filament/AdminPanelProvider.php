@@ -3,6 +3,8 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use App\Filament\Resources\BarangKeluarResource;
+use App\Filament\Resources\BarangMasukResource;
 use App\Filament\Resources\PCInventoryResource;
 use App\Filament\Resources\NonPCInventoryResource;
 use App\Filament\Resources\SoftwareInventoryResource;
@@ -190,6 +192,16 @@ class AdminPanelProvider extends PanelProvider
                                 ->icon('heroicon-o-code-bracket-square')
                                 ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
                                 ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+
+                            NavigationItem::make('Barang Masuk')
+                                ->icon('heroicon-o-arrow-down-tray')
+                                ->url(fn() => BarangMasukResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                ->isActiveWhen(fn() => request()->routeIs(BarangMasukResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+
+                            NavigationItem::make('Barang Keluar')
+                                ->icon('heroicon-o-arrow-up-tray')
+                                ->url(fn() => BarangKeluarResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                ->isActiveWhen(fn() => request()->routeIs(BarangKeluarResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
                         ]);
                 }
 
