@@ -9,6 +9,7 @@ use App\Filament\Resources\PCInventoryResource;
 use App\Filament\Resources\NonPCInventoryResource;
 use App\Filament\Resources\SoftwareInventoryResource;
 use App\Filament\Widgets\CalendarWidget;
+use App\Filament\Widgets\KalenderAkademikWidget;
 use App\Filament\Widgets\StatsOverviewWidget;
 use App\Filament\Widgets\WelcomeWidget;
 use App\Models\Laboratorium;
@@ -54,6 +55,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 WelcomeWidget::class,
                 StatsOverviewWidget::class,
+                KalenderAkademikWidget::class,
                 CalendarWidget::class,
             ])
             ->middleware([

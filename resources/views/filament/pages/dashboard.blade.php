@@ -5,7 +5,7 @@
                 Selamat datang di SIOPAL-UDINUS!
             </h2>
             <p class="mt-1 text-gray-500">
-                Sistem Informasi Operasional Perangkat Laboratorium Universitas Dian Nuswantoro
+                Sistem Informasi Operasional Laboratorium Komputer Universitas Dian Nuswantoro
             </p>
         </div>
     </div>
