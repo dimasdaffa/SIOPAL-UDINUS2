@@ -260,6 +260,15 @@ class PCInventoryResource extends Resource
                 }),
                 TextColumn::make('inventoriable.processor.tipe')->label('CPU')->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('inventoriable.ram.tipe')->label('RAM')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.motherboard.tipe')->label('Motherboard')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.penyimpanan.tipe')->label('Storage')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.vga.tipe')->label('VGA')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.psu.tipe')->label('PSU')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.keyboard.tipe')->label('Keyboard')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.mouse.tipe')->label('Mouse')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.monitor.tipe')->label('Monitor')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.dvd.tipe')->label('DVD')->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('inventoriable.headphone.tipe')->label('Headphone')->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 SelectFilter::make('laboratorium')
