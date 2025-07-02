@@ -42,6 +42,16 @@ class CreatePCInventory extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        // Ambil ID laboratorium dari record yang baru dibuat
+        $labId = $this->record->laboratorium_id;
+
+        // Redirect ke halaman index dengan filter laboratorium yang sesuai
+        return $this->getResource()::getUrl('index', [
+            'tableFilters' => [
+                'laboratorium' => [
+                    'value' => $labId
+                ]
+            ]
+        ]);
     }
 }
