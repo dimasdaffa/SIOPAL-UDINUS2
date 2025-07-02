@@ -7,7 +7,7 @@
                 </h2>
 
                 <p class="mt-1 text-gray-600 dark:text-gray-400">
-                    Sistem Informasi Operasional Perangkat Laboratorium Universitas Dian Nuswantoro
+                    Sistem Informasi Operasional Laboratorium Komputer Universitas Dian Nuswantoro
                 </p>
 
                 <p class="mt-3">
