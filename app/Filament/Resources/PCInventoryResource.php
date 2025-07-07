@@ -18,6 +18,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Tables\Actions\Action;
 
 class PCInventoryResource extends Resource
 {
@@ -293,6 +294,14 @@ class PCInventoryResource extends Resource
                         $records->each(fn(Inventory $record) => $record->inventoriable?->delete());
                     }),
                 ]),
+            ])
+            ->headerActions([
+                Action::make('export')
+                    ->label('Export Excel')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    // Arahkan action untuk memanggil metode 'exportToExcel' di Livewire Component (List Page)
+                    ->action(fn ($livewire) => $livewire->exportToExcel())
             ]);
     }
 
