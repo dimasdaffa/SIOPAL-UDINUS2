@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Dashboard;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use App\Filament\Resources\BarangKeluarResource;
 use App\Filament\Resources\BarangMasukResource;
 use App\Filament\Resources\PCInventoryResource;
@@ -69,6 +70,10 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
+            ])
+
             ->authMiddleware([
                 Authenticate::class,
             ])
@@ -108,6 +113,11 @@ class AdminPanelProvider extends PanelProvider
                                 ->url(\App\Filament\Resources\KlasifikasiLabResource::getUrl())
                                 ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\KlasifikasiLabResource::getRouteBaseName() . '.*')),
 
+                            // Add Shield Permission navigation item
+                            NavigationItem::make('Permissions')
+                                ->icon('heroicon-o-shield-check')
+                                ->url(fn () => route('filament.admin.resources.shield.roles.index'))
+                                ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.shield.roles.*')),
                         ]),
 
                     // Add Data Hardware group with all hardware resources

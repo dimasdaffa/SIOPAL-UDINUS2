@@ -15,7 +15,7 @@ class MousePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_mouse');
     }
 
     /**
@@ -23,7 +23,7 @@ class MousePolicy
      */
     public function view(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_mouse');
     }
 
     /**
@@ -31,7 +31,7 @@ class MousePolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_mouse');
     }
 
     /**
@@ -39,7 +39,7 @@ class MousePolicy
      */
     public function update(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_mouse');
     }
 
     /**
@@ -47,7 +47,7 @@ class MousePolicy
      */
     public function delete(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_mouse');
     }
 
     /**
@@ -55,7 +55,7 @@ class MousePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_mouse');
     }
 
     /**
@@ -63,7 +63,7 @@ class MousePolicy
      */
     public function forceDelete(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_mouse');
     }
 
     /**
@@ -71,7 +71,7 @@ class MousePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_mouse');
     }
 
     /**
@@ -79,7 +79,7 @@ class MousePolicy
      */
     public function restore(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_mouse');
     }
 
     /**
@@ -87,7 +87,7 @@ class MousePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_mouse');
     }
 
     /**
@@ -95,7 +95,7 @@ class MousePolicy
      */
     public function replicate(User $user, Mouse $mouse): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_mouse');
     }
 
     /**
@@ -103,6 +103,6 @@ class MousePolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_mouse');
     }
 }

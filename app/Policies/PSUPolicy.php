@@ -15,7 +15,7 @@ class PSUPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_p::s::u');
     }
 
     /**
@@ -23,7 +23,7 @@ class PSUPolicy
      */
     public function view(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_p::s::u');
     }
 
     /**
@@ -31,7 +31,7 @@ class PSUPolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_p::s::u');
     }
 
     /**
@@ -39,7 +39,7 @@ class PSUPolicy
      */
     public function update(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_p::s::u');
     }
 
     /**
@@ -47,7 +47,7 @@ class PSUPolicy
      */
     public function delete(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_p::s::u');
     }
 
     /**
@@ -55,7 +55,7 @@ class PSUPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_p::s::u');
     }
 
     /**
@@ -63,7 +63,7 @@ class PSUPolicy
      */
     public function forceDelete(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_p::s::u');
     }
 
     /**
@@ -71,7 +71,7 @@ class PSUPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_p::s::u');
     }
 
     /**
@@ -79,7 +79,7 @@ class PSUPolicy
      */
     public function restore(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_p::s::u');
     }
 
     /**
@@ -87,7 +87,7 @@ class PSUPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_p::s::u');
     }
 
     /**
@@ -95,7 +95,7 @@ class PSUPolicy
      */
     public function replicate(User $user, PSU $pSU): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_p::s::u');
     }
 
     /**
@@ -103,6 +103,6 @@ class PSUPolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_p::s::u');
     }
 }

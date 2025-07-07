@@ -15,7 +15,7 @@ class MotherboardPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_motherboard');
     }
 
     /**
@@ -23,7 +23,7 @@ class MotherboardPolicy
      */
     public function view(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_motherboard');
     }
 
     /**
@@ -31,7 +31,7 @@ class MotherboardPolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_motherboard');
     }
 
     /**
@@ -39,7 +39,7 @@ class MotherboardPolicy
      */
     public function update(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_motherboard');
     }
 
     /**
@@ -47,7 +47,7 @@ class MotherboardPolicy
      */
     public function delete(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_motherboard');
     }
 
     /**
@@ -55,7 +55,7 @@ class MotherboardPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_motherboard');
     }
 
     /**
@@ -63,7 +63,7 @@ class MotherboardPolicy
      */
     public function forceDelete(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_motherboard');
     }
 
     /**
@@ -71,7 +71,7 @@ class MotherboardPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_motherboard');
     }
 
     /**
@@ -79,7 +79,7 @@ class MotherboardPolicy
      */
     public function restore(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_motherboard');
     }
 
     /**
@@ -87,7 +87,7 @@ class MotherboardPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_motherboard');
     }
 
     /**
@@ -95,7 +95,7 @@ class MotherboardPolicy
      */
     public function replicate(User $user, Motherboard $motherboard): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_motherboard');
     }
 
     /**
@@ -103,6 +103,6 @@ class MotherboardPolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_motherboard');
     }
 }

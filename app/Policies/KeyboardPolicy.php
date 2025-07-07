@@ -15,7 +15,7 @@ class KeyboardPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_keyboard');
     }
 
     /**
@@ -23,7 +23,7 @@ class KeyboardPolicy
      */
     public function view(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_keyboard');
     }
 
     /**
@@ -31,7 +31,7 @@ class KeyboardPolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_keyboard');
     }
 
     /**
@@ -39,7 +39,7 @@ class KeyboardPolicy
      */
     public function update(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_keyboard');
     }
 
     /**
@@ -47,7 +47,7 @@ class KeyboardPolicy
      */
     public function delete(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_keyboard');
     }
 
     /**
@@ -55,7 +55,7 @@ class KeyboardPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_keyboard');
     }
 
     /**
@@ -63,7 +63,7 @@ class KeyboardPolicy
      */
     public function forceDelete(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_keyboard');
     }
 
     /**
@@ -71,7 +71,7 @@ class KeyboardPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_keyboard');
     }
 
     /**
@@ -79,7 +79,7 @@ class KeyboardPolicy
      */
     public function restore(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_keyboard');
     }
 
     /**
@@ -87,7 +87,7 @@ class KeyboardPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_keyboard');
     }
 
     /**
@@ -95,7 +95,7 @@ class KeyboardPolicy
      */
     public function replicate(User $user, Keyboard $keyboard): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_keyboard');
     }
 
     /**
@@ -103,6 +103,6 @@ class KeyboardPolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_keyboard');
     }
 }

@@ -15,7 +15,7 @@ class RAMPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_r::a::m');
     }
 
     /**
@@ -23,7 +23,7 @@ class RAMPolicy
      */
     public function view(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_r::a::m');
     }
 
     /**
@@ -31,7 +31,7 @@ class RAMPolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_r::a::m');
     }
 
     /**
@@ -39,7 +39,7 @@ class RAMPolicy
      */
     public function update(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_r::a::m');
     }
 
     /**
@@ -47,7 +47,7 @@ class RAMPolicy
      */
     public function delete(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_r::a::m');
     }
 
     /**
@@ -55,7 +55,7 @@ class RAMPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_r::a::m');
     }
 
     /**
@@ -63,7 +63,7 @@ class RAMPolicy
      */
     public function forceDelete(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_r::a::m');
     }
 
     /**
@@ -71,7 +71,7 @@ class RAMPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_r::a::m');
     }
 
     /**
@@ -79,7 +79,7 @@ class RAMPolicy
      */
     public function restore(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_r::a::m');
     }
 
     /**
@@ -87,7 +87,7 @@ class RAMPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_r::a::m');
     }
 
     /**
@@ -95,7 +95,7 @@ class RAMPolicy
      */
     public function replicate(User $user, RAM $rAM): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_r::a::m');
     }
 
     /**
@@ -103,6 +103,6 @@ class RAMPolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_r::a::m');
     }
 }

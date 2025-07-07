@@ -15,7 +15,7 @@ class HeadphonePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_headphone');
     }
 
     /**
@@ -23,7 +23,7 @@ class HeadphonePolicy
      */
     public function view(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_headphone');
     }
 
     /**
@@ -31,7 +31,7 @@ class HeadphonePolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_headphone');
     }
 
     /**
@@ -39,7 +39,7 @@ class HeadphonePolicy
      */
     public function update(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_headphone');
     }
 
     /**
@@ -47,7 +47,7 @@ class HeadphonePolicy
      */
     public function delete(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_headphone');
     }
 
     /**
@@ -55,7 +55,7 @@ class HeadphonePolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_headphone');
     }
 
     /**
@@ -63,7 +63,7 @@ class HeadphonePolicy
      */
     public function forceDelete(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_headphone');
     }
 
     /**
@@ -71,7 +71,7 @@ class HeadphonePolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_headphone');
     }
 
     /**
@@ -79,7 +79,7 @@ class HeadphonePolicy
      */
     public function restore(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_headphone');
     }
 
     /**
@@ -87,7 +87,7 @@ class HeadphonePolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_headphone');
     }
 
     /**
@@ -95,7 +95,7 @@ class HeadphonePolicy
      */
     public function replicate(User $user, Headphone $headphone): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_headphone');
     }
 
     /**
@@ -103,6 +103,6 @@ class HeadphonePolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_headphone');
     }
 }

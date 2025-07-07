@@ -15,7 +15,7 @@ class ProcessorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_any_processor');
     }
 
     /**
@@ -23,7 +23,7 @@ class ProcessorPolicy
      */
     public function view(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to view hardware
+        return $user->can('view_processor');
     }
 
     /**
@@ -31,7 +31,7 @@ class ProcessorPolicy
      */
     public function create(User $user): bool
     {
-        return true; // Allow all users to create hardware
+        return $user->can('create_processor');
     }
 
     /**
@@ -39,7 +39,7 @@ class ProcessorPolicy
      */
     public function update(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to update hardware
+        return $user->can('update_processor');
     }
 
     /**
@@ -47,7 +47,7 @@ class ProcessorPolicy
      */
     public function delete(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to delete hardware
+        return $user->can('delete_processor');
     }
 
     /**
@@ -55,7 +55,7 @@ class ProcessorPolicy
      */
     public function deleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk delete hardware
+        return $user->can('delete_any_processor');
     }
 
     /**
@@ -63,7 +63,7 @@ class ProcessorPolicy
      */
     public function forceDelete(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to force delete hardware
+        return $user->can('force_delete_processor');
     }
 
     /**
@@ -71,7 +71,7 @@ class ProcessorPolicy
      */
     public function forceDeleteAny(User $user): bool
     {
-        return true; // Allow all users to bulk force delete hardware
+        return $user->can('force_delete_any_processor');
     }
 
     /**
@@ -79,7 +79,7 @@ class ProcessorPolicy
      */
     public function restore(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to restore hardware
+        return $user->can('restore_processor');
     }
 
     /**
@@ -87,7 +87,7 @@ class ProcessorPolicy
      */
     public function restoreAny(User $user): bool
     {
-        return true; // Allow all users to bulk restore hardware
+        return $user->can('restore_any_processor');
     }
 
     /**
@@ -95,7 +95,7 @@ class ProcessorPolicy
      */
     public function replicate(User $user, Processor $processor): bool
     {
-        return true; // Allow all users to replicate hardware
+        return $user->can('replicate_processor');
     }
 
     /**
@@ -103,6 +103,6 @@ class ProcessorPolicy
      */
     public function reorder(User $user): bool
     {
-        return true; // Allow all users to reorder hardware
+        return $user->can('reorder_processor');
     }
 }
