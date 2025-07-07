@@ -175,6 +175,13 @@ class NonPCInventoryResource extends Resource
                         $records->each(fn(Inventory $record) => $record->inventoriable?->delete());
                     }),
                 ]),
+            ])
+            ->headerActions([
+                Tables\Actions\Action::make('export')
+                    ->label('Export Excel')
+                    ->icon('heroicon-o-document-arrow-down')
+                    ->color('success')
+                    ->action(fn ($livewire) => $livewire->exportToExcel())
             ]);
     }
 
