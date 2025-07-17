@@ -46,7 +46,13 @@ class PCInventoryResource extends Resource
                     ->schema([
                         Select::make('laboratorium_id')
                             ->label('Laboratorium')
-                            ->relationship('laboratorium', 'ruang')
+                            ->relationship(
+                                'laboratorium',
+                                'ruang',
+                                fn (Builder $query) => auth()->user()->hasRole('super_admin')
+                                    ? $query
+                                    : $query->whereIn('id', auth()->user()->getAuthorizedLabIds('view'))
+                            )
                             ->required()
                             ->preload()
                             ->searchable()
@@ -274,7 +280,13 @@ class PCInventoryResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('laboratorium')
-                    ->relationship('laboratorium', 'ruang')
+                    ->relationship(
+                        'laboratorium',
+                        'ruang',
+                        fn (Builder $query) => auth()->user()->hasRole('super_admin')
+                            ? $query
+                            : $query->whereIn('id', auth()->user()->getAuthorizedLabIds('view'))
+                    )
                     ->preload(),
             ])
             ->actions([

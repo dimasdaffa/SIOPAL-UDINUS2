@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\PCInventoriesExport;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListPCInventories extends ListRecords
 {
@@ -18,6 +19,24 @@ class ListPCInventories extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    /**
+     * Filter records based on user's lab permissions
+     */
+    protected function getTableQuery(): Builder
+    {
+        $query = parent::getTableQuery();
+
+        // Super admin can see all labs, no filtering needed
+        if (auth()->user()->hasRole('super_admin')) {
+            return $query;
+        }
+
+        // For regular users, filter by authorized labs
+        $authorizedLabIds = auth()->user()->getAuthorizedLabIds('view');
+        return $query->whereIn('laboratorium_id', $authorizedLabIds);
+    }
+
     /**
      * Metode ini akan menangani logika download file Excel.
      */

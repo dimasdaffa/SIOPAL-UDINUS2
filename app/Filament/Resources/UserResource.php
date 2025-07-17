@@ -20,6 +20,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserResource extends Resource
 {
@@ -62,6 +63,12 @@ class UserResource extends Resource
                     ->label('No HP')
                     ->required()
                     ->maxLength(15),
+                Select::make('roles')
+                    ->label('Role')
+                    ->multiple()
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable(),
                 FileUpload::make('foto')
                     ->label('Foto Laboran')
                     ->image()
@@ -96,6 +103,11 @@ class UserResource extends Resource
                     ->label('NPP/NIM')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('roles.name')
+                    ->label('Role')
+                    ->badge()
+                    ->color('primary')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('no_phone')
                     ->label('No HP')
                     ->searchable()
@@ -168,12 +180,19 @@ class UserResource extends Resource
 
                         return $indicators;
                     }),
+
+                // Filter by role
+                SelectFilter::make('roles')
+                    ->relationship('roles', 'name')
+                    ->preload()
+                    ->searchable()
+                    ->multiple()
+                    ->label('Filter by Role'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ViewAction::make(),
-
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -193,8 +212,9 @@ class UserResource extends Resource
     {
         return [
             'index' => Pages\ListUsers::route('/'),
-            // 'create' => Pages\CreateUser::route('/create'),
-            // 'edit' => Pages\EditUser::route('/{record}/edit'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'view' => Pages\ViewUser::route('/{record}'),
         ];
     }
 }

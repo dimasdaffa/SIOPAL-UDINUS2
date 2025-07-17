@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class Inventory extends Model
 {
@@ -30,12 +32,34 @@ class Inventory extends Model
     }
 
     /**
-     * Auto-generate nomor inventaris sebelum menyimpan
+     * The "booted" method of the model.
+     *
+     * @return void
      */
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
+        // Temporarily commenting out the global scope to debug 500 error
+        /*
+        static::addGlobalScope('lab-permissions', function (Builder $builder) {
+            // Skip scope for console commands or when no user is authenticated
+            if (app()->runningInConsole() || !Auth::check()) {
+                return;
+            }
 
+            $user = Auth::user();
+
+            // Super admin can see all inventory, no filtering needed
+            if ($user->hasRole('super_admin')) {
+                return;
+            }
+
+            // For all other users, only show inventory items from labs they have permission to access
+            $authorizedLabIds = $user->getAuthorizedLabIds('view');
+            $builder->whereIn('laboratorium_id', $authorizedLabIds);
+        });
+        */
+
+        // Auto-generate nomor inventaris sebelum menyimpan
         static::creating(function ($inventory) {
             // Ambil nama laboratorium
             $laboratorium = Laboratorium::find($inventory->laboratorium_id);

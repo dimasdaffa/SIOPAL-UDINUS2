@@ -188,33 +188,38 @@ class AdminPanelProvider extends PanelProvider
                 $laboratories = Laboratorium::query()->orderBy('ruang')->get();
 
                 foreach ($laboratories as $lab) {
-                    $labItems[] = NavigationGroup::make($lab->ruang)
-                        ->items([
-                            NavigationItem::make('Inventaris PC')
-                                ->icon('heroicon-o-computer-desktop')
-                                ->url(fn() => PCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                    $labSlug = strtolower(str_replace([' ', '.'], ['_', '_'], $lab->ruang));
 
-                            NavigationItem::make('Inventaris Non-PC')
-                                ->icon('heroicon-o-cpu-chip')
-                                ->url(fn() => NonPCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                    // Only add this lab group if the user has permission to view it
+                    if (auth()->user() && (auth()->user()->can("lab_view_{$labSlug}") || auth()->user()->hasRole('super_admin'))) {
+                        $labItems[] = NavigationGroup::make($lab->ruang)
+                            ->items([
+                                NavigationItem::make('Inventaris PC')
+                                    ->icon('heroicon-o-computer-desktop')
+                                    ->url(fn() => PCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                    ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
 
-                            NavigationItem::make('Inventaris Software')
-                                ->icon('heroicon-o-code-bracket-square')
-                                ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                                NavigationItem::make('Inventaris Non-PC')
+                                    ->icon('heroicon-o-cpu-chip')
+                                    ->url(fn() => NonPCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                    ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
 
-                            NavigationItem::make('Barang Masuk')
-                                ->icon('heroicon-o-arrow-down-tray')
-                                ->url(fn() => BarangMasukResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(BarangMasukResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                                NavigationItem::make('Inventaris Software')
+                                    ->icon('heroicon-o-code-bracket-square')
+                                    ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                    ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
 
-                            NavigationItem::make('Barang Keluar')
-                                ->icon('heroicon-o-arrow-up-tray')
-                                ->url(fn() => BarangKeluarResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                ->isActiveWhen(fn() => request()->routeIs(BarangKeluarResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
-                        ]);
+                                NavigationItem::make('Barang Masuk')
+                                    ->icon('heroicon-o-arrow-down-tray')
+                                    ->url(fn() => BarangMasukResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                    ->isActiveWhen(fn() => request()->routeIs(BarangMasukResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+
+                                NavigationItem::make('Barang Keluar')
+                                    ->icon('heroicon-o-arrow-up-tray')
+                                    ->url(fn() => BarangKeluarResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                                    ->isActiveWhen(fn() => request()->routeIs(BarangKeluarResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                            ]);
+                    }
                 }
 
                 return $builder->groups(array_merge($initialGroups, $labItems));
