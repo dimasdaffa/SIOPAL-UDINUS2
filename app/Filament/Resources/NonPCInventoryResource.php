@@ -133,7 +133,7 @@ class NonPCInventoryResource extends Resource
 
                 Section::make('Detail Barang')
                     ->schema([
-                        TextInput::make('details.merk')->label('Merk'),
+                        TextInput::make('details.merk')->label('Jumlah'),
                         TextInput::make('details.model')->label('Model/Tipe'),
                         Textarea::make('details.spesifikasi')
                             ->label('Spesifikasi Tambahan')
@@ -148,7 +148,7 @@ class NonPCInventoryResource extends Resource
             ->columns([
                 TextColumn::make('kode_inventaris')->searchable()->sortable(),
                 TextColumn::make('nama_barang')->searchable(),
-                TextColumn::make('inventoriable.merk')->label('Merk')->toggleable(),
+                TextColumn::make('inventoriable.merk')->label('Jumlah')->toggleable(),
                 TextColumn::make('laboratorium.ruang')->sortable()->badge(),
                 TextColumn::make('kondisi')->sortable()->badge()->color(fn (string $state): string => match ($state) {
                     'Baik' => 'success',

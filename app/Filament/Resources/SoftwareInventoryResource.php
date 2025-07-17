@@ -92,13 +92,13 @@ class SoftwareInventoryResource extends Resource
                                     $set('preview_kode_inventaris', null);
                                 }
                             }),
-                        TextInput::make('preview_kode_inventaris')
-                            ->label('No Inventaris (Preview)')
-                            ->disabled()
-                            ->dehydrated(false)
-                            ->placeholder('Pilih laboratorium terlebih dahulu')
-                            ->helperText('Nomor inventaris yang akan di-generate otomatis')
-                            ->extraAttributes(['style' => 'background-color: #f3f4f6; font-weight: 500;']),
+                        // TextInput::make('preview_kode_inventaris')
+                        //     ->label('No Inventaris (Preview)')
+                        //     ->disabled()
+                        //     ->dehydrated(false)
+                        //     ->placeholder('Pilih laboratorium terlebih dahulu')
+                        //     ->helperText('Nomor inventaris yang akan di-generate otomatis')
+                        //     ->extraAttributes(['style' => 'background-color: #f3f4f6; font-weight: 500;']),
                         TextInput::make('nama_barang')
                             ->label('Nama Software')
                             ->required(),
@@ -125,9 +125,9 @@ class SoftwareInventoryResource extends Resource
                         return [];
                     }),
 
-                Section::make('Detail Lisensi')
+                Section::make('Detail Lainnya')
                     ->schema([
-                        TextInput::make('details.jenis_lisensi')->label('Jenis Lisensi (Contoh: Freeware, Perpetual, Subscription)'),
+                        TextInput::make('details.jenis_lisensi')->label('Versi'),
                         TextInput::make('details.nomor_lisensi')->label('Nomor Lisensi / Kunci Produk'),
                         DatePicker::make('details.tanggal_kadaluarsa')->label('Tanggal Kadaluarsa (jika ada)'),
                     ])->columns(2),
@@ -140,7 +140,7 @@ class SoftwareInventoryResource extends Resource
             ->columns([
                 TextColumn::make('kode_inventaris')->searchable()->sortable(),
                 TextColumn::make('nama_barang')->label('Nama Software')->searchable(),
-                TextColumn::make('inventoriable.jenis_lisensi')->label('Lisensi')->toggleable(),
+                TextColumn::make('inventoriable.jenis_lisensi')->label('Versi')->toggleable(),
                 TextColumn::make('laboratorium.ruang')->sortable()->badge(),
             ])
             ->filters([
