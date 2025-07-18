@@ -78,151 +78,217 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigation(function (NavigationBuilder $builder): NavigationBuilder {
-                $initialGroups = [
-                    // Tambahkan Dashboard di awal navigasi
-                    NavigationGroup::make('Menu Utama')
-                        ->items([
-                            NavigationItem::make('Dashboard')
-                                ->icon('heroicon-o-home')
-                                ->url(fn() => Dashboard::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.dashboard')),
-                        ]),
+                // Hanya lanjutkan jika pengguna sudah login
+                if (!auth()->check()) {
+                    return $builder;
+                }
 
-                    NavigationGroup::make('Pelaporan PTPP')
+                $user = auth()->user();
+                $navigationGroups = [];
+
+                // Menu Utama (Dashboard) - selalu tampilkan untuk semua user
+                $navigationGroups[] = NavigationGroup::make('Menu Utama')
+                    ->items([
+                        NavigationItem::make('Dashboard')
+                            ->icon('heroicon-o-home')
+                            ->url(fn() => Dashboard::getUrl())
+                            ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.dashboard')),
+                    ]);
+
+                // Pelaporan PTPP - tampilkan hanya jika user memiliki izin
+                if ($user->hasRole('super_admin') || $user->can('view_lapor_ptpp')) {
+                    $navigationGroups[] = NavigationGroup::make('Pelaporan PTPP')
                         ->items([
                             NavigationItem::make('PTTP SKT')
                                 ->icon('heroicon-o-document-text')
                                 ->url(\App\Filament\Resources\LaporPtppResource::getUrl())
                                 ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\LaporPtppResource::getRouteBaseName() . '.*')),
-                        ]),
-                    // Add Master Data group with static resources
-                    NavigationGroup::make('MASTER DATA')
-                        ->items([
-                            NavigationItem::make('Data Laboran')
-                                ->icon('heroicon-o-users')
-                                ->url(\App\Filament\Resources\UserResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\UserResource::getRouteBaseName() . '.*')),
+                        ]);
+                }
 
-                            NavigationItem::make('Data Laboratorium')
-                                ->icon('heroicon-o-building-office')
-                                ->url(\App\Filament\Resources\LaboratoriumResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\LaboratoriumResource::getRouteBaseName() . '.*')),
+                // MASTER DATA - hanya tampilkan jika user memiliki izin
+                $masterDataItems = [];
 
-                            NavigationItem::make('Data Klasifikasi Lab')
-                                ->icon('fluentui-dual-screen-desktop-24-o')
-                                ->url(\App\Filament\Resources\KlasifikasiLabResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\KlasifikasiLabResource::getRouteBaseName() . '.*')),
+                // Data Laboran
+                if ($user->hasRole('super_admin') || $user->can('view_any_user')) {
+                    $masterDataItems[] = NavigationItem::make('Data Laboran')
+                        ->icon('heroicon-o-users')
+                        ->url(\App\Filament\Resources\UserResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\UserResource::getRouteBaseName() . '.*'));
+                }
 
-                            // Add Shield Permission navigation item
-                            NavigationItem::make('Permissions')
-                                ->icon('heroicon-o-shield-check')
-                                ->url(fn () => route('filament.admin.resources.shield.roles.index'))
-                                ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.shield.roles.*')),
-                        ]),
+                // Data Laboratorium
+                if ($user->hasRole('super_admin') || $user->can('view_any_laboratorium')) {
+                    $masterDataItems[] = NavigationItem::make('Data Laboratorium')
+                        ->icon('heroicon-o-building-office')
+                        ->url(\App\Filament\Resources\LaboratoriumResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\LaboratoriumResource::getRouteBaseName() . '.*'));
+                }
 
-                    // Add Data Hardware group with all hardware resources
-                    NavigationGroup::make('Data Hardware')
-                        ->items([
-                            NavigationItem::make('Motherboard')
-                                ->icon('mdi-chip')
-                                ->url(\App\Filament\Resources\MotherboardResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MotherboardResource::getRouteBaseName() . '.*')),
+                // Data Klasifikasi Lab
+                if ($user->hasRole('super_admin') || $user->can('view_any_klasifikasi_lab')) {
+                    $masterDataItems[] = NavigationItem::make('Data Klasifikasi Lab')
+                        ->icon('fluentui-dual-screen-desktop-24-o')
+                        ->url(\App\Filament\Resources\KlasifikasiLabResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\KlasifikasiLabResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('Processor')
-                                ->icon('heroicon-o-cpu-chip')
-                                ->url(\App\Filament\Resources\ProcessorResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\ProcessorResource::getRouteBaseName() . '.*')),
+                // Permissions
+                if ($user->hasRole('super_admin')) {
+                    $masterDataItems[] = NavigationItem::make('Permissions')
+                        ->icon('heroicon-o-shield-check')
+                        ->url(fn () => route('filament.admin.resources.shield.roles.index'))
+                        ->isActiveWhen(fn() => request()->routeIs('filament.admin.resources.shield.roles.*'));
+                }
 
-                            NavigationItem::make('RAM')
-                                ->icon('fluentui-ram-20')
-                                ->url(\App\Filament\Resources\RAMResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\RAMResource::getRouteBaseName() . '.*')),
+                // Tambahkan grup MASTER DATA jika ada item di dalamnya
+                if (count($masterDataItems) > 0) {
+                    $navigationGroups[] = NavigationGroup::make('MASTER DATA')
+                        ->items($masterDataItems);
+                }
 
-                            NavigationItem::make('VGA')
-                                ->icon('clarity-box-plot-line')
-                                ->url(\App\Filament\Resources\VGAResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\VGAResource::getRouteBaseName() . '.*')),
+                // DATA HARDWARE - hanya tampilkan jika user memiliki izin
+                $hardwareItems = [];
 
-                            NavigationItem::make('Penyimpanan')
-                                ->icon('clarity-hard-disk-line')
-                                ->url(\App\Filament\Resources\PenyimpananResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\PenyimpananResource::getRouteBaseName() . '.*')),
+                // Motherboard
+                if ($user->hasRole('super_admin') || $user->can('view_any_motherboard')) {
+                    $hardwareItems[] = NavigationItem::make('Motherboard')
+                        ->icon('mdi-chip')
+                        ->url(\App\Filament\Resources\MotherboardResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MotherboardResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('DVD')
-                                ->icon('clarity-cd-dvd-line')
-                                ->url(\App\Filament\Resources\DVDResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\DVDResource::getRouteBaseName() . '.*')),
+                // Processor
+                if ($user->hasRole('super_admin') || $user->can('view_any_processor')) {
+                    $hardwareItems[] = NavigationItem::make('Processor')
+                        ->icon('heroicon-o-cpu-chip')
+                        ->url(\App\Filament\Resources\ProcessorResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\ProcessorResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('PSU')
-                                ->icon('mdi-cube')
-                                ->url(\App\Filament\Resources\PSUResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\PSUResource::getRouteBaseName() . '.*')),
+                // RAM
+                if ($user->hasRole('super_admin') || $user->can('view_any_r_a_m')) {
+                    $hardwareItems[] = NavigationItem::make('RAM')
+                        ->icon('fluentui-ram-20')
+                        ->url(\App\Filament\Resources\RAMResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\RAMResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('Keyboard')
-                                ->icon('clarity-keyboard-line')
-                                ->url(\App\Filament\Resources\KeyboardResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\KeyboardResource::getRouteBaseName() . '.*')),
+                // VGA
+                if ($user->hasRole('super_admin') || $user->can('view_any_v_g_a')) {
+                    $hardwareItems[] = NavigationItem::make('VGA')
+                        ->icon('clarity-box-plot-line')
+                        ->url(\App\Filament\Resources\VGAResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\VGAResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('Mouse')
-                                ->icon('clarity-mouse-line')
-                                ->url(\App\Filament\Resources\MouseResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MouseResource::getRouteBaseName() . '.*')),
+                // Penyimpanan
+                if ($user->hasRole('super_admin') || $user->can('view_any_penyimpanan')) {
+                    $hardwareItems[] = NavigationItem::make('Penyimpanan')
+                        ->icon('clarity-hard-disk-line')
+                        ->url(\App\Filament\Resources\PenyimpananResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\PenyimpananResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('Monitor')
-                                ->icon('mdi-monitor-small')
-                                ->url(\App\Filament\Resources\MonitorResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MonitorResource::getRouteBaseName() . '.*')),
+                // DVD
+                if ($user->hasRole('super_admin') || $user->can('view_any_d_v_d')) {
+                    $hardwareItems[] = NavigationItem::make('DVD')
+                        ->icon('clarity-cd-dvd-line')
+                        ->url(\App\Filament\Resources\DVDResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\DVDResource::getRouteBaseName() . '.*'));
+                }
 
-                            NavigationItem::make('Headphone')
-                                ->icon('fluentui-headphones-24')
-                                ->url(\App\Filament\Resources\HeadphoneResource::getUrl())
-                                ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\HeadphoneResource::getRouteBaseName() . '.*')),
-                        ]),
+                // PSU
+                if ($user->hasRole('super_admin') || $user->can('view_any_p_s_u')) {
+                    $hardwareItems[] = NavigationItem::make('PSU')
+                        ->icon('mdi-cube')
+                        ->url(\App\Filament\Resources\PSUResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\PSUResource::getRouteBaseName() . '.*'));
+                }
 
-                    // Add Pelaporan PTPP group
+                // Keyboard
+                if ($user->hasRole('super_admin') || $user->can('view_any_keyboard')) {
+                    $hardwareItems[] = NavigationItem::make('Keyboard')
+                        ->icon('clarity-keyboard-line')
+                        ->url(\App\Filament\Resources\KeyboardResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\KeyboardResource::getRouteBaseName() . '.*'));
+                }
 
-                ];
+                // Mouse
+                if ($user->hasRole('super_admin') || $user->can('view_any_mouse')) {
+                    $hardwareItems[] = NavigationItem::make('Mouse')
+                        ->icon('clarity-mouse-line')
+                        ->url(\App\Filament\Resources\MouseResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MouseResource::getRouteBaseName() . '.*'));
+                }
 
-                $labItems = [];
+                // Monitor
+                if ($user->hasRole('super_admin') || $user->can('view_any_monitor')) {
+                    $hardwareItems[] = NavigationItem::make('Monitor')
+                        ->icon('mdi-monitor-small')
+                        ->url(\App\Filament\Resources\MonitorResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\MonitorResource::getRouteBaseName() . '.*'));
+                }
+
+                // Headphone
+                if ($user->hasRole('super_admin') || $user->can('view_any_headphone')) {
+                    $hardwareItems[] = NavigationItem::make('Headphone')
+                        ->icon('fluentui-headphones-24')
+                        ->url(\App\Filament\Resources\HeadphoneResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\HeadphoneResource::getRouteBaseName() . '.*'));
+                }
+
+                // Tambahkan grup Data Hardware jika ada item di dalamnya
+                if (count($hardwareItems) > 0) {
+                    $navigationGroups[] = NavigationGroup::make('Data Hardware')
+                        ->items($hardwareItems);
+                }
+
+                // NAVIGASI LABORATORIUM
                 // Ambil semua lab dari database untuk membuat navigasi dinamis
                 $laboratories = Laboratorium::query()->orderBy('ruang')->get();
 
                 foreach ($laboratories as $lab) {
-                    $labSlug = strtolower(str_replace([' ', '.'], ['_', '_'], $lab->ruang));
+                    // Gunakan hasLabPermission dari trait untuk pengecekan izin yang lebih akurat
+                    if ($user->hasLabPermission($lab->id, 'view')) {
+                        $labItems = [];
 
-                    // Only add this lab group if the user has permission to view it
-                    if (auth()->user() && (auth()->user()->can("lab_view_{$labSlug}") || auth()->user()->hasRole('super_admin'))) {
-                        $labItems[] = NavigationGroup::make($lab->ruang)
-                            ->items([
-                                NavigationItem::make('Inventaris PC')
-                                    ->icon('heroicon-o-computer-desktop')
-                                    ->url(fn() => PCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                    ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                        // Inventaris PC
+                        $labItems[] = NavigationItem::make('Inventaris PC')
+                            ->icon('heroicon-o-computer-desktop')
+                            ->url(fn() => PCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                            ->isActiveWhen(fn() => request()->routeIs(PCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id);
 
-                                NavigationItem::make('Inventaris Non-PC')
-                                    ->icon('heroicon-o-cpu-chip')
-                                    ->url(fn() => NonPCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                    ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                        // Inventaris Non-PC
+                        $labItems[] = NavigationItem::make('Inventaris Non-PC')
+                            ->icon('heroicon-o-cpu-chip')
+                            ->url(fn() => NonPCInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                            ->isActiveWhen(fn() => request()->routeIs(NonPCInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id);
 
-                                NavigationItem::make('Inventaris Software')
-                                    ->icon('heroicon-o-code-bracket-square')
-                                    ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                    ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                        // Inventaris Software
+                        $labItems[] = NavigationItem::make('Inventaris Software')
+                            ->icon('heroicon-o-code-bracket-square')
+                            ->url(fn() => SoftwareInventoryResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                            ->isActiveWhen(fn() => request()->routeIs(SoftwareInventoryResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id);
 
-                                NavigationItem::make('Barang Masuk')
-                                    ->icon('heroicon-o-arrow-down-tray')
-                                    ->url(fn() => BarangMasukResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                    ->isActiveWhen(fn() => request()->routeIs(BarangMasukResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
+                        // Barang Masuk
+                        $labItems[] = NavigationItem::make('Barang Masuk')
+                            ->icon('heroicon-o-arrow-down-tray')
+                            ->url(fn() => BarangMasukResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                            ->isActiveWhen(fn() => request()->routeIs(BarangMasukResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id);
 
-                                NavigationItem::make('Barang Keluar')
-                                    ->icon('heroicon-o-arrow-up-tray')
-                                    ->url(fn() => BarangKeluarResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
-                                    ->isActiveWhen(fn() => request()->routeIs(BarangKeluarResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id),
-                            ]);
+                        // Barang Keluar
+                        $labItems[] = NavigationItem::make('Barang Keluar')
+                            ->icon('heroicon-o-arrow-up-tray')
+                            ->url(fn() => BarangKeluarResource::getUrl('index', ['tableFilters[laboratorium][value]' => $lab->id]))
+                            ->isActiveWhen(fn() => request()->routeIs(BarangKeluarResource::getRouteBaseName() . '.index') && request()->input('tableFilters.laboratorium.value') == $lab->id);
+
+                        $navigationGroups[] = NavigationGroup::make($lab->ruang)
+                            ->items($labItems);
                     }
                 }
 
-                return $builder->groups(array_merge($initialGroups, $labItems));
+                return $builder->groups($navigationGroups);
             });
     }
 }
