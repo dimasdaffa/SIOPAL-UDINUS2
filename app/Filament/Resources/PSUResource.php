@@ -53,7 +53,6 @@ class PSUResource extends Resource
                 Forms\Components\TextInput::make('daya')
                     ->label('Daya (Watt)')
                     ->numeric()
-                    ->suffix('W')
                     ->required(),
                 Forms\Components\TextInput::make('efisiensi')
                     ->label('Efisiensi')
@@ -93,19 +92,52 @@ class PSUResource extends Resource
             ->columns([
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('merk')
                     ->label('Merk')
-                    ->searchable(),
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('tipe')
-                    ->label('Tipe'),
+                    ->label('Tipe')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('daya')
-                    ->label('Daya (Watt)')
-                    ->suffix(' W'),
+                    ->label('Daya')
+                    ->numeric()
+                    ->suffix(' W')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('efisiensi')
-                    ->label('Efisiensi'),
+                    ->label('Efisiensi')
+                    ->searchable()
+                    ->sortable(),
+
+                // KOLOM YANG DITAMBAHKAN
+                TextColumn::make('bulan')
+                    ->label('Bulan Pengadaan')
+                    ->formatStateUsing(function (?string $state): ?string {
+                        if (empty($state)) {
+                            return null;
+                        }
+                        $months = [
+                            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+                            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+                            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+                        ];
+                        return $months[(int)$state] ?? $state;
+                    })
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('tahun')
-                    ->label('Tahun'),
+                    ->label('Tahun')
+                    ->sortable(),
+
+                // KOLOM YANG DITAMBAHKAN
+                TextColumn::make('stok')
+                    ->label('Stok')
+                    ->numeric()
+                    ->sortable(),
             ])
             ->filters([
                 // Add filters if needed

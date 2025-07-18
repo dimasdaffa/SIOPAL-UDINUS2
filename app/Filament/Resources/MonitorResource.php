@@ -58,8 +58,7 @@ class MonitorResource extends Resource
                     ->maxLength(255),
 
                 TextInput::make('resolusi')
-                    ->label('Resolusi (px)')
-                    ->minValue(1)
+                    ->label('Resolusi (contoh: 1920x1080)')
                     ->required(),
 
                 Select::make('ukuran')
@@ -133,15 +132,49 @@ class MonitorResource extends Resource
                     ->sortable(),
 
                 TextColumn::make('resolusi')
-                    ->label('Resolusi (px)')
+                    ->label('Resolusi')
+                    ->searchable()
                     ->sortable(),
 
                 TextColumn::make('ukuran')
                     ->label('Ukuran Layar')
-                    ->sortable(),
+                    ->searchable()
+                    ->sortable()
+                    ->badge(),
+
+                // KOLOM YANG DITAMBAHKAN
+                TextColumn::make('spesifikasi')
+                    ->label('Spesifikasi')
+                    ->limit(40)
+                    ->tooltip('Lihat spesifikasi lengkap')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                // KOLOM YANG DITAMBAHKAN
+                TextColumn::make('bulan')
+                    ->label('Bulan Pengadaan')
+                    ->formatStateUsing(function (?string $state): ?string {
+                        if (empty($state)) {
+                            return null;
+                        }
+                        $months = [
+                            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+                            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+                            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'
+                        ];
+                        return $months[(int)$state] ?? $state;
+                    })
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
+                    ->sortable(),
+
+                // KOLOM YANG DITAMBAHKAN
+                TextColumn::make('stok')
+                    ->label('Stok')
+                    ->numeric()
                     ->sortable(),
 
             ])
