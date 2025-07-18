@@ -119,30 +119,34 @@ class MonitorResource extends Resource
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('merk')
                     ->label('Merk')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('nama')
                     ->label('Tipe')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('resolusi')
                     ->label('Resolusi')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('ukuran')
                     ->label('Ukuran Layar')
                     ->searchable()
                     ->sortable()
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('spesifikasi')
                     ->label('Spesifikasi')
                     ->limit(40)
@@ -150,7 +154,6 @@ class MonitorResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('bulan')
                     ->label('Bulan Pengadaan')
                     ->formatStateUsing(function (?string $state): ?string {
@@ -169,13 +172,14 @@ class MonitorResource extends Resource
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
             ])
             ->filters([

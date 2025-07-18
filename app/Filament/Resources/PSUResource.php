@@ -93,26 +93,29 @@ class PSUResource extends Resource
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('merk')
                     ->label('Merk')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('tipe')
                     ->label('Tipe')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('daya')
                     ->label('Daya')
                     ->numeric()
                     ->suffix(' W')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 Tables\Columns\TextColumn::make('efisiensi')
                     ->label('Efisiensi')
                     ->searchable()
-                    ->sortable(),
-
-                // KOLOM YANG DITAMBAHKAN
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('bulan')
                     ->label('Bulan Pengadaan')
                     ->formatStateUsing(function (?string $state): ?string {
@@ -128,16 +131,15 @@ class PSUResource extends Resource
                     })
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
                 Tables\Columns\TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
-
-                // KOLOM YANG DITAMBAHKAN
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 // Add filters if needed

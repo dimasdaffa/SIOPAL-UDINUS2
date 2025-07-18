@@ -94,19 +94,21 @@ class ProcessorResource extends Resource
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('merk')
                     ->label('Merk')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('tipe')
                     ->label('Tipe')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('bulan')
                     ->label('Bulan Pengadaan')
                     ->formatStateUsing(function (?string $state): ?string {
@@ -125,13 +127,14 @@ class ProcessorResource extends Resource
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //

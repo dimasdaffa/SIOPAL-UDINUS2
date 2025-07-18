@@ -111,33 +111,35 @@ class VGAResource extends Resource
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('merk')
                     ->label('Merk')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('tipe')
                     ->label('Tipe VGA')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('kapasitas')
                     ->label('Kapasitas VRAM')
                     ->numeric()
                     ->sortable()
-                    ->suffix(' GB'),
+                    ->suffix(' GB')
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('spesifikasi')
                     ->label('Spesifikasi')
-                    ->limit(40) // Membatasi panjang teks yang tampil di tabel
-                    ->tooltip('Klik untuk melihat spesifikasi lengkap') // Menampilkan sisa teks saat hover
+                    ->limit(40)
+                    ->tooltip('Klik untuk melihat spesifikasi lengkap')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('bulan')
                     ->label('Bulan Pengadaan')
                     ->formatStateUsing(function (?string $state): ?string {
@@ -156,13 +158,14 @@ class VGAResource extends Resource
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 //

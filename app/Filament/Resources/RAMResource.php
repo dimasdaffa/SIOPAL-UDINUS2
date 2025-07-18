@@ -108,12 +108,14 @@ class RAMResource extends Resource
             ->columns([
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('merk')
                     ->label('Merk')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('tipe')
                     ->label('Tipe RAM')
@@ -125,12 +127,14 @@ class RAMResource extends Resource
                         'DDR4' => 'warning',
                         'DDR5' => 'success',
                         default => 'gray',
-                    }),
+                    })
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('kapasitas')
                     ->label('Kapasitas (GB)')
                     ->sortable()
-                    ->numeric(),
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('bulan')
@@ -151,13 +155,15 @@ class RAMResource extends Resource
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->sortable()
-                    ->numeric(),
+                    ->numeric()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 SelectFilter::make('tipe')

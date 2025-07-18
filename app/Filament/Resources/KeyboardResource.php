@@ -102,12 +102,14 @@ class KeyboardResource extends Resource
                 TextColumn::make('no_inventaris')
                     ->label('No Inventaris')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('merk')
                     ->label('Merk')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
                 TextColumn::make('tipe')
                     ->label('Tipe Keyboard')
@@ -118,9 +120,9 @@ class KeyboardResource extends Resource
                         'USB' => 'success',
                         'Wireless' => 'info',
                         default => 'gray',
-                    }),
-
-                // KOLOM YANG DITAMBAHKAN
+                    })
+                    ->toggleable(isToggledHiddenByDefault: false),
+                
                 TextColumn::make('bulan')
                     ->label('Bulan Pengadaan')
                     ->formatStateUsing(function (?string $state): ?string {
@@ -139,13 +141,14 @@ class KeyboardResource extends Resource
 
                 TextColumn::make('tahun')
                     ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
 
-                // KOLOM YANG DITAMBAHKAN
                 TextColumn::make('stok')
                     ->label('Stok')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: false),
             ])
             ->filters([
                 SelectFilter::make('tipe')
