@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Models\Laboratorium;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Cache;
+use Spatie\Permission\Models\Permission;
 
 trait HasLabPermissions
 {
@@ -48,24 +49,32 @@ trait HasLabPermissions
      */
     public function getAuthorizedLabIds(string $action = 'view'): array
     {
-        // Cache key unique to this user and action
+        // Force refresh the cache for testing
         $cacheKey = "user_{$this->id}_lab_permissions_{$action}";
+        Cache::forget($cacheKey);
 
-        // Cache the results for 1 hour to improve performance
-        return Cache::remember($cacheKey, 3600, function() use ($action) {
+        // Cache the results for a shorter time during testing (5 minutes)
+        return Cache::remember($cacheKey, 300, function() use ($action) {
             // Super admin can access all labs
             if ($this->hasRole('super_admin')) {
                 return Laboratorium::pluck('id')->toArray();
             }
 
             $authorizedLabs = [];
+
+            // Get all permissions for this user
+            $userPermissions = $this->getAllPermissions()->pluck('name')->toArray();
+
+            // Get all labs
             $laboratories = Laboratorium::all();
 
+            // For each lab, check if the user has the specific permission
             foreach ($laboratories as $lab) {
                 $labSlug = strtolower(str_replace([' ', '.'], ['_', '_'], $lab->ruang));
                 $permissionName = "lab_{$action}_{$labSlug}";
 
-                if ($this->can($permissionName)) {
+                // If the user has this permission (through any role), add the lab
+                if (in_array($permissionName, $userPermissions)) {
                     $authorizedLabs[] = $lab->id;
                 }
             }
@@ -78,6 +87,7 @@ trait HasLabPermissions
      * Apply lab permission filter to a query
      *
      * @param Builder $query
+     * @param string $labIdField
      * @param string $action
      * @return Builder
      */
