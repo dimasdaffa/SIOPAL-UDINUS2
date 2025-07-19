@@ -95,8 +95,8 @@ class AdminPanelProvider extends PanelProvider
                             ->isActiveWhen(fn() => request()->routeIs('filament.admin.pages.dashboard')),
                     ]);
 
-                // Pelaporan PTPP - tampilkan hanya jika user memiliki izin
-                if ($user->hasRole('super_admin') || $user->can('view_lapor_ptpp')) {
+                // Pelaporan PTPP - tampilkan untuk semua yang memiliki izin terkait PTPP
+                if ($user->hasRole('super_admin') || $user->can('view-navigation-item', 'lapor::ptpp')) {
                     $navigationGroups[] = NavigationGroup::make('Pelaporan PTPP')
                         ->items([
                             NavigationItem::make('PTTP SKT')
@@ -110,7 +110,7 @@ class AdminPanelProvider extends PanelProvider
                 $masterDataItems = [];
 
                 // Data Laboran
-                if ($user->hasRole('super_admin') || $user->can('view_any_user')) {
+                if ($user->can('view-navigation-item', 'user')) {
                     $masterDataItems[] = NavigationItem::make('Data Laboran')
                         ->icon('heroicon-o-users')
                         ->url(\App\Filament\Resources\UserResource::getUrl())
@@ -118,7 +118,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Data Laboratorium
-                if ($user->hasRole('super_admin') || $user->can('view_any_laboratorium')) {
+                if ($user->can('view-navigation-item', 'laboratorium')) {
                     $masterDataItems[] = NavigationItem::make('Data Laboratorium')
                         ->icon('heroicon-o-building-office')
                         ->url(\App\Filament\Resources\LaboratoriumResource::getUrl())
@@ -126,7 +126,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Data Klasifikasi Lab
-                if ($user->hasRole('super_admin') || $user->can('view_any_klasifikasi_lab')) {
+                if ($user->can('view-navigation-item', 'klasifikasi::lab')) {
                     $masterDataItems[] = NavigationItem::make('Data Klasifikasi Lab')
                         ->icon('fluentui-dual-screen-desktop-24-o')
                         ->url(\App\Filament\Resources\KlasifikasiLabResource::getUrl())
@@ -134,7 +134,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Permissions
-                if ($user->hasRole('super_admin')) {
+                if ($user->hasRole('super_admin') || $user->can('view-navigation-item', 'role')) {
                     $masterDataItems[] = NavigationItem::make('Permissions')
                         ->icon('heroicon-o-shield-check')
                         ->url(fn () => route('filament.admin.resources.shield.roles.index'))
@@ -151,7 +151,7 @@ class AdminPanelProvider extends PanelProvider
                 $hardwareItems = [];
 
                 // Motherboard
-                if ($user->hasRole('super_admin') || $user->can('view_any_motherboard')) {
+                if ($user->can('view-navigation-item', 'motherboard')) {
                     $hardwareItems[] = NavigationItem::make('Motherboard')
                         ->icon('mdi-chip')
                         ->url(\App\Filament\Resources\MotherboardResource::getUrl())
@@ -159,7 +159,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Processor
-                if ($user->hasRole('super_admin') || $user->can('view_any_processor')) {
+                if ($user->can('view-navigation-item', 'processor')) {
                     $hardwareItems[] = NavigationItem::make('Processor')
                         ->icon('heroicon-o-cpu-chip')
                         ->url(\App\Filament\Resources\ProcessorResource::getUrl())
@@ -167,7 +167,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // RAM
-                if ($user->hasRole('super_admin') || $user->can('view_any_r_a_m')) {
+                if ($user->can('view-navigation-item', 'r::a::m')) {
                     $hardwareItems[] = NavigationItem::make('RAM')
                         ->icon('fluentui-ram-20')
                         ->url(\App\Filament\Resources\RAMResource::getUrl())
@@ -175,7 +175,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // VGA
-                if ($user->hasRole('super_admin') || $user->can('view_any_v_g_a')) {
+                if ($user->can('view-navigation-item', 'v::g::a')) {
                     $hardwareItems[] = NavigationItem::make('VGA')
                         ->icon('clarity-box-plot-line')
                         ->url(\App\Filament\Resources\VGAResource::getUrl())
@@ -183,7 +183,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Penyimpanan
-                if ($user->hasRole('super_admin') || $user->can('view_any_penyimpanan')) {
+                if ($user->can('view-navigation-item', 'penyimpanan')) {
                     $hardwareItems[] = NavigationItem::make('Penyimpanan')
                         ->icon('clarity-hard-disk-line')
                         ->url(\App\Filament\Resources\PenyimpananResource::getUrl())
@@ -191,7 +191,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // DVD
-                if ($user->hasRole('super_admin') || $user->can('view_any_d_v_d')) {
+                if ($user->can('view-navigation-item', 'd::v::d')) {
                     $hardwareItems[] = NavigationItem::make('DVD')
                         ->icon('clarity-cd-dvd-line')
                         ->url(\App\Filament\Resources\DVDResource::getUrl())
@@ -199,7 +199,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // PSU
-                if ($user->hasRole('super_admin') || $user->can('view_any_p_s_u')) {
+                if ($user->can('view-navigation-item', 'p::s::u')) {
                     $hardwareItems[] = NavigationItem::make('PSU')
                         ->icon('mdi-cube')
                         ->url(\App\Filament\Resources\PSUResource::getUrl())
@@ -207,7 +207,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Keyboard
-                if ($user->hasRole('super_admin') || $user->can('view_any_keyboard')) {
+                if ($user->can('view-navigation-item', 'keyboard')) {
                     $hardwareItems[] = NavigationItem::make('Keyboard')
                         ->icon('clarity-keyboard-line')
                         ->url(\App\Filament\Resources\KeyboardResource::getUrl())
@@ -215,7 +215,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Mouse
-                if ($user->hasRole('super_admin') || $user->can('view_any_mouse')) {
+                if ($user->can('view-navigation-item', 'mouse')) {
                     $hardwareItems[] = NavigationItem::make('Mouse')
                         ->icon('clarity-mouse-line')
                         ->url(\App\Filament\Resources\MouseResource::getUrl())
@@ -223,7 +223,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Monitor
-                if ($user->hasRole('super_admin') || $user->can('view_any_monitor')) {
+                if ($user->can('view-navigation-item', 'monitor')) {
                     $hardwareItems[] = NavigationItem::make('Monitor')
                         ->icon('mdi-monitor-small')
                         ->url(\App\Filament\Resources\MonitorResource::getUrl())
@@ -231,7 +231,7 @@ class AdminPanelProvider extends PanelProvider
                 }
 
                 // Headphone
-                if ($user->hasRole('super_admin') || $user->can('view_any_headphone')) {
+                if ($user->can('view-navigation-item', 'headphone')) {
                     $hardwareItems[] = NavigationItem::make('Headphone')
                         ->icon('fluentui-headphones-24')
                         ->url(\App\Filament\Resources\HeadphoneResource::getUrl())

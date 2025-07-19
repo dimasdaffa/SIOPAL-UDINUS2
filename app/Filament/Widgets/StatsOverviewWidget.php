@@ -7,6 +7,7 @@ use App\Models\Laboratorium;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Gate;
 
 class StatsOverviewWidget extends BaseWidget
 {
@@ -52,5 +53,11 @@ class StatsOverviewWidget extends BaseWidget
                 ->descriptionIcon('heroicon-m-code-bracket-square')
                 ->color('info'),
         ];
+    }
+
+    // Fungsi untuk memeriksa apakah widget ini dapat ditampilkan berdasarkan izin
+    public static function canView(): bool
+    {
+        return Gate::check('view-widget', 'StatsOverviewWidget');
     }
 }

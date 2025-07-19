@@ -4,6 +4,7 @@ namespace App\Filament\Widgets;
 
 use Filament\Widgets\Widget;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class WelcomeWidget extends Widget
 {
@@ -19,5 +20,11 @@ class WelcomeWidget extends Widget
     public function getUserName()
     {
         return Auth::user()->name ?? 'Pengguna';
+    }
+
+    // Fungsi untuk memeriksa apakah widget ini dapat ditampilkan berdasarkan izin
+    public static function canView(): bool
+    {
+        return Gate::check('view-widget', 'WelcomeWidget');
     }
 }
