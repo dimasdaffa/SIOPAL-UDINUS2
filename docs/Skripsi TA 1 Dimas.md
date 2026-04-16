@@ -522,21 +522,7 @@ Tabel pivot `course_software` dan `lab_software` merupakan komponen kunci dalam 
 
 Gambar 2 menunjukkan _Entity Relationship Diagram_ (ERD) yang menggambarkan relasi antar entitas dalam basis data sistem penjadwalan otomatis SIOPAL. ERD ini mencakup entitas-entitas utama beserta tabel pivot yang telah diidentifikasi sebelumnya.
 
-_[Catatan: Diagram ERD di bawah ini ditulis dalam format Mermaid dan perlu dikonversi ke diagram visual menggunakan Draw.io untuk keperluan dokumen akhir skripsi]_
-
-```
-PRODI ||--o{ COURSE : "memiliki"
-PRODI ||--o{ LAB_PRODI_PRIORITY : "diprioritaskan oleh"
-LABORATORIUM ||--o{ LAB_PRODI_PRIORITY : "memprioritaskan"
-LABORATORIUM ||--o{ SCHEDULE : "digunakan oleh"
-LABORATORIUM ||--o{ LAB_SOFTWARE : "memiliki"
-COURSE ||--o{ SCHEDULE : "dijadwalkan sebagai"
-COURSE ||--o{ COURSE_SOFTWARE : "membutuhkan"
-SOFTWARE_DETAIL ||--o{ COURSE_SOFTWARE : "dibutuhkan oleh"
-SOFTWARE_DETAIL ||--o{ LAB_SOFTWARE : "terinstal di"
-TIME_SLOT ||--o{ SCHEDULE : "digunakan oleh"
-LECTURER ||--o{ SCHEDULE : "mengampu"
-```
+![Entity Relationship Diagram Sistem Penjadwalan Otomatis SIOPAL](images/erd_diagram.png)
 
 Gambar 2\. _Entity Relationship Diagram_ Sistem Penjadwalan Otomatis
 
@@ -605,32 +591,7 @@ Tahap _Process Modelling_ menghasilkan diagram-diagram UML (_Unified Modeling La
 
 _Use Case Diagram_ digunakan untuk memetakan interaksi aktor (pengguna) dengan fungsionalitas sistem. Dalam konteks fitur penjadwalan otomatis, aktor utama adalah **Administrator Laboratorium** yang berinteraksi dengan tujuh _use case_ utama.
 
-_[Catatan: Diagram di bawah ini ditulis dalam format Mermaid dan perlu dikonversi ke diagram visual menggunakan Draw.io untuk keperluan dokumen akhir skripsi]_
-
-```mermaid
-flowchart LR
-    Admin["🧑‍💼 Administrator<br/>Laboratorium"]
-
-    UC1["Kelola Data<br/>Laboratorium"]
-    UC2["Kelola Data<br/>Mata Kuliah"]
-    UC3["Konfigurasi Kebutuhan<br/>Software Mata Kuliah"]
-    UC4["Cari Slot Jadwal<br/>Otomatis (Input Satuan)"]
-    UC5["Import Jadwal Massal<br/>via Excel"]
-    UC6["Lihat Tabel Jadwal<br/>(Timetable)"]
-    UC7["Kelola Data<br/>Jadwal (CRUD)"]
-
-    Admin --> UC1
-    Admin --> UC2
-    Admin --> UC3
-    Admin --> UC4
-    Admin --> UC5
-    Admin --> UC6
-    Admin --> UC7
-
-    UC3 -. "<<include>>" .-> UC2
-    UC4 -. "<<include>>" .-> UC7
-    UC5 -. "<<include>>" .-> UC7
-```
+![Use Case Diagram Fitur Penjadwalan Otomatis SIOPAL](images/usecase_diagram.png)
 
 Gambar X\. _Use Case Diagram_ Fitur Penjadwalan Otomatis SIOPAL
 
@@ -648,42 +609,31 @@ Tabel 12a\. Deskripsi _Use Case_
 | UC6 | Lihat Tabel Jadwal               | Administrator melihat visualisasi jadwal dalam format _grid_ per laboratorium per hari dan dapat melakukan _export_ ke Excel                                                                                   |
 | UC7 | Kelola Data Jadwal               | Administrator menambah, mengubah, atau menghapus data jadwal secara manual dengan validasi konflik otomatis                                                                                                    |
 
-**b. _Activity Diagram_ — Penjadwalan Otomatis (Input Satuan)**
+**b. _Class Diagram_**
+
+_Class Diagram_ digunakan untuk menggambarkan struktur statis sistem dengan menampilkan kelas-kelas, atribut, metode, serta relasi antar kelas (Ramdany et al., 2024). Dalam konteks sistem SIOPAL, _Class Diagram_ memodelkan tujuh model Eloquent yang merepresentasikan entitas basis data, serta satu kelas _service_ yang mengenkapsulasi logika bisnis penjadwalan.
+
+![Class Diagram Sistem Penjadwalan Otomatis SIOPAL](images/class_diagram.png)
+
+Gambar X\. _Class Diagram_ Sistem Penjadwalan Otomatis SIOPAL
+
+Berdasarkan Gambar X, kelas-kelas dalam sistem dapat dikelompokkan sebagai berikut:
+
+1. **Kelas Model Eloquent**: Tujuh kelas model (`Laboratorium`, `Course`, `Schedule`, `TimeSlot`, `Prodi`, `SoftwareDetail`, `Lecturer`) merepresentasikan entitas pada basis data. Setiap kelas memiliki atribut yang sesuai dengan kolom tabel dan metode relasi Eloquent (`hasMany()`, `belongsTo()`, `belongsToMany()`) yang mendefinisikan hubungan antar entitas.
+
+2. **Kelas _Service_**: Kelas `SchedulingService` berfungsi sebagai _service layer_ yang mengenkapsulasi seluruh logika _constraint filtering_. Kelas ini memiliki ketergantungan (_dependency_) terhadap kelas `Laboratorium`, `Schedule`, dan `TimeSlot`, yang ditunjukkan oleh garis putus-putus pada diagram. Metode utamanya meliputi:
+    - `getAvailableLabs(course)` — filter lab berdasarkan kapasitas dan _software_
+    - `getAvailableSlots(lab, day, slots)` — filter slot berdasarkan konflik jadwal dan jam operasional
+    - `hasConflict(lab, day, slot, slots)` — validasi ulang konflik sebelum penyimpanan
+    - `getBreakTimes(sks, sesi)` — kalkulasi jam istirahat dinamis
+
+3. **Relasi _Many-to-Many_**: Tiga relasi _many-to-many_ direpresentasikan melalui tabel pivot: `course_software` (antara `Course` dan `SoftwareDetail`), `lab_software` (antara `Laboratorium` dan `SoftwareDetail`), dan `lab_prodi_priority` (antara `Laboratorium` dan `Prodi`).
+
+**c. _Activity Diagram_ — Penjadwalan Otomatis (Input Satuan)**
 
 _Activity Diagram_ berikut menggambarkan alur aktivitas lengkap ketika administrator melakukan penjadwalan otomatis melalui mode input satuan pada halaman _Schedule Wizard_.
 
-```mermaid
-flowchart TD
-    Start(["● Mulai"]) --> A["Buka halaman<br/>Penjadwalan Otomatis"]
-    A --> B["Pilih Program Studi"]
-    B --> C["Pilih Mata Kuliah"]
-    C --> D["Isi Jumlah Siswa,<br/>Kelompok, Sesi Waktu"]
-    D --> E["Klik 'Cari Slot Tersedia'"]
-
-    E --> V1{"Validasi input<br/>lengkap?"}
-    V1 -- "Tidak" --> W1["Tampilkan<br/>notifikasi peringatan"]
-    W1 --> D
-
-    V1 -- "Ya" --> F["STEP 1: Filter lab aktif<br/>dengan kapasitas ≥ jumlah siswa<br/>(Eloquent where)"]
-    F --> G["STEP 2: Filter lab yang memiliki<br/>semua software yang dibutuhkan<br/>(Eloquent whereHas)"]
-    G --> H["STEP 3: Ambil slot yang sudah<br/>terisi, filter slot kosong berturutan<br/>(Eloquent where + PHP loop)"]
-    H --> I["STEP 4: Filter slot<br/>sesuai rentang sesi<br/>(Collection filter)"]
-    I --> J["STEP 5: Eliminasi slot yang<br/>melewati break times<br/>(Collection filter + overlap)"]
-    J --> K["STEP 6: Urutkan hasil —<br/>lab prioritas di atas<br/>(Collection sortByDesc)"]
-
-    K --> R1{"Ada rekomendasi<br/>yang tersedia?"}
-    R1 -- "Tidak" --> W2["Tampilkan notifikasi<br/>'Tidak ada slot tersedia'"]
-    W2 --> End(["● Selesai"])
-
-    R1 -- "Ya" --> L["Tampilkan kartu<br/>rekomendasi per hari"]
-    L --> M["Admin memilih<br/>salah satu kartu"]
-    M --> N{"Double-check:<br/>Masih kosong?"}
-    N -- "Tidak (bentrok)" --> W3["Tampilkan notifikasi<br/>'Slot sudah terisi'"]
-    W3 --> L
-    N -- "Ya" --> O["Simpan jadwal<br/>ke database"]
-    O --> P["Tampilkan notifikasi<br/>'Jadwal berhasil dibuat'"]
-    P --> End
-```
+![Activity Diagram Penjadwalan Otomatis Input Satuan](images/activity_single_input.png)
 
 Gambar X\. _Activity Diagram_ Penjadwalan Otomatis (Input Satuan)
 
@@ -691,43 +641,15 @@ Berdasarkan Gambar X, alur penjadwalan otomatis terbagi menjadi empat fase utama
 
 Perlu diperhatikan bahwa pada fase konfirmasi terdapat mekanisme _double-check_ (node "Masih kosong?") yang berfungsi sebagai pengaman (_safeguard_) terhadap kondisi _race condition_ — yaitu situasi di mana slot yang semula kosong telah terisi oleh pengguna lain di antara waktu pencarian dan waktu konfirmasi.
 
-**c. _Activity Diagram_ — _Import_ Massal via Excel**
+**d. _Activity Diagram_ — _Import_ Massal via Excel**
 
 _Activity Diagram_ berikut menggambarkan alur aktivitas pada mode _import_ massal.
 
-```mermaid
-flowchart TD
-    Start(["● Mulai"]) --> A["Buka halaman<br/>Penjadwalan Otomatis"]
-    A --> B["Klik tombol<br/>'Import Excel'"]
-    B --> C["Unggah berkas Excel"]
-    C --> D["Klik 'Proses'"]
-
-    D --> E["Baca seluruh baris Excel<br/>(first pass)"]
-    E --> F["Expand baris menjadi<br/>entri jadwal individual<br/>(pagi × n + malam × n)"]
-    F --> G["Urutkan berdasarkan<br/>SKS menurun (descending)"]
-
-    G --> H{"Masih ada entri<br/>yang belum diproses?"}
-    H -- "Tidak" --> L["Tampilkan tabel<br/>preview + ringkasan"]
-
-    H -- "Ya" --> I["Ambil entri berikutnya"]
-    I --> J["Cari slot: iterasi<br/>Hari × Slot × Lab<br/>(triple nested loop)"]
-    J --> K1{"Slot ditemukan?"}
-    K1 -- "Ya" --> K2["Tandai slot sebagai<br/>terpakai (in-memory)"]
-    K2 --> K3["Catat hasil: OK/Warning"]
-    K3 --> H
-    K1 -- "Tidak" --> K4["Catat hasil: Error<br/>+ alasan kegagalan"]
-    K4 --> H
-
-    L --> M{"Admin konfirmasi<br/>import?"}
-    M -- "Tidak (Cancel)" --> End(["● Selesai"])
-    M -- "Ya (Confirm)" --> N["Simpan seluruh jadwal<br/>OK + Warning ke database"]
-    N --> O["Tampilkan notifikasi<br/>'Import berhasil'"]
-    O --> End
-```
+![Activity Diagram Import Massal via Excel](images/activity_bulk_import.png)
 
 Gambar X\. _Activity Diagram_ Import Massal via Excel
 
-**d. _Sequence Diagram_ — Interaksi Komponen pada Penjadwalan Otomatis**
+**e. _Sequence Diagram_ — Interaksi Komponen pada Penjadwalan Otomatis**
 
 _Sequence Diagram_ berikut menggambarkan interaksi antar komponen perangkat lunak saat proses penjadwalan otomatis (input satuan) berlangsung. Diagram ini menunjukkan bagaimana _ScheduleWizard_ (lapisan presentasi) berinteraksi dengan _SchedulingService_ (lapisan logika bisnis) dan model-model Eloquent (lapisan akses data).
 
