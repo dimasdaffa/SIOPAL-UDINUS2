@@ -653,59 +653,7 @@ Gambar X\. _Activity Diagram_ Import Massal via Excel
 
 _Sequence Diagram_ berikut menggambarkan interaksi antar komponen perangkat lunak saat proses penjadwalan otomatis (input satuan) berlangsung. Diagram ini menunjukkan bagaimana _ScheduleWizard_ (lapisan presentasi) berinteraksi dengan _SchedulingService_ (lapisan logika bisnis) dan model-model Eloquent (lapisan akses data).
 
-```mermaid
-sequenceDiagram
-    actor Admin as Administrator
-    participant SW as ScheduleWizard<br/>(Filament Page)
-    participant SS as SchedulingService
-    participant Lab as Laboratorium<br/>(Eloquent Model)
-    participant Sch as Schedule<br/>(Eloquent Model)
-    participant TS as TimeSlot<br/>(Eloquent Model)
-    participant DB as MySQL Database
-
-    Admin->>SW: Isi formulir + Klik "Cari Slot Tersedia"
-    SW->>SW: Validasi input (course, jumlah_siswa, sesi)
-
-    Note over SW,DB: STEP 1-2: Database Layer Filtering
-    SW->>Lab: where('is_active', true)<br/>->where('pc_siap', '>=', jumlah_siswa)
-    Lab->>DB: SELECT * FROM laboratoria WHERE ...
-    DB-->>Lab: Daftar lab aktif + kapasitas cukup
-    SW->>Lab: filter() — cek software via Inventory
-    Lab-->>SW: Daftar lab yang memenuhi constraint software
-
-    Note over SW,DB: STEP 3: Slot Availability Check
-    loop Untuk setiap Lab × Hari
-        SW->>SS: getAvailableSlots(lab, day, sks)
-        SS->>Sch: where('laboratorium_id', lab)<br/>->where('day', day)
-        Sch->>DB: SELECT * FROM schedules WHERE ...
-        DB-->>Sch: Jadwal existing di lab+hari
-        SS->>SS: Hitung occupied slot numbers
-        SS->>TS: where('start_time', '>=')<br/>->where('end_time', '<=')
-        TS->>DB: SELECT * FROM time_slots WHERE ...
-        DB-->>TS: Semua slot dalam jam operasional
-        SS->>SS: filter() — slot berturutan kosong
-        SS-->>SW: Slot-slot yang tersedia
-    end
-
-    Note over SW,DB: STEP 4-6: Application Layer Filtering
-    SW->>SW: filter() — slot sesuai rentang sesi
-    SW->>SW: filter() — slot tidak melewati break
-    SW->>SW: sortByDesc() — prioritas lab
-    SW-->>Admin: Tampilkan kartu rekomendasi
-
-    Admin->>SW: Klik kartu rekomendasi
-
-    Note over SW,DB: Double-check + Simpan
-    SW->>SS: hasConflict(lab, day, slot, sks)
-    SS->>Sch: Cek ulang occupied slots
-    Sch->>DB: SELECT * FROM schedules WHERE ...
-    DB-->>Sch: Data terbaru
-    SS-->>SW: false (tidak ada konflik)
-    SW->>Sch: Schedule::create({...})
-    Sch->>DB: INSERT INTO schedules ...
-    DB-->>Sch: Jadwal tersimpan
-    SW-->>Admin: Notifikasi "Jadwal berhasil dibuat"
-```
+![Sequence Diagram Penjadwalan Otomatis Input Satuan](images/sequence_diagram.png)
 
 Gambar X\. _Sequence Diagram_ Penjadwalan Otomatis (Input Satuan)
 
