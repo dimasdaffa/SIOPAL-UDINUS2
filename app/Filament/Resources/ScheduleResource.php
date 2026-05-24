@@ -512,7 +512,27 @@ class ScheduleResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->deselectRecordsAfterCompletion(),
+                    Tables\Actions\BulkAction::make('deleteAll')
+                        ->label('Hapus Semua Jadwal')
+                        ->icon('heroicon-o-trash')
+                        ->color('danger')
+                        ->requiresConfirmation()
+                        ->modalHeading('Hapus Semua Jadwal')
+                        ->modalDescription('Apakah Anda yakin ingin menghapus SELURUH jadwal? Tindakan ini tidak dapat dibatalkan.')
+                        ->modalSubmitActionLabel('Ya, Hapus Semua')
+                        ->action(function () {
+                            $count = Schedule::count();
+                            Schedule::truncate();
+
+                            \Filament\Notifications\Notification::make()
+                                ->title('Semua jadwal berhasil dihapus')
+                                ->body("Total {$count} jadwal telah dihapus.")
+                                ->success()
+                                ->send();
+                        })
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ])
             ->emptyStateHeading('Belum ada jadwal')
