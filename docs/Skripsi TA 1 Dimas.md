@@ -589,25 +589,182 @@ Tahap _Process Modelling_ menghasilkan diagram-diagram UML (_Unified Modeling La
 
 **a. _Use Case Diagram_**
 
-_Use Case Diagram_ digunakan untuk memetakan interaksi aktor (pengguna) dengan fungsionalitas sistem. Dalam konteks fitur penjadwalan otomatis, aktor utama adalah **Administrator Laboratorium** yang berinteraksi dengan tujuh _use case_ utama.
+_Use Case Diagram_ digunakan untuk memetakan interaksi aktor (pengguna) dengan fungsionalitas sistem. Dalam konteks fitur penjadwalan otomatis SIOPAL, aktor utama adalah **Administrator Laboratorium** yang terlebih dahulu harus melakukan **Login** untuk mengakses seluruh fitur sistem. _Use case_ Login menjadi _use case_ sentral yang terhubung dengan tujuh _use case_ fungsional melalui relasi `<<include>>`.
 
 ![Use Case Diagram Fitur Penjadwalan Otomatis SIOPAL](images/usecase_diagram.png)
 
 Gambar X\. _Use Case Diagram_ Fitur Penjadwalan Otomatis SIOPAL
 
-Berdasarkan Gambar X, interaksi aktor dengan sistem dapat dijelaskan sebagai berikut:
+Berdasarkan Gambar X, interaksi aktor dengan sistem dijelaskan secara naratif pada tabel-tabel berikut:
 
-Tabel 12a\. Deskripsi _Use Case_
+Tabel 12a\. _Use Case_ Naratif Fitur Penjadwalan Otomatis SIOPAL
 
-| No  | _Use Case_                       | Deskripsi                                                                                                                                                                                                      |
-| :-: | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| UC1 | Kelola Data Laboratorium         | Administrator menambah, mengubah, atau menghapus data laboratorium, termasuk konfigurasi status aktif, jam operasional, dan prioritas program studi                                                            |
-| UC2 | Kelola Data Mata Kuliah          | Administrator mengelola data mata kuliah praktikum beserta atribut SKS dan jumlah mahasiswa                                                                                                                    |
-| UC3 | Konfigurasi Kebutuhan _Software_ | Administrator menetapkan _software_ yang dibutuhkan oleh setiap mata kuliah melalui relasi _many-to-many_. _Use case_ ini merupakan bagian dari UC2 (`<<include>>`)                                            |
-| UC4 | Cari Slot Jadwal Otomatis        | Administrator memasukkan parameter penjadwalan (prodi, matkul, jumlah siswa, sesi) dan sistem menampilkan rekomendasi slot yang valid. Pemilihan rekomendasi menghasilkan data jadwal baru (`<<include>>` UC7) |
-| UC5 | Import Jadwal Massal             | Administrator mengunggah berkas Excel dan sistem secara otomatis menempatkan jadwal ke slot yang tersedia. Hasil _import_ disimpan sebagai data jadwal (`<<include>>` UC7)                                     |
-| UC6 | Lihat Tabel Jadwal               | Administrator melihat visualisasi jadwal dalam format _grid_ per laboratorium per hari dan dapat melakukan _export_ ke Excel                                                                                   |
-| UC7 | Kelola Data Jadwal               | Administrator menambah, mengubah, atau menghapus data jadwal secara manual dengan validasi konflik otomatis                                                                                                    |
+**1. LOGIN**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Melakukan _login_ ke dalam sistem SIOPAL |
+| **Deskripsi** | Sistem memungkinkan Administrator Laboratorium untuk masuk dan mengakses _dashboard_ serta seluruh fitur penjadwalan otomatis pada sistem SIOPAL. Autentikasi dilakukan menggunakan _email_ dan _password_ yang divalidasi terhadap basis data melalui Laravel Filament Authentication. |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah mengakses halaman _login_ SIOPAL (`/admin/login`). |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor memasukkan _email_ dan _password_, lalu menekan tombol "Masuk". | 2. Sistem memvalidasi kesesuaian _email_ dan _password_ pada tabel `users` di basis data. |
+| | 3. Sistem menyimpan data sesi pengguna (_session_) termasuk identitas dan hak akses. |
+| | 4. Sistem mengarahkan aktor ke halaman _Dashboard_ (`/admin`). |
+
+| **Kondisi Akhir** | Aktor berhasil masuk dan dapat mengakses _dashboard_ serta seluruh fitur sistem sesuai hak aksesnya. |
+| :--- | :--- |
+
+---
+
+**2. KELOLA DATA LABORATORIUM**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Mengelola data laboratorium komputer beserta konfigurasi penjadwalan |
+| **Deskripsi** | Sistem memungkinkan Administrator untuk menambah, mengubah, dan menghapus data laboratorium. Pengelolaan mencakup informasi dasar (ruang, kapasitas, jumlah PC), pengaturan penjadwalan (status aktif, jam operasional), dan prioritas program studi. Data ini menjadi parameter _constraint_ utama dalam algoritma penjadwalan otomatis. |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka menu "Master Data" → "Data Laboratorium". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor melihat daftar laboratorium yang tersedia. | 2. Sistem menampilkan tabel laboratorium: Ruang, Kategori, Kapasitas, beserta tombol aksi (Lihat, Ubah, Hapus). |
+| 3. Aktor menekan tombol "Tambah Laboratorium". | 4. Sistem menampilkan formulir tiga seksi: "Informasi Dasar" (ruang, kapasitas, PC siap, PC _backup_), "Pengaturan Penjadwalan" (_toggle_ aktif, jam operasional mulai/selesai), dan "Prioritas Program Studi" (_multi-select_). |
+| 5. Aktor mengisi formulir dan menekan "Simpan". | 6. Sistem memvalidasi input dan menyimpan data laboratorium ke tabel `laboratoria` beserta relasi prioritas ke tabel `lab_prodi_priority`. |
+| | 7. Sistem mengarahkan aktor ke halaman daftar laboratorium dengan notifikasi berhasil. |
+
+| **Kondisi Akhir** | Data laboratorium berhasil ditambah, diubah, atau dihapus. Perubahan konfigurasi akan berpengaruh langsung pada hasil algoritma penjadwalan otomatis. |
+| :--- | :--- |
+
+---
+
+**3. KELOLA DATA MATA KULIAH**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Mengelola data mata kuliah praktikum beserta kebutuhan _software_ |
+| **Deskripsi** | Sistem memungkinkan Administrator untuk menambah, mengubah, dan menghapus data mata kuliah praktikum. Pengelolaan mencakup informasi mata kuliah (kode, nama, SKS, jumlah mahasiswa, program studi) serta konfigurasi kebutuhan _software_ melalui relasi _many-to-many_ (`<<extend>>` Konfigurasi Kebutuhan _Software_). Data kebutuhan _software_ disimpan pada tabel pivot `course_software` dan menjadi parameter kunci pada Step 2 algoritma _Eloquent Query Filtering_. |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka menu "Master Data" → "Data Mata Kuliah". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor melihat daftar mata kuliah. | 2. Sistem menampilkan tabel mata kuliah: Kode, Nama, Program Studi, SKS, Jumlah Mahasiswa, beserta tombol aksi. |
+| 3. Aktor menekan "Tambah Mata Kuliah" atau "Ubah" pada data tertentu. | 4. Sistem menampilkan formulir: Kode Mata Kuliah, Nama, Program Studi (_dropdown_), SKS, Jumlah Mahasiswa, dan _multi-select_ Kebutuhan _Software_. |
+| 5. Aktor mengisi formulir, termasuk memilih _software_ yang dibutuhkan, lalu menekan "Simpan". | 6. Sistem menyimpan data mata kuliah ke tabel `courses` dan menyinkronkan kebutuhan _software_ ke tabel pivot `course_software`. |
+| | 7. Sistem mengarahkan aktor ke halaman daftar mata kuliah dengan notifikasi berhasil. |
+
+| **Kondisi Akhir** | Data mata kuliah beserta kebutuhan _software_ berhasil tersimpan. Data ini akan digunakan sebagai parameter _constraint_ dalam proses penjadwalan otomatis. |
+| :--- | :--- |
+
+---
+
+**4. CARI SLOT JADWAL OTOMATIS (INPUT SATUAN)**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Mencari dan menetapkan slot jadwal secara otomatis untuk satu mata kuliah |
+| **Deskripsi** | Sistem memungkinkan Administrator untuk memasukkan parameter penjadwalan (program studi, mata kuliah, dosen, jumlah siswa, kelompok, sesi waktu) melalui formulir interaktif. Sistem kemudian menjalankan enam tahap _Eloquent Query Filtering_ untuk menemukan slot jadwal yang valid dan menampilkan hasil dalam bentuk kartu rekomendasi per hari. Pemilihan kartu menghasilkan data jadwal baru yang tersimpan di basis data (`<<include>>` Kelola Data Jadwal). |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka menu "Penjadwalan" → "Penjadwalan Otomatis". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor memilih Program Studi dari _dropdown_. | 2. Sistem memperbarui daftar Mata Kuliah secara reaktif, menampilkan hanya mata kuliah milik program studi yang dipilih (Livewire `live()`). |
+| 3. Aktor memilih Mata Kuliah, Dosen Pengampu, mengisi Jumlah Siswa, Kode Kelompok, dan Sesi Waktu. | 4. Sistem secara otomatis menggabungkan kode prodi dengan kode kelompok (misal "A11.0001") dan menentukan durasi berdasarkan SKS mata kuliah. |
+| 5. Aktor menekan tombol "Cari Slot Tersedia". | 6. Sistem menjalankan enam tahap _Eloquent Query Filtering_: (1) Filter lab aktif + kapasitas, (2) Filter ketersediaan _software_, (3) Deteksi konflik slot, (4) Filter sesi waktu, (5) Eliminasi _break times_, (6) Urutkan prioritas lab. |
+| | 7. Sistem menampilkan hasil rekomendasi dalam struktur tab per hari (Senin–Jumat). Setiap tab berisi kartu-kartu rekomendasi dengan informasi: nama lab, kapasitas, rentang waktu, dan indikator prioritas (⭐). |
+| 8. Aktor memilih salah satu kartu rekomendasi. | 9. Sistem melakukan _double-check_ konflik jadwal untuk mengantisipasi _race condition_. |
+| | 10. Jika tidak ada konflik, sistem menyimpan jadwal ke tabel `schedules` dan menampilkan notifikasi "Jadwal berhasil dibuat". |
+
+| **Kondisi Akhir** | Jadwal baru berhasil tersimpan di basis data dengan seluruh _constraint_ terpenuhi (anti-bentrok, ketersediaan _software_, jam operasional, dan _break times_). |
+| :--- | :--- |
+
+---
+
+**5. IMPORT JADWAL MASSAL VIA EXCEL**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Menempatkan jadwal secara massal dari berkas Excel |
+| **Deskripsi** | Sistem memungkinkan Administrator untuk mengunggah berkas Excel berisi daftar mata kuliah beserta jumlah kelompok per sesi. Sistem menjalankan kelas `BulkScheduleImport` yang membaca seluruh baris, mengekspansi menjadi entri individual, mengurutkan berdasarkan SKS menurun, dan menempatkan setiap jadwal menggunakan algoritma _triple nested loop_ (Hari × Slot × Lab). Hasil ditampilkan dalam tabel pratinjau sebelum disimpan ke basis data (`<<include>>` Kelola Data Jadwal). |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka halaman "Penjadwalan Otomatis", lalu menekan tombol "_Import_ Excel". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor mengunggah berkas Excel dan menekan tombol "Proses". | 2. Sistem membaca seluruh baris Excel (_first pass_), mengekspansi setiap baris menjadi entri jadwal individual (pagi × n + malam × n), dan mengurutkan berdasarkan SKS menurun. |
+| | 3. Untuk setiap entri, sistem mencari slot melalui iterasi Hari × Slot × Lab. Slot yang ditemukan ditandai sebagai terpakai secara _in-memory_ untuk mencegah konflik antar entri. |
+| | 4. Sistem menampilkan tabel pratinjau dengan status per baris: **OK** (hijau), **Warning** (kuning — data tidak konsisten), atau **Error** (merah — tidak ada slot tersedia). Ringkasan statistik ditampilkan di bagian atas. |
+| 5. Aktor meninjau tabel pratinjau dan menekan "Confirm Import". | 6. Sistem menyimpan seluruh jadwal berstatus OK dan Warning ke tabel `schedules`. Jadwal berstatus Error diabaikan. |
+| | 7. Sistem menampilkan notifikasi "_Import_ berhasil" beserta jumlah jadwal yang tersimpan. |
+
+| **Kondisi Akhir** | Jadwal massal berhasil ditempatkan dan tersimpan di basis data. Administrator dapat melihat hasilnya di halaman Tabel Jadwal atau Data Jadwal. |
+| :--- | :--- |
+
+---
+
+**6. LIHAT TABEL JADWAL (_TIMETABLE_)**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Melihat visualisasi jadwal dalam format _grid_ per laboratorium |
+| **Deskripsi** | Sistem menampilkan jadwal praktikum dalam format tabel _grid_ dengan sumbu horizontal berupa hari (Senin–Jumat) dan sumbu vertikal berupa slot waktu (07:00–21:00). Administrator dapat memilih laboratorium melalui _dropdown_ dan melakukan _export_ jadwal ke format Excel. |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka menu "Penjadwalan" → "Tabel Jadwal". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor memilih laboratorium dari _dropdown_. | 2. Sistem menampilkan tabel _grid_ jadwal untuk laboratorium yang dipilih. Slot yang terisi ditandai dengan warna dan menampilkan nama mata kuliah beserta kode kelompok. |
+| 3. Aktor menekan tombol "_Export_ Excel". | 4. Sistem menghasilkan berkas Excel yang berisi jadwal seluruh laboratorium (satu _sheet_ per laboratorium) dan mengunduhnya ke perangkat aktor. |
+
+| **Kondisi Akhir** | Aktor dapat melihat visualisasi jadwal per laboratorium dan mengunduh jadwal dalam format Excel. |
+| :--- | :--- |
+
+---
+
+**7. KELOLA DATA JADWAL (CRUD)**
+
+| Komponen | Keterangan |
+| :--- | :--- |
+| **Tujuan** | Mengelola data jadwal secara manual dengan validasi konflik otomatis |
+| **Deskripsi** | Sistem memungkinkan Administrator untuk menambah, melihat, mengubah, dan menghapus data jadwal secara manual. Formulir tambah/ubah terintegrasi dengan `SchedulingService` — ketika Administrator memilih laboratorium dan hari, sistem secara otomatis menampilkan hanya slot waktu yang tersedia sehingga mencegah konflik jadwal. Halaman ini juga menyediakan _bulk actions_ untuk menghapus beberapa atau seluruh jadwal sekaligus. |
+| **Aktor** | Administrator Laboratorium |
+
+| **Skenario Utama** | |
+| :--- | :--- |
+| **Kondisi Awal** | Aktor sudah _login_ dan membuka menu "Penjadwalan" → "Jadwal Kuliah". |
+
+| Aksi Aktor | Reaksi Sistem |
+| :--- | :--- |
+| 1. Aktor melihat daftar seluruh jadwal. | 2. Sistem menampilkan tabel jadwal: Mata Kuliah, Kelompok, Dosen, Laboratorium, Hari, Waktu, Siswa, Sesi, SKS, beserta tombol aksi (Lihat, Ubah, Hapus) dan filter (Laboratorium, Hari, Mata Kuliah, Dosen). |
+| 3. Aktor menekan "Tambah Jadwal". | 4. Sistem menampilkan formulir: Program Studi, Mata Kuliah (_reactive dropdown_), Dosen, Kelompok, Jumlah Siswa, Sesi, Laboratorium, Hari, dan Jam Mulai. |
+| 5. Aktor memilih Laboratorium dan Hari. | 6. Sistem secara otomatis memfilter dan menampilkan hanya slot waktu yang tersedia (tidak bertabrakan dengan jadwal _existing_) pada _dropdown_ Jam Mulai, beserta informasi jumlah slot tersedia. |
+| 7. Aktor memilih Jam Mulai dan menekan "Simpan". | 8. Sistem memvalidasi ulang konflik jadwal. Jika valid, sistem menyimpan jadwal ke tabel `schedules` dengan kalkulasi otomatis `start_time`, `end_time`, dan `duration_slots`. |
+| | 9. Sistem mengarahkan aktor ke halaman daftar jadwal dengan notifikasi berhasil. |
+
+| **Kondisi Akhir** | Data jadwal berhasil ditambah, diubah, atau dihapus dengan jaminan tidak terjadi konflik jadwal. |
+| :--- | :--- |
 
 **b. _Class Diagram_**
 
