@@ -25,6 +25,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
+            CourseSeeder::class,
+            CourseSoftwareSeeder::class,
+            LabSoftwareSeeder::class,
+            ScheduleSeeder::class,
+            SoftwareDetailSeeder::class,
         ]);
 
         $tahunSekarang = date('Y');
