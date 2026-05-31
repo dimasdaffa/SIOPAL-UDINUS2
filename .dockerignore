@@ -1,0 +1,29 @@
+# Git and local configs
+.git
+.gitignore
+.gitattributes
+.editorconfig
+
+# Composer & Node dependencies
+vendor/
+node_modules/
+
+# Laravel storage, bootstrap & env
+.env
+.env.backup
+storage/framework/cache/data/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/logs/*
+
+# Docker configurations
+docker/
+
+# Development & test artifacts
+tests/
+phpunit.xml
+.phpunit.cache/
+npm-debug.log
+yarn-error.log
+.idea/
+.vscode/
