@@ -6,7 +6,7 @@ services:
     container_name: siopal_app
     restart: unless-stopped
     ports:
-      - "${APP_PORT:-8080}:80"
+      - "9000:9000"
     volumes:
       - ..:/var/www/html
     environment:

@@ -50,5 +50,5 @@ else
     php artisan view:clear
 fi
 
-echo "Starting Supervisor to manage PHP-FPM and Nginx..."
-exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+echo "Starting PHP-FPM..."
+exec php-fpm

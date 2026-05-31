@@ -14,8 +14,6 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip \
     unzip \
-    nginx \
-    supervisor \
     && rm -rf /var/lib/apt/lists/*
 
 # Configure and install PHP extensions
@@ -38,8 +36,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy configuration files
-COPY docker/nginx.conf /etc/nginx/sites-available/default
-COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Ensure entrypoint is executable
@@ -52,8 +48,8 @@ COPY . /var/www/html
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 80
-EXPOSE 80
+# Expose port 9000 (PHP-FPM)
+EXPOSE 9000
 
 # Define Entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

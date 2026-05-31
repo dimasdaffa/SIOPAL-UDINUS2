@@ -16,8 +16,7 @@ storage/framework/sessions/*
 storage/framework/views/*
 storage/logs/*
 
-# Docker configurations
-docker/
+# Docker configurations (only ignore temporary/data docker files if any)
 
 # Development & test artifacts
 tests/
