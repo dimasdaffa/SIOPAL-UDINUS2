@@ -25,6 +25,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
+            // Master data (harus sebelum Course & LabSoftware)
+            KlasifikasiLabSeeder::class,
+            LaboratoriaSeeder::class,
+            ProdiSeeder::class,
+            LecturerSeeder::class,
+            // Penjadwalan
             CourseSeeder::class,
             CourseSoftwareSeeder::class,
             LabSoftwareSeeder::class,
