@@ -31,12 +31,12 @@ class DatabaseSeeder extends Seeder
             ProdiSeeder::class,
             LecturerSeeder::class,
             LabProdiPrioritySeeder::class,
-            // Penjadwalan
+            // Software & Penjadwalan
+            SoftwareDetailSeeder::class,   // harus sebelum CourseSoftware & LabSoftware
             CourseSeeder::class,
             CourseSoftwareSeeder::class,
             LabSoftwareSeeder::class,
             ScheduleSeeder::class,
-            SoftwareDetailSeeder::class,
         ]);
 
         $tahunSekarang = date('Y');
