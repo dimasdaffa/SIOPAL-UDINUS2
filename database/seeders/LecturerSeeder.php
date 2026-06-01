@@ -10,15 +10,19 @@ class LecturerSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * Data dosen dummy untuk keperluan penjadwalan.
-     * Nama-nama ini adalah contoh fiktif representatif untuk
-     * tiap program studi di UDINUS.
+     * Data dosen sesuai siopalfull.sql (3 dosen asli).
+     * Ditambahkan beberapa dosen dummy untuk kelengkapan penjadwalan.
      */
     public function run(): void
     {
         $lecturers = [
-            // Teknik Informatika & Sistem Informasi
-            ['name' => 'Dr. Ahmad Zulfikar, S.Kom., M.Cs.'],
+            // Dosen asli dari SQL
+            ['name' => 'Norenzo, S. Kom'],
+            ['name' => 'DONY, M.KOM'],
+            ['name' => 'NURBAGUS, M.KOM'],
+
+            // Dosen dummy tambahan (untuk kebutuhan penjadwalan semua prodi)
+            ['name' => 'Ahmad Zulfikar, S.Kom., M.Cs.'],
             ['name' => 'Budi Santoso, S.Kom., M.Cs.'],
             ['name' => 'Candra Wijaya, S.T., M.Kom.'],
             ['name' => 'Dewi Lestari, S.Kom., M.T.'],
@@ -28,24 +32,12 @@ class LecturerSeeder extends Seeder
             ['name' => 'Hendra Kusuma, S.Kom., M.Cs.'],
             ['name' => 'Indah Permatasari, S.Kom., M.T.'],
             ['name' => 'Joko Supriyanto, S.Kom., M.Cs.'],
-            ['name' => 'Kurniawan Rahmat, S.Kom., M.Kom.'],
-            ['name' => 'Lina Fitria, S.Kom., M.Cs.'],
-            ['name' => 'Muhammad Rizky, S.T., M.Kom.'],
-            ['name' => 'Novia Andriani, S.Kom., M.Cs.'],
-            // DKV & Animasi & Multimedia
             ['name' => 'Oktavian Darmawan, S.Sn., M.Ds.'],
             ['name' => 'Putri Rahayu, S.Sn., M.Ds.'],
             ['name' => 'Qori Hidayat, S.Sn., M.Sn.'],
             ['name' => 'Rizal Firmansyah, S.Sn., M.Ds.'],
-            ['name' => 'Sari Dewi, S.Sn., M.Sn.'],
-            // Ilmu Komunikasi & FTV
             ['name' => 'Tri Wibowo, S.Sos., M.Si.'],
-            ['name' => 'Umi Kalsum, S.Sos., M.Si.'],
             ['name' => 'Vino Prasetya, S.Sn., M.Sn.'],
-            // DTI (D3)
-            ['name' => 'Wahyu Setiawan, S.Kom., M.Kom.'],
-            ['name' => 'Yuliana Kartika, S.Kom., M.Cs.'],
-            ['name' => 'Zainudin Arif, S.Kom., M.Kom.'],
         ];
 
         foreach ($lecturers as $lecturer) {

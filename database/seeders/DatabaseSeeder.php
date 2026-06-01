@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             LaboratoriaSeeder::class,
             ProdiSeeder::class,
             LecturerSeeder::class,
+            LabProdiPrioritySeeder::class,
             // Penjadwalan
             CourseSeeder::class,
             CourseSoftwareSeeder::class,
