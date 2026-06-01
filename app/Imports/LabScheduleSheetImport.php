@@ -17,6 +17,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 class LabScheduleSheetImport implements ToCollection, WithTitle
 {
     protected Laboratorium $lab;
+    protected ?int $academicPeriodId;
     protected bool $previewMode;
     protected array $results = [];
     protected array $errors = [];
@@ -24,10 +25,11 @@ class LabScheduleSheetImport implements ToCollection, WithTitle
     // Row offset for data (after header rows)
     protected int $headerRows = 4;
 
-    public function __construct(Laboratorium $lab, bool $previewMode = true)
+    public function __construct(Laboratorium $lab, bool $previewMode = true, ?int $academicPeriodId = null)
     {
         $this->lab = $lab;
         $this->previewMode = $previewMode;
+        $this->academicPeriodId = $academicPeriodId ?? \App\Models\AcademicPeriod::getActiveId();
     }
 
     public function title(): string
@@ -355,6 +357,9 @@ class LabScheduleSheetImport implements ToCollection, WithTitle
 
         $existingSchedules = Schedule::where('laboratorium_id', $this->lab->id)
             ->where('day', $result['day'])
+            ->when($this->academicPeriodId, function ($query) {
+                $query->where('academic_period_id', $this->academicPeriodId);
+            })
             ->get();
 
         foreach ($existingSchedules as $schedule) {
@@ -404,6 +409,7 @@ class LabScheduleSheetImport implements ToCollection, WithTitle
             // Create schedule
             if ($result['course_id'] && $result['start_time']) {
                 Schedule::create([
+                    'academic_period_id' => $this->academicPeriodId,
                     'course_id' => $result['course_id'],
                     'lecturer_id' => $lecturerId,
                     'laboratorium_id' => $this->lab->id,

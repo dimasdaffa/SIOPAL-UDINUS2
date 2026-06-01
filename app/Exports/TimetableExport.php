@@ -12,6 +12,13 @@ class TimetableExport implements WithMultipleSheets
 {
     use Exportable;
 
+    protected ?int $academicPeriodId;
+
+    public function __construct(?int $academicPeriodId = null)
+    {
+        $this->academicPeriodId = $academicPeriodId ?? \App\Models\AcademicPeriod::getActiveId();
+    }
+
     public function sheets(): array
     {
         $sheets = [];
@@ -22,7 +29,7 @@ class TimetableExport implements WithMultipleSheets
             ->get();
 
         foreach ($labs as $lab) {
-            $sheets[] = new LabScheduleSheet($lab);
+            $sheets[] = new LabScheduleSheet($lab, $this->academicPeriodId);
         }
 
         return $sheets;

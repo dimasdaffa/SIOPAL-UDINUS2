@@ -102,6 +102,14 @@ class AdminPanelProvider extends PanelProvider
                 // PENJADWALAN - tampilkan untuk semua yang memiliki izin terkait penjadwalan
                 $penjadwalanItems = [];
 
+                // Tahun Ajaran
+                if ($user->hasRole('super_admin') || $user->can('view_any_academic::period')) {
+                    $penjadwalanItems[] = NavigationItem::make('Tahun Ajaran')
+                        ->icon('heroicon-o-wrench-screwdriver')
+                        ->url(\App\Filament\Resources\AcademicPeriodResource::getUrl())
+                        ->isActiveWhen(fn() => request()->routeIs(\App\Filament\Resources\AcademicPeriodResource::getRouteBaseName() . '.*'));
+                }
+
                 // Program Studi
                 if ($user->hasRole('super_admin') || $user->can('view-navigation-item', 'prodi')) {
                     $penjadwalanItems[] = NavigationItem::make('Program Studi')

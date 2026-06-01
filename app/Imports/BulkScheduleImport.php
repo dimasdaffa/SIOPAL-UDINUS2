@@ -388,8 +388,11 @@ class BulkScheduleImport implements ToCollection, WithHeadingRow
      */
     private function getOccupiedSlotNumbersFromDB(int $labId, string $day): array
     {
+        $activePeriodId = \App\Models\AcademicPeriod::getActiveId();
+
         $schedules = Schedule::where('laboratorium_id', $labId)
             ->where('day', $day)
+            ->when($activePeriodId, fn($q) => $q->where('academic_period_id', $activePeriodId))
             ->with('timeSlot')
             ->get();
 

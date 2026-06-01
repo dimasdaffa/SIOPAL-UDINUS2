@@ -12,33 +12,47 @@ class ListSchedules extends ListRecords
 {
     protected static string $resource = ScheduleResource::class;
 
+    public function getSubheading(): ?string
+    {
+        $activePeriod = \App\Models\AcademicPeriod::getActive();
+        if ($activePeriod) {
+            return "Periode Aktif Saat Ini: " . $activePeriod->label;
+        }
+        return "Belum ada periode aktif. Harap atur periode aktif di menu Tahun Ajaran.";
+    }
+
     protected function getHeaderActions(): array
     {
         return [
             Actions\CreateAction::make()
                 ->label('Tambah Jadwal'),
             Actions\Action::make('deleteAll')
-                ->label('Hapus Semua Jadwal')
+                ->label('Hapus Jadwal Semester Ini')
                 ->icon('heroicon-o-trash')
                 ->color('danger')
                 ->requiresConfirmation()
-                ->modalHeading('Hapus Semua Jadwal')
+                ->modalHeading('Hapus Jadwal Semester Ini')
                 ->modalDescription(function () {
-                    $count = Schedule::count();
-                    return "Anda akan menghapus {$count} jadwal. Tindakan ini tidak dapat dibatalkan. Lanjutkan?";
+                    $activePeriod = \App\Models\AcademicPeriod::getActive();
+                    $label = $activePeriod ? $activePeriod->label : 'aktif';
+                    $count = Schedule::where('academic_period_id', $activePeriod?->id)->count();
+                    return "Anda akan menghapus {$count} jadwal pada periode \"{$label}\". Tindakan ini tidak dapat dibatalkan. Lanjutkan?";
                 })
-                ->modalSubmitActionLabel('Ya, Hapus Semua')
+                ->modalSubmitActionLabel('Ya, Hapus')
                 ->action(function () {
-                    $count = Schedule::count();
-                    Schedule::truncate();
+                    $activePeriodId = \App\Models\AcademicPeriod::getActiveId();
+                    if ($activePeriodId) {
+                        $count = Schedule::where('academic_period_id', $activePeriodId)->count();
+                        Schedule::where('academic_period_id', $activePeriodId)->delete();
 
-                    Notification::make()
-                        ->title('Semua jadwal berhasil dihapus')
-                        ->body("Total {$count} jadwal telah dihapus.")
-                        ->success()
-                        ->send();
+                        Notification::make()
+                            ->title('Jadwal periode aktif berhasil dihapus')
+                            ->body("Total {$count} jadwal pada periode aktif telah dihapus.")
+                            ->success()
+                            ->send();
+                    }
                 })
-                ->visible(fn () => Schedule::count() > 0),
+                ->visible(fn () => Schedule::where('academic_period_id', \App\Models\AcademicPeriod::getActiveId())->count() > 0),
         ];
     }
 }

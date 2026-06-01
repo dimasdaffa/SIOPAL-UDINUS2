@@ -25,6 +25,10 @@ class CreateSchedule extends CreateRecord
 
     protected function syncTimeSlotData(array $data): array
     {
+        if (empty($data['academic_period_id'])) {
+            $data['academic_period_id'] = \App\Models\AcademicPeriod::getActiveId();
+        }
+
         if (!empty($data['time_slot_id']) && !empty($data['course_id'])) {
             $slot = TimeSlot::find($data['time_slot_id']);
             $course = Course::find($data['course_id']);

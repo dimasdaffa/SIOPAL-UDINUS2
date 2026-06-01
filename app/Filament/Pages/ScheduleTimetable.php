@@ -36,6 +36,7 @@ class ScheduleTimetable extends Page implements HasActions
     protected static ?string $title = 'Timetable Visual';
 
     public ?int $selectedLabId = null;
+    public ?int $selectedAcademicPeriodId = null;
     public array $schedulesByDay = [];
 
     // Import state
@@ -46,6 +47,7 @@ class ScheduleTimetable extends Page implements HasActions
 
     public function mount(): void
     {
+        $this->selectedAcademicPeriodId = \App\Models\AcademicPeriod::getActiveId();
         $firstLab = Laboratorium::where('is_active', true)->first();
         if ($firstLab) {
             $this->selectedLabId = $firstLab->id;
@@ -54,6 +56,11 @@ class ScheduleTimetable extends Page implements HasActions
     }
 
     public function updatedSelectedLabId(): void
+    {
+        $this->loadSchedules();
+    }
+
+    public function updatedSelectedAcademicPeriodId(): void
     {
         $this->loadSchedules();
     }
@@ -110,6 +117,9 @@ class ScheduleTimetable extends Page implements HasActions
 
         $schedules = Schedule::with(['course', 'lecturer'])
             ->where('laboratorium_id', $this->selectedLabId)
+            ->when($this->selectedAcademicPeriodId, function ($query) {
+                $query->where('academic_period_id', $this->selectedAcademicPeriodId);
+            })
             ->orderBy('start_time')
             ->get();
 
@@ -130,8 +140,10 @@ class ScheduleTimetable extends Page implements HasActions
             ->icon('heroicon-o-arrow-down-tray')
             ->color('success')
             ->action(function () {
-                $filename = 'Jadwal_Laboratorium_' . date('Y-m-d') . '.xlsx';
-                return Excel::download(new TimetableExport(), $filename);
+                $period = \App\Models\AcademicPeriod::find($this->selectedAcademicPeriodId);
+                $periodLabel = $period ? str_replace('/', '-', $period->label) : 'Aktif';
+                $filename = 'Jadwal_Laboratorium_' . $periodLabel . '_' . date('Y-m-d') . '.xlsx';
+                return Excel::download(new TimetableExport($this->selectedAcademicPeriodId), $filename);
             });
     }
 
@@ -191,7 +203,7 @@ class ScheduleTimetable extends Page implements HasActions
             }
 
             try {
-                $import = new LabScheduleSheetImport($lab, true);
+                $import = new LabScheduleSheetImport($lab, true, $this->selectedAcademicPeriodId);
 
                 // Read only this specific sheet
                 $worksheet = $spreadsheet->getSheet($sheetIndex);
@@ -298,6 +310,7 @@ class ScheduleTimetable extends Page implements HasActions
                 $exists = Schedule::where('laboratorium_id', $lab->id)
                     ->where('day', $result['day'])
                     ->where('start_time', $result['start_time'])
+                    ->where('academic_period_id', $this->selectedAcademicPeriodId)
                     ->exists();
 
                 if ($exists) {
@@ -324,6 +337,7 @@ class ScheduleTimetable extends Page implements HasActions
                     ->first();
 
                 Schedule::create([
+                    'academic_period_id' => $this->selectedAcademicPeriodId ?? \App\Models\AcademicPeriod::getActiveId(),
                     'course_id' => $courseId,
                     'lecturer_id' => $lecturerId,
                     'laboratorium_id' => $lab->id,

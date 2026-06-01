@@ -379,6 +379,9 @@ class ScheduleResource extends Resource
                     ])
                     ->columns(3),
 
+                Forms\Components\Hidden::make('academic_period_id')
+                    ->default(fn() => \App\Models\AcademicPeriod::getActiveId()),
+
                 // Hidden fields untuk backward compatibility
                 Forms\Components\Hidden::make('duration_slots')
                     ->default(fn(Get $get) => Course::find($get('course_id'))?->sks ?? 1),
@@ -392,6 +395,13 @@ class ScheduleResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('academicPeriod.label')
+                    ->label('Periode')
+                    ->badge()
+                    ->color('gray')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
                 Tables\Columns\TextColumn::make('course.name')
                     ->label('Mata Kuliah')
                     ->searchable()
@@ -477,6 +487,11 @@ class ScheduleResource extends Resource
             ])
             ->defaultSort('day')
             ->filters([
+                Tables\Filters\SelectFilter::make('academic_period_id')
+                    ->label('Periode Akademik')
+                    ->options(fn () => \App\Models\AcademicPeriod::all()->pluck('full_label', 'id')->toArray())
+                    ->default(fn () => \App\Models\AcademicPeriod::getActiveId()),
+
                 Tables\Filters\SelectFilter::make('laboratorium_id')
                     ->label('Laboratorium')
                     ->relationship('laboratorium', 'ruang')
@@ -515,22 +530,30 @@ class ScheduleResource extends Resource
                     Tables\Actions\DeleteBulkAction::make()
                         ->deselectRecordsAfterCompletion(),
                     Tables\Actions\BulkAction::make('deleteAll')
-                        ->label('Hapus Semua Jadwal')
+                        ->label('Hapus Jadwal Semester Ini')
                         ->icon('heroicon-o-trash')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->modalHeading('Hapus Semua Jadwal')
-                        ->modalDescription('Apakah Anda yakin ingin menghapus SELURUH jadwal? Tindakan ini tidak dapat dibatalkan.')
-                        ->modalSubmitActionLabel('Ya, Hapus Semua')
+                        ->modalHeading('Hapus Jadwal Semester Ini')
+                        ->modalDescription(function () {
+                            $activePeriod = \App\Models\AcademicPeriod::getActive();
+                            $label = $activePeriod ? $activePeriod->label : 'aktif';
+                            $count = Schedule::where('academic_period_id', $activePeriod?->id)->count();
+                            return "Apakah Anda yakin ingin menghapus {$count} jadwal pada periode \"{$label}\"? Tindakan ini tidak dapat dibatalkan.";
+                        })
+                        ->modalSubmitActionLabel('Ya, Hapus')
                         ->action(function () {
-                            $count = Schedule::count();
-                            Schedule::truncate();
+                            $activePeriodId = \App\Models\AcademicPeriod::getActiveId();
+                            if ($activePeriodId) {
+                                $count = Schedule::where('academic_period_id', $activePeriodId)->count();
+                                Schedule::where('academic_period_id', $activePeriodId)->delete();
 
-                            \Filament\Notifications\Notification::make()
-                                ->title('Semua jadwal berhasil dihapus')
-                                ->body("Total {$count} jadwal telah dihapus.")
-                                ->success()
-                                ->send();
+                                \Filament\Notifications\Notification::make()
+                                    ->title('Jadwal periode aktif berhasil dihapus')
+                                    ->body("Total {$count} jadwal pada periode aktif telah dihapus.")
+                                    ->success()
+                                    ->send();
+                            }
                         })
                         ->deselectRecordsAfterCompletion(),
                 ]),
@@ -571,6 +594,10 @@ class ScheduleResource extends Resource
 
     protected static function syncTimeSlotData(array $data): array
     {
+        if (empty($data['academic_period_id'])) {
+            $data['academic_period_id'] = \App\Models\AcademicPeriod::getActiveId();
+        }
+
         if (!empty($data['time_slot_id']) && !empty($data['course_id'])) {
             $slot = TimeSlot::find($data['time_slot_id']);
             $course = Course::find($data['course_id']);

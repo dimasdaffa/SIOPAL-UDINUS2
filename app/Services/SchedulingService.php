@@ -177,7 +177,8 @@ class SchedulingService
         Laboratorium $lab,
         string $day,
         int $slotsNeeded,
-        ?int $excludeScheduleId = null
+        ?int $excludeScheduleId = null,
+        ?int $academicPeriodId = null
     ): Collection {
         // Ambil semua slot dalam jam operasional lab
         $operatingStart = $lab->operating_start
@@ -197,7 +198,7 @@ class SchedulingService
         }
 
         // Dapatkan slot yang sudah terisi untuk lab+hari ini
-        $occupiedSlotNumbers = $this->getOccupiedSlotNumbers($lab->id, $day, $excludeScheduleId);
+        $occupiedSlotNumbers = $this->getOccupiedSlotNumbers($lab->id, $day, $excludeScheduleId, $academicPeriodId);
 
         // Filter slot yang bisa menjadi slot awal
         return $allSlots->filter(function ($slot) use ($allSlots, $occupiedSlotNumbers, $slotsNeeded) {
@@ -229,10 +230,13 @@ class SchedulingService
      * @param int|null $excludeScheduleId ID jadwal yang dikecualikan
      * @return array Array of slot numbers
      */
-    public function getOccupiedSlotNumbers(int $labId, string $day, ?int $excludeScheduleId = null): array
+    public function getOccupiedSlotNumbers(int $labId, string $day, ?int $excludeScheduleId = null, ?int $academicPeriodId = null): array
     {
+        $academicPeriodId = $academicPeriodId ?? \App\Models\AcademicPeriod::getActiveId();
+
         $schedules = Schedule::where('laboratorium_id', $labId)
             ->where('day', $day)
+            ->when($academicPeriodId, fn($q) => $q->where('academic_period_id', $academicPeriodId))
             ->when($excludeScheduleId, fn($q) => $q->where('id', '!=', $excludeScheduleId))
             ->with('timeSlot')
             ->get();
@@ -282,14 +286,15 @@ class SchedulingService
         string $day,
         int $startSlotId,
         int $slotsNeeded,
-        ?int $excludeScheduleId = null
+        ?int $excludeScheduleId = null,
+        ?int $academicPeriodId = null
     ): bool {
         $startSlot = TimeSlot::find($startSlotId);
         if (!$startSlot) {
             return true; // Invalid slot = conflict
         }
 
-        $occupiedNumbers = $this->getOccupiedSlotNumbers($labId, $day, $excludeScheduleId);
+        $occupiedNumbers = $this->getOccupiedSlotNumbers($labId, $day, $excludeScheduleId, $academicPeriodId);
 
         // Cek apakah ada overlap
         for ($i = 0; $i < $slotsNeeded; $i++) {

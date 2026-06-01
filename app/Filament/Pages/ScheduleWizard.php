@@ -425,6 +425,7 @@ class ScheduleWizard extends Page implements HasForms
 
         // Create schedule
         $schedule = Schedule::create([
+            'academic_period_id' => \App\Models\AcademicPeriod::getActiveId(),
             'course_id' => $courseId,
             'lecturer_id' => $lecturerId,
             'laboratorium_id' => $labId,
@@ -536,8 +537,11 @@ class ScheduleWizard extends Page implements HasForms
             return;
         }
 
-        // REPLACE mode: Delete existing schedules first
-        Schedule::truncate();
+        // REPLACE mode: Delete existing schedules in the active period first
+        $activePeriodId = \App\Models\AcademicPeriod::getActiveId();
+        if ($activePeriodId) {
+            Schedule::where('academic_period_id', $activePeriodId)->delete();
+        }
 
         $imported = 0;
         $skipped = 0;
@@ -558,6 +562,7 @@ class ScheduleWizard extends Page implements HasForms
             }
 
             Schedule::create([
+                'academic_period_id' => $activePeriodId,
                 'course_id' => $result['course_id'],
                 'lecturer_id' => null, // Dosen kosong
                 'laboratorium_id' => $result['laboratorium_id'],

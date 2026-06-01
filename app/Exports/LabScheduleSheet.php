@@ -19,15 +19,17 @@ use PhpOffice\PhpSpreadsheet\Style\Fill;
 class LabScheduleSheet implements FromArray, WithTitle, WithStyles, WithColumnWidths, WithEvents
 {
     protected Laboratorium $lab;
+    protected ?int $academicPeriodId;
     protected array $schedulesByDay = [];
     protected int $slotsPerDay;
     protected array $blueSeparatorRows = [];
     protected array $dayMergeRanges = [];
     protected int $dataEndRow = 0;
 
-    public function __construct(Laboratorium $lab)
+    public function __construct(Laboratorium $lab, ?int $academicPeriodId = null)
     {
         $this->lab = $lab;
+        $this->academicPeriodId = $academicPeriodId ?? \App\Models\AcademicPeriod::getActiveId();
         $this->slotsPerDay = count($this->getTimeSlots());
         $this->loadSchedules();
     }
@@ -47,6 +49,9 @@ class LabScheduleSheet implements FromArray, WithTitle, WithStyles, WithColumnWi
 
         $schedules = Schedule::with(['course', 'lecturer'])
             ->where('laboratorium_id', $this->lab->id)
+            ->when($this->academicPeriodId, function ($query) {
+                $query->where('academic_period_id', $this->academicPeriodId);
+            })
             ->orderBy('start_time')
             ->get();
 
@@ -70,6 +75,9 @@ class LabScheduleSheet implements FromArray, WithTitle, WithStyles, WithColumnWi
     {
         // Check if any schedule in this lab has a 3+ SKS siang course
         $has3SksSiang = Schedule::where('laboratorium_id', $this->lab->id)
+            ->when($this->academicPeriodId, function ($query) {
+                $query->where('academic_period_id', $this->academicPeriodId);
+            })
             ->whereHas('course', function ($q) {
                 $q->where('sks', '>=', 3);
             })
@@ -88,8 +96,11 @@ class LabScheduleSheet implements FromArray, WithTitle, WithStyles, WithColumnWi
 
         // Row 1: Title
         $data[] = ['Penggunaan Ruang ' . $this->lab->ruang];
+        
+        $period = \App\Models\AcademicPeriod::find($this->academicPeriodId);
+        $periodLabel = $period ? $period->label : (date('Y') . ' / ' . (date('Y') + 1));
         // Row 2: University
-        $data[] = ['Universitas Dian Nuswantoro ' . date('Y') . ' / ' . (date('Y') + 1)];
+        $data[] = ['Universitas Dian Nuswantoro (Periode: ' . $periodLabel . ')'];
         // Row 3: Address
         $data[] = ['Jalan Nakula I nomor 5 - 11 Semarang Telepon (024) 3517261, 3520165'];
         // Row 4: Table header

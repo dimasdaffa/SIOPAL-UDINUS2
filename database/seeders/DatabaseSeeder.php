@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CourseSoftwareSeeder::class,
             LabSoftwareSeeder::class,
+            AcademicPeriodSeeder::class,
             ScheduleSeeder::class,
         ]);
 

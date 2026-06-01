@@ -7,14 +7,32 @@
                     Pilih Laboratorium
                 </h2>
 
-                <div class="max-w-md">
-                    <select wire:model.live="selectedLabId"
-                            class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm">
-                        <option value="">-- Pilih Laboratorium --</option>
-                        @foreach(\App\Models\Laboratorium::where('is_active', true)->orderBy('ruang')->get() as $lab)
-                            <option value="{{ $lab->id }}">{{ $lab->ruang }}</option>
-                        @endforeach
-                    </select>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Pilih Laboratorium
+                        </label>
+                        <select wire:model.live="selectedLabId"
+                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm">
+                            <option value="">-- Pilih Laboratorium --</option>
+                            @foreach(\App\Models\Laboratorium::where('is_active', true)->orderBy('ruang')->get() as $lab)
+                                <option value="{{ $lab->id }}">{{ $lab->ruang }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            Pilih Periode Akademik
+                        </label>
+                        <select wire:model.live="selectedAcademicPeriodId"
+                                class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm">
+                            <option value="">-- Pilih Periode --</option>
+                            @foreach(\App\Models\AcademicPeriod::orderBy('tahun_ajaran', 'desc')->orderBy('semester', 'desc')->get() as $period)
+                                <option value="{{ $period->id }}">{{ $period->full_label }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
         </div>
@@ -22,6 +40,7 @@
         @if($selectedLabId)
             @php
                 $selectedLab = \App\Models\Laboratorium::find($selectedLabId);
+                $period = \App\Models\AcademicPeriod::find($selectedAcademicPeriodId);
             @endphp
 
             <!-- Header Jadwal Lab -->
@@ -31,7 +50,7 @@
                         Penggunaan Ruang {{ $selectedLab?->ruang }}
                     </h2>
                     <p style="color: #fecaca !important;" class="text-sm">
-                        Universitas Dian Nuswantoro {{ date('Y') }} / {{ date('Y') + 1 }}
+                        Universitas Dian Nuswantoro (Periode: {{ $period ? $period->label : 'Aktif' }})
                     </p>
                     <p style="color: #fca5a5 !important;" class="text-xs mt-1">
                         Jalan Nakula I nomor 5 - 11 Semarang Telepon (024) 3517261, 3520165

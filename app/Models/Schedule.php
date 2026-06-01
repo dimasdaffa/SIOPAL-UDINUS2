@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 class Schedule extends Model
 {
     protected $fillable = [
+        'academic_period_id',
         'course_id',
         'lecturer_id',
         'laboratorium_id',
@@ -29,6 +30,18 @@ class Schedule extends Model
     ];
 
     protected $appends = ['kelompok_code'];
+
+    /**
+     * Boot method: otomatis set academic_period_id ke periode aktif jika kosong.
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (Schedule $schedule) {
+            if (empty($schedule->academic_period_id)) {
+                $schedule->academic_period_id = AcademicPeriod::getActiveId();
+            }
+        });
+    }
 
     /**
      * Get the kelompok_code (code part of kelompok after prodi code)
@@ -52,6 +65,11 @@ class Schedule extends Model
         );
     }
 
+    public function academicPeriod(): BelongsTo
+    {
+        return $this->belongsTo(AcademicPeriod::class);
+    }
+
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
@@ -65,6 +83,29 @@ class Schedule extends Model
     public function laboratorium(): BelongsTo
     {
         return $this->belongsTo(Laboratorium::class);
+    }
+
+    /**
+     * Scope: filter jadwal berdasarkan periode aktif
+     */
+    public function scopeForActivePeriod($query)
+    {
+        $activeId = AcademicPeriod::getActiveId();
+        if ($activeId) {
+            return $query->where('academic_period_id', $activeId);
+        }
+        return $query;
+    }
+
+    /**
+     * Scope: filter jadwal berdasarkan periode tertentu
+     */
+    public function scopeForPeriod($query, ?int $periodId)
+    {
+        if ($periodId) {
+            return $query->where('academic_period_id', $periodId);
+        }
+        return $query;
     }
 
     /**
