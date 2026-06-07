@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
             CourseSeeder::class,
             CourseSoftwareSeeder::class,
             LabSoftwareSeeder::class,
+            SoftwareInventorySeeder::class, // buat record inventories dari lab_software
             AcademicPeriodSeeder::class,
             ScheduleSeeder::class,
         ]);
