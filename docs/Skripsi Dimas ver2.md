@@ -1140,7 +1140,7 @@ Berdasarkan Tabel 19, seluruh 8 aspek pengujian algoritma penjadwalan menghasilk
 
 Setelah fitur penjadwalan otomatis dinyatakan valid secara fungsional melalui _Black Box Testing_ dan Uji Algoritma, tahap selanjutnya adalah pengujian penerimaan pengguna (_User Acceptance Testing_/UAT). Pengujian ini bertujuan untuk mengukur tingkat penerimaan dan kepuasan pengguna akhir terhadap fitur penjadwalan otomatis pada sistem SIOPAL.
 
-Pengujian UAT dilakukan dengan menyebarkan kuesioner secara daring kepada **21 orang responden** yang terdiri dari **Staff Laboratorium** (Administrator/Laboran) dan **Non-Lab** (Dosen/Kaprodi/pihak terkait yang menerima output jadwal) di lingkungan Fakultas Ilmu Komputer Universitas Dian Nuswantoro (UDINUS). Seluruh responden diminta untuk mencoba langsung fitur penjadwalan otomatis — termasuk _Schedule Wizard_, _Timetable Visual_, _Import_ massal via Excel, dan _Export_ jadwal ke Excel — sebelum mengisi kuesioner.
+Pengujian UAT dilakukan dengan menyebarkan kuesioner secara daring kepada **35 orang responden** yang terdiri dari **Staff Laboratorium** (Administrator/Laboran) dan **Non-Lab** (Dosen/Kaprodi/pihak terkait yang menerima output jadwal) di lingkungan Fakultas Ilmu Komputer Universitas Dian Nuswantoro (UDINUS). Seluruh responden diminta untuk mencoba langsung fitur penjadwalan otomatis — termasuk _Schedule Wizard_, _Timetable Visual_, _Import_ massal via Excel, dan _Export_ jadwal ke Excel — sebelum mengisi kuesioner.
 
 Kuesioner terdiri dari **19 pertanyaan** yang mencakup lima aspek penilaian: Fungsionalitas (4 soal), Kemudahan Penggunaan (4 soal), Keandalan (3 soal), Efisiensi (3 soal), serta Kesesuaian Kebutuhan & Kepuasan (5 soal). Penilaian menggunakan **skala Likert 1–5** (Sangat Tidak Setuju hingga Sangat Setuju) dengan sumber referensi (Aliyah et al., 2025).
 
@@ -1148,7 +1148,7 @@ Kuesioner terdiri dari **19 pertanyaan** yang mencakup lima aspek penilaian: Fun
 
 Proses pengolahan data dilakukan dengan menghitung frekuensi jawaban, total skor, dan persentase untuk setiap butir pertanyaan. Rumus yang digunakan:
 
-$$\text{Jumlah skor ideal} = 5 \times 21 = 105$$
+$$\text{Jumlah skor ideal} = 5 \times 35 = 175$$
 
 $$P = \frac{\text{Jumlah skor}}{\text{Skor ideal}} \times 100\%$$
 
@@ -1156,336 +1156,308 @@ Berikut adalah hasil pengolahan data per butir pertanyaan:
 
 ---
 
-**Aspek 1: Fungsionalitas (_Functionality_)**
+**Aspek 1: Fungsionalitas**
 
 **P1. Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah.**
 
-Tabel 20\. Rekomendasi Lab Sesuai Kebutuhan _Software_
+Tabel 20\. Penilaian Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 13 | 65 | **96** |
-| Setuju | 7 | 28 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemampuan sistem dalam merekomendasikan laboratorium sesuai kebutuhan _software_ mata kuliah mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P2. Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada.**
 
-Tabel 21\. Rekomendasi Slot Waktu Tidak Bentrok
+Tabel 21\. Penilaian Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 14 | 70 | **98** |
-| Setuju | 7 | 28 | |
+| Sangat Setuju | 23 | 115 | **163** |
+| Setuju | 12 | 48 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **98/105 × 100%** | | **93,3%** |
+| **Persentase** | **163/175 × 100%** | | **93,1%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemampuan sistem dalam merekomendasikan slot waktu yang tidak bertabrakan mendapatkan hasil **93,3%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada mendapatkan hasil **93,1%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P3. Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar.**
 
-Tabel 22\. Fitur _Import_ Massal via Excel
+Tabel 22\. Penilaian Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 11 | 55 | **94** |
-| Setuju | 9 | 36 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 19 | 95 | **159** |
+| Setuju | 16 | 64 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **94/105 × 100%** | | **89,5%** |
+| **Persentase** | **159/175 × 100%** | | **90,9%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur _import_ massal jadwal via Excel mendapatkan hasil **89,5%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar mendapatkan hasil **90,9%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P4. Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat).**
 
-Tabel 23\. Fitur _Export_ Jadwal ke Excel
+Tabel 23\. Penilaian Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat).
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 12 | 60 | **96** |
-| Setuju | 9 | 36 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap akurasi fitur _export_ jadwal ke Excel mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat) mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 ---
 
-**Aspek 2: Kemudahan Penggunaan (_Usability_)**
+**Aspek 2: Kemudahan Penggunaan**
 
 **P5. Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan.**
 
-Tabel 24\. Kemudahan Antarmuka _Schedule Wizard_
+Tabel 24\. Penilaian Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 14 | 70 | **98** |
-| Setuju | 7 | 28 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **98/105 × 100%** | | **93,3%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemudahan antarmuka _Schedule Wizard_ mendapatkan hasil **93,3%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P6. Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif.**
 
-Tabel 25\. Kemudahan Formulir Input Jadwal
+Tabel 25\. Penilaian Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 13 | 65 | **97** |
-| Setuju | 8 | 32 | |
+| Sangat Setuju | 20 | 100 | **160** |
+| Setuju | 15 | 60 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **160/175 × 100%** | | **91,4%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemudahan formulir input jadwal mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P7. Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif.**
 
-Tabel 26\. Tampilan Kartu Rekomendasi Jadwal
+Tabel 26\. Penilaian Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 11 | 55 | **94** |
-| Setuju | 9 | 36 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **94/105 × 100%** | | **89,5%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap tampilan kartu rekomendasi jadwal mendapatkan hasil **89,5%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P8. Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal.**
 
-Tabel 27\. Tampilan _Timetable Visual_
+Tabel 27\. Penilaian Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 14 | 70 | **97** |
-| Setuju | 6 | 24 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap tampilan _Timetable Visual_ mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 ---
 
-**Aspek 3: Keandalan (_Reliability_)**
+**Aspek 3: Keandalan**
 
 **P9. Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama.**
 
-Tabel 28\. Validasi Anti-Bentrok
+Tabel 28\. Penilaian Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 14 | 70 | **98** |
-| Setuju | 7 | 28 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **98/105 × 100%** | | **93,3%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemampuan sistem dalam menghindari jadwal bentrok mendapatkan hasil **93,3%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P10. Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia.**
 
-Tabel 29\. Kejelasan Notifikasi Sistem
+Tabel 29\. Penilaian Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 12 | 60 | **96** |
-| Setuju | 9 | 36 | |
+| Sangat Setuju | 21 | 105 | **161** |
+| Setuju | 14 | 56 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **161/175 × 100%** | | **92,0%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kejelasan notifikasi sistem mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia mendapatkan hasil **92,0%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P11. Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar.**
 
-Tabel 30\. Konsistensi Hasil Penjadwalan
+Tabel 30\. Penilaian Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 11 | 55 | **95** |
-| Setuju | 10 | 40 | |
+| Sangat Setuju | 20 | 100 | **160** |
+| Setuju | 15 | 60 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **95/105 × 100%** | | **90,5%** |
+| **Persentase** | **160/175 × 100%** | | **91,4%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap konsistensi hasil penjadwalan mendapatkan hasil **90,5%**, yang termasuk dalam kategori **Sangat Layak**.
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
 
 ---
 
-**Aspek 4: Efisiensi (_Efficiency_)**
+**Aspek 4: Efisiensi**
 
 **P12. Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama).**
 
-Tabel 31\. Kecepatan Proses Pencarian
+Tabel 31\. Penilaian Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama).
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 11 | 55 | **94** |
-| Setuju | 9 | 36 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **94/105 × 100%** | | **89,5%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kecepatan proses pencarian rekomendasi jadwal mendapatkan hasil **89,5%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama) mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P13. Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala.**
 
-Tabel 32\. Kecepatan _Import_ dan _Export_ Excel
+Tabel 32\. Penilaian Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 15 | 75 | **97** |
-| Setuju | 4 | 16 | |
-| Cukup Setuju | 2 | 6 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kecepatan proses _import_ dan _export_ Excel mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P14. Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual.**
 
-Tabel 33\. Efisiensi Penjadwalan Otomatis vs Manual
+Tabel 33\. Penilaian Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 12 | 60 | **96** |
-| Setuju | 9 | 36 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kemampuan fitur dalam mengurangi waktu penyusunan jadwal mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 ---
 
-**Aspek 5: Kesesuaian Kebutuhan & Kepuasan (_Relevance & Satisfaction_)**
+**Aspek 5: Kesesuaian & Kepuasan**
 
 **P15. Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari.**
 
-Tabel 34\. Kesesuaian dengan Kebutuhan Operasional
+Tabel 34\. Penilaian Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 13 | 65 | **96** |
-| Setuju | 7 | 28 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 21 | 105 | **161** |
+| Setuju | 14 | 56 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **161/175 × 100%** | | **92,0%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kesesuaian fitur dengan kebutuhan operasional mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari mendapatkan hasil **92,0%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P16. Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan.**
 
-Tabel 35\. Kelengkapan Informasi Jadwal
+Tabel 35\. Penilaian Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 12 | 60 | **96** |
-| Setuju | 9 | 36 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **96/105 × 100%** | | **91,4%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kelengkapan informasi jadwal mendapatkan hasil **91,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P17. Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester.**
 
-Tabel 36\. Fitur Pengelolaan Periode Akademik
+Tabel 36\. Penilaian Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 14 | 70 | **97** |
-| Setuju | 6 | 24 | |
-| Cukup Setuju | 1 | 3 | |
+| Sangat Setuju | 24 | 120 | **164** |
+| Setuju | 11 | 44 | |
+| Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **164/175 × 100%** | | **93,7%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur pengelolaan periode akademik mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester mendapatkan hasil **93,7%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P18. Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL.**
 
-Tabel 37\. Kepuasan Keseluruhan
+Tabel 37\. Penilaian Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 13 | 65 | **97** |
-| Setuju | 8 | 32 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap kepuasan keseluruhan fitur penjadwalan otomatis mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
-
----
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 **P19. Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS.**
 
-Tabel 38\. Rekomendasi Penggunaan Operasional
+Tabel 38\. Penilaian Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
-| Sangat Setuju | 13 | 65 | **97** |
-| Setuju | 8 | 32 | |
+| Sangat Setuju | 22 | 110 | **162** |
+| Setuju | 13 | 52 | |
 | Cukup Setuju | 0 | 0 | |
 | Tidak Setuju | 0 | 0 | |
 | Sangat Tidak Setuju | 0 | 0 | |
-| **Persentase** | **97/105 × 100%** | | **92,4%** |
+| **Persentase** | **162/175 × 100%** | | **92,6%** |
 
-Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap rekomendasi penggunaan fitur secara operasional mendapatkan hasil **92,4%**, yang termasuk dalam kategori **Sangat Layak**.
+Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS mendapatkan hasil **92,6%**, yang termasuk dalam kategori **Sangat Layak**.
 
 ---
 
@@ -1497,30 +1469,30 @@ Tabel 39\. Rekapitulasi Hasil Jawaban Responden UAT
 
 | No | Aspek | Soal | Skor | Persentase (%) |
 | :---: | :--- | :---: | :---: | :---: |
-| **1** | **Fungsionalitas** | P1 | 96 | 91,4% |
-| | | P2 | 98 | 93,3% |
-| | | P3 | 94 | 89,5% |
-| | | P4 | 96 | 91,4% |
-| **2** | **Kemudahan Penggunaan** | P5 | 98 | 93,3% |
-| | | P6 | 97 | 92,4% |
-| | | P7 | 94 | 89,5% |
-| | | P8 | 97 | 92,4% |
-| **3** | **Keandalan** | P9 | 98 | 93,3% |
-| | | P10 | 96 | 91,4% |
-| | | P11 | 95 | 90,5% |
-| **4** | **Efisiensi** | P12 | 94 | 89,5% |
-| | | P13 | 97 | 92,4% |
-| | | P14 | 96 | 91,4% |
-| **5** | **Kesesuaian & Kepuasan** | P15 | 96 | 91,4% |
-| | | P16 | 96 | 91,4% |
-| | | P17 | 97 | 92,4% |
-| | | P18 | 97 | 92,4% |
-| | | P19 | 97 | 92,4% |
-| **Total** | | | **1.829** | |
-| **Skor Ideal** | | | **1.995** | |
-| **Rata-Rata Keseluruhan** | | | | **91,7%** |
+| **1** | **Fungsionalitas** | P1 | 164 | 93,7% |
+|  |  | P2 | 163 | 93,1% |
+|  |  | P3 | 159 | 90,9% |
+|  |  | P4 | 164 | 93,7% |
+| **2** | **Kemudahan Penggunaan** | P5 | 164 | 93,7% |
+|  |  | P6 | 160 | 91,4% |
+|  |  | P7 | 162 | 92,6% |
+|  |  | P8 | 164 | 93,7% |
+| **3** | **Keandalan** | P9 | 164 | 93,7% |
+|  |  | P10 | 161 | 92,0% |
+|  |  | P11 | 160 | 91,4% |
+| **4** | **Efisiensi** | P12 | 162 | 92,6% |
+|  |  | P13 | 164 | 93,7% |
+|  |  | P14 | 162 | 92,6% |
+| **5** | **Kesesuaian & Kepuasan** | P15 | 161 | 92,0% |
+|  |  | P16 | 162 | 92,6% |
+|  |  | P17 | 164 | 93,7% |
+|  |  | P18 | 162 | 92,6% |
+|  |  | P19 | 162 | 92,6% |
+| **Total** | | | **3084** | |
+| **Skor Ideal** | | | **3325** | |
+| **Rata-Rata Keseluruhan** | | | | **92,8%** |
 
-Berdasarkan Tabel 39, diperoleh total skor **1.829** dari skor ideal **1.995** (5 × 19 × 21), sehingga rata-rata persentase keseluruhan mencapai **91,7%**.
+Berdasarkan Tabel 39, diperoleh total skor **3084** dari skor ideal **3325** (5 × 19 × 35), sehingga rata-rata persentase keseluruhan mencapai **92,8%**.
 
 **c. Hasil Akhir Pengolahan Data per Aspek**
 
@@ -1528,19 +1500,19 @@ Tabel 40\. Hasil Akhir Pengolahan Data UAT per Aspek
 
 | No | Aspek yang Dinilai | Indikator | Jumlah Soal | Skor | Skor Ideal | Persentase (%) |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: |
-| 1 | Penerimaan Sistem | Fungsionalitas | 4 | 384 | 420 | 91,4% |
-| 2 | Penerimaan Sistem | Kemudahan Penggunaan | 4 | 386 | 420 | 91,9% |
-| 3 | Penerimaan Sistem | Keandalan | 3 | 289 | 315 | 91,7% |
-| 4 | Penerimaan Sistem | Efisiensi | 3 | 287 | 315 | 91,1% |
-| 5 | Penerimaan Sistem | Kesesuaian & Kepuasan | 5 | 483 | 525 | 92,0% |
+| 1 | Penerimaan Sistem | Fungsionalitas | 4 | 650 | 700 | 92,9% |
+| 2 | Penerimaan Sistem | Kemudahan Penggunaan | 4 | 650 | 700 | 92,9% |
+| 3 | Penerimaan Sistem | Keandalan | 3 | 485 | 525 | 92,4% |
+| 4 | Penerimaan Sistem | Efisiensi | 3 | 488 | 525 | 93,0% |
+| 5 | Penerimaan Sistem | Kesesuaian & Kepuasan | 5 | 811 | 875 | 92,7% |
 
 Berdasarkan Tabel 40, kelima aspek penilaian menunjukkan persentase yang konsisten tinggi dengan uraian sebagai berikut:
 
-* Untuk aspek **Fungsionalitas**, persentase mencapai **91,4%**, menunjukkan bahwa responden sangat setuju fitur penjadwalan otomatis — termasuk rekomendasi lab berdasarkan _software_, deteksi bentrok, serta fitur _import_ dan _export_ Excel — telah berfungsi dengan baik dan akurat.
-* Untuk aspek **Kemudahan Penggunaan**, persentase mencapai **91,9%**, menunjukkan bahwa responden sangat setuju bahwa antarmuka _Schedule Wizard_, formulir input, tampilan kartu rekomendasi, dan _Timetable Visual_ mudah dipahami dan dioperasikan.
-* Untuk aspek **Keandalan**, persentase mencapai **91,7%**, menunjukkan bahwa responden sangat yakin sistem tidak pernah merekomendasikan jadwal bentrok, menampilkan notifikasi yang jelas, dan menghasilkan hasil yang konsisten.
-* Untuk aspek **Efisiensi**, persentase mencapai **91,1%**, menunjukkan bahwa responden merasakan manfaat kecepatan proses pencarian, kelancaran _import/export_, dan pengurangan waktu penyusunan jadwal secara signifikan dibanding cara manual.
-* Untuk aspek **Kesesuaian Kebutuhan & Kepuasan**, persentase tertinggi yaitu **92,0%**, menunjukkan bahwa responden sangat puas dengan keseluruhan fitur dan merekomendasikan sistem SIOPAL untuk digunakan secara operasional.
+* Untuk aspek **Fungsionalitas**, persentase mencapai **92,9%**, menunjukkan bahwa responden sangat setuju fitur penjadwalan otomatis — termasuk rekomendasi lab berdasarkan _software_, deteksi bentrok, serta fitur _import_ dan _export_ Excel — telah berfungsi dengan baik dan akurat.
+* Untuk aspek **Kemudahan Penggunaan**, persentase mencapai **92,9%**, menunjukkan bahwa responden sangat setuju bahwa antarmuka _Schedule Wizard_, formulir input, tampilan kartu rekomendasi, dan _Timetable Visual_ mudah dipahami dan dioperasikan.
+* Untuk aspek **Keandalan**, persentase mencapai **92,4%**, menunjukkan bahwa responden sangat yakin sistem tidak pernah merekomendasikan jadwal bentrok, menampilkan notifikasi yang jelas, dan menghasilkan hasil yang konsisten.
+* Untuk aspek **Efisiensi**, persentase mencapai **93,0%**, menunjukkan bahwa responden merasakan manfaat kecepatan proses pencarian, kelancaran _import/export_, dan pengurangan waktu penyusunan jadwal secara signifikan dibanding cara manual.
+* Untuk aspek **Kesesuaian Kebutuhan & Kepuasan**, persentase tertinggi yaitu **92,7%**, menunjukkan bahwa responden sangat puas dengan keseluruhan fitur dan merekomendasikan sistem SIOPAL untuk digunakan secara operasional.
 
 **d. Visualisasi Grafik Hasil UAT**
 
@@ -1550,7 +1522,7 @@ Dari hasil pengolahan di atas, disajikan dalam bentuk grafik sebagai berikut:
 
 ```
 100,0% |
-       |   91,4%      91,9%      91,7%      91,1%      92,0%
+       |   92,9%      92,9%      92,4%      93,0%      92,7%
  80,0% |  [██████]   [██████]   [██████]   [██████]   [██████]
        |  [██████]   [██████]   [██████]   [██████]   [██████]
  60,0% |  [██████]   [██████]   [██████]   [██████]   [██████]
@@ -1568,7 +1540,7 @@ Gambar X\. Grafik Hasil Pengolahan Data UAT per Aspek
 **2. Grafik Total Tingkat Penerimaan**
 
 ```
-Persentase | [██████████████████████████████████████████████████████] 91,7%
+Persentase | [██████████████████████████████████████████████████████] 92,8%
            +-------------------------------------------------------------------
            0,0%       20,0%       40,0%       60,0%       80,0%       100,0%
 ```
@@ -1577,25 +1549,25 @@ Gambar X\. Grafik Tingkat Penerimaan Keseluruhan Fitur Penjadwalan Otomatis SIOP
 
 **e. Kesimpulan Hasil UAT**
 
-Berdasarkan visualisasi grafik di atas, dapat disimpulkan bahwa tanggapan seluruh 21 responden terhadap fitur penjadwalan otomatis pada sistem SIOPAL sangat positif.
+Berdasarkan visualisasi grafik di atas, dapat disimpulkan bahwa tanggapan seluruh 35 responden terhadap fitur penjadwalan otomatis pada sistem SIOPAL sangat positif.
 
-* Pada aspek **Fungsionalitas**, persentase mencapai **91,4%**, menunjukkan bahwa seluruh fitur inti — rekomendasi lab berbasis _software_, deteksi bentrok otomatis, _import_ massal, dan _export_ Excel — telah berfungsi sesuai kebutuhan operasional.
-* Pada aspek **Kemudahan Penggunaan**, persentase **91,9%** mencerminkan bahwa antarmuka sistem dinilai intuitif dan mudah dioperasikan.
-* Pada aspek **Keandalan**, persentase **91,7%** mengonfirmasi bahwa sistem telah andal dalam mencegah jadwal bentrok dan memberikan umpan balik yang informatif.
-* Pada aspek **Efisiensi**, persentase **91,1%** menandakan bahwa fitur ini berhasil mengurangi waktu dan usaha penyusunan jadwal secara signifikan.
-* Pada aspek **Kesesuaian & Kepuasan**, persentase tertinggi **92,0%** menunjukkan bahwa responden puas dan merekomendasikan fitur ini untuk digunakan secara operasional.
+* Pada aspek **Fungsionalitas**, persentase mencapai **92,9%**, menunjukkan bahwa seluruh fitur inti — rekomendasi lab berbasis _software_, deteksi bentrok otomatis, _import_ massal, dan _export_ Excel — telah berfungsi sesuai kebutuhan operasional.
+* Pada aspek **Kemudahan Penggunaan**, persentase **92,9%** mencerminkan bahwa antarmuka sistem dinilai intuitif dan mudah dioperasikan.
+* Pada aspek **Keandalan**, persentase **92,4%** mengonfirmasi bahwa sistem telah andal dalam mencegah jadwal bentrok dan memberikan umpan balik yang informatif.
+* Pada aspek **Efisiensi**, persentase **93,0%** menandakan bahwa fitur ini berhasil mengurangi waktu dan usaha penyusunan jadwal secara signifikan.
+* Pada aspek **Kesesuaian & Kepuasan**, persentase tertinggi **92,7%** menunjukkan bahwa responden puas dan merekomendasikan fitur ini untuk digunakan secara operasional.
 
-Dengan rata-rata persentase keseluruhan sebesar **91,7%** yang berada pada kategori **Sangat Layak** (81%–100%), maka fitur penjadwalan otomatis pada Website SIOPAL dinyatakan **diterima** oleh pengguna dan **layak untuk diimplementasikan** secara operasional di Laboratorium Komputer Fakultas Ilmu Komputer Universitas Dian Nuswantoro. Hasil ini sesuai dengan batas minimum keberhasilan yang ditetapkan pada Bab 3, yaitu skor > 61% (kategori "Layak").
+Dengan rata-rata persentase keseluruhan sebesar **92,8%** yang berada pada kategori **Sangat Layak** (81%–100%), maka fitur penjadwalan otomatis pada Website SIOPAL dinyatakan **diterima** oleh pengguna dan **layak untuk diimplementasikan** secara operasional di Laboratorium Komputer Fakultas Ilmu Komputer Universitas Dian Nuswantoro. Hasil ini sesuai dengan batas minimum keberhasilan yang ditetapkan pada Bab 3, yaitu skor > 61% (kategori "Layak").
 
 4. ### **Pembahasan** {#pembahasan}
 
-Berdasarkan seluruh hasil pengujian yang telah diuraikan di atas, dapat disimpulkan bahwa fitur penjadwalan otomatis pada sistem SIOPAL telah memenuhi seluruh kriteria keberhasilan yang ditetapkan. Dari total **30 skenario pengujian** (22 _Black Box Testing_ + 8 Uji Algoritma), seluruhnya menghasilkan status **Valid** dengan tingkat keberhasilan **100%**. Ditambah dengan hasil _User Acceptance Testing_ (UAT) yang melibatkan 21 responden dan menunjukkan tingkat penerimaan sebesar **91,7%** (kategori **Sangat Layak**), fitur ini terbukti tidak hanya valid secara teknis tetapi juga diterima dengan baik oleh pengguna akhir.
+Berdasarkan seluruh hasil pengujian yang telah diuraikan di atas, dapat disimpulkan bahwa fitur penjadwalan otomatis pada sistem SIOPAL telah memenuhi seluruh kriteria keberhasilan yang ditetapkan. Dari total **30 skenario pengujian** (22 _Black Box Testing_ + 8 Uji Algoritma), seluruhnya menghasilkan status **Valid** dengan tingkat keberhasilan **100%**. Ditambah dengan hasil _User Acceptance Testing_ (UAT) yang melibatkan 35 responden dan menunjukkan tingkat penerimaan sebesar **92,8%** (kategori **Sangat Layak**), fitur ini terbukti tidak hanya valid secara teknis tetapi juga diterima dengan baik oleh pengguna akhir.
 
 Keberhasilan ini tidak terlepas dari pendekatan _layered filtering_ yang memisahkan proses _constraint checking_ ke dalam dua lapisan: lapisan basis data (menggunakan Eloquent `where()` dan `whereHas()`) dan lapisan aplikasi (menggunakan Collection `filter()`). Pendekatan ini memberikan dua keuntungan utama:
 
-1. **Keandalan (_Reliability_)**: Setiap _constraint_ diperiksa secara independen dan berurutan, sehingga tidak ada _constraint_ yang terlewatkan. Apabila suatu kandidat gagal pada satu tahap, kandidat tersebut langsung dieliminasi tanpa perlu diperiksa pada tahap selanjutnya. Hal ini dikonfirmasi oleh hasil UAT pada aspek Keandalan yang mencapai **91,7%**.
+1. **Keandalan (_Reliability_)**: Setiap _constraint_ diperiksa secara independen dan berurutan, sehingga tidak ada _constraint_ yang terlewatkan. Apabila suatu kandidat gagal pada satu tahap, kandidat tersebut langsung dieliminasi tanpa perlu diperiksa pada tahap selanjutnya. Hal ini dikonfirmasi oleh hasil UAT pada aspek Keandalan yang mencapai **92,4%**.
 
-2. **Efisiensi (_Efficiency_)**: _Constraint_ statis (kapasitas dan _software_) dievaluasi pada tingkat basis data, sehingga jumlah data yang perlu diproses di sisi aplikasi sudah berkurang sejak awal. Khusus pada mode _import_ massal, teknik pelacakan _in-memory_ (`$usedSlotNumbers`) mengurangi jumlah _query_ basis data secara signifikan. Aspek Efisiensi pada UAT memperoleh persentase **91,1%**, membuktikan bahwa pengguna merasakan manfaat nyata dari optimasi ini.
+2. **Efisiensi (_Efficiency_)**: _Constraint_ statis (kapasitas dan _software_) dievaluasi pada tingkat basis data, sehingga jumlah data yang perlu diproses di sisi aplikasi sudah berkurang sejak awal. Khusus pada mode _import_ massal, teknik pelacakan _in-memory_ (`$usedSlotNumbers`) mengurangi jumlah _query_ basis data secara signifikan. Aspek Efisiensi pada UAT memperoleh persentase **93,0%**, membuktikan bahwa pengguna merasakan manfaat nyata dari optimasi ini.
 
 Teknik _Eloquent Query Filtering_ terbukti efektif sebagai metode penyelesaian _Constraint Satisfaction Problem_ dalam domain penjadwalan laboratorium, di mana jumlah variabel dan domain masih berada dalam skala yang dapat ditangani oleh pendekatan _Generate-and-Test_ dengan _forward checking_ secara berurutan, tanpa memerlukan algoritma _backtracking_ yang lebih kompleks.
 
@@ -1611,7 +1583,7 @@ Berdasarkan hasil perancangan, implementasi, dan pengujian yang telah diuraikan 
 
 3. **Algoritma _query filtering_ Eloquent berlapis berhasil diimplementasikan untuk menyelesaikan _Constraint Satisfaction Problem_ dan menghasilkan rekomendasi slot waktu yang valid.** Implementasi dilakukan melalui enam tahap _filtering_ berurutan yang terbagi dalam dua lapisan: lapisan basis data menggunakan Eloquent `where()` dan `whereHas()` untuk filter kapasitas dan _software_, serta lapisan aplikasi menggunakan Laravel Collection `filter()` untuk filter konflik jadwal, sesi waktu, _break times_, dan pengurutan prioritas. Sistem menyediakan dua mode input: (a) input satuan melalui antarmuka _wizard_ yang menampilkan rekomendasi dalam bentuk kartu interaktif, dan (b) _import_ massal melalui berkas Excel yang menggunakan teknik pengurutan SKS (_Most Constrained Variable heuristic_), algoritma _triple nested loop_, dan pelacakan slot _in-memory_ untuk optimasi performa. Kedua mode berhasil menghasilkan jadwal yang bebas konflik (_clash-free_). Dengan demikian, tujuan penelitian ketiga telah tercapai.
 
-4. **Pengujian _Black Box Testing_ dan _User Acceptance Testing_ (UAT) memvalidasi bahwa seluruh fungsionalitas fitur penjadwalan otomatis berjalan sesuai spesifikasi dan diterima oleh pengguna.** Pengujian _Black Box Testing_ dilakukan melalui 22 skenario uji yang mencakup empat kategori: fungsionalitas antarmuka (6 skenario), validasi _constraint_ penjadwalan (8 skenario), fitur _import_ massal (4 skenario), dan skenario batas (4 skenario). Seluruh skenario menghasilkan status **Valid** dengan tingkat keberhasilan **100%**. Uji algoritma penjadwalan melalui 8 aspek pengujian — termasuk validasi anti-bentrok, _overlap detection_ pada _break times_, dan verifikasi silang pada _timetable_ — juga seluruhnya menghasilkan status Valid. Selain itu, pengujian UAT terhadap 21 responden menghasilkan rata-rata persentase penerimaan sebesar **91,7%** (kategori **Sangat Layak**), dengan aspek Kesesuaian & Kepuasan memperoleh persentase tertinggi (**92,0%**). Total 30 skenario pengujian teknis dan hasil UAT yang positif mengonfirmasi bahwa sistem telah memenuhi seluruh _constraints_ yang ditetapkan, diterima oleh pengguna, dan siap diimplementasikan secara operasional. Hasil ini menjawab rumusan masalah keempat.
+4. **Pengujian _Black Box Testing_ dan _User Acceptance Testing_ (UAT) memvalidasi bahwa seluruh fungsionalitas fitur penjadwalan otomatis berjalan sesuai spesifikasi dan diterima oleh pengguna.** Pengujian _Black Box Testing_ dilakukan melalui 22 skenario uji yang mencakup empat kategori: fungsionalitas antarmuka (6 skenario), validasi _constraint_ penjadwalan (8 skenario), fitur _import_ massal (4 skenario), dan skenario batas (4 skenario). Seluruh skenario menghasilkan status **Valid** dengan tingkat keberhasilan **100%**. Uji algoritma penjadwalan melalui 8 aspek pengujian — termasuk validasi anti-bentrok, _overlap detection_ pada _break times_, dan verifikasi silang pada _timetable_ — juga seluruhnya menghasilkan status Valid. Selain itu, pengujian UAT terhadap 35 responden menghasilkan rata-rata persentase penerimaan sebesar **92,8%** (kategori **Sangat Layak**), dengan aspek Efisiensi memperoleh persentase tertinggi (**93,0%**). Total 30 skenario pengujian teknis dan hasil UAT yang positif mengonfirmasi bahwa sistem telah memenuhi seluruh _constraints_ yang ditetapkan, diterima oleh pengguna, dan siap diimplementasikan secara operasional. Hasil ini menjawab rumusan masalah keempat.
 
 2. ## **Penelitian Selanjutnya** {#penelitian-selanjutnya}
 
