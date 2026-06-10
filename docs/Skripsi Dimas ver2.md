@@ -1182,15 +1182,18 @@ Tabel 21\. Daftar Pertanyaan Kuesioner UAT
 | 18 | | Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL. | P18 |
 | 19 | | Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS. | P19 |
 
-**a. Hasil Pengolahan Data Kuesioner**
+**a. Analisis Butir Soal**
 
-Proses pengolahan data dilakukan dengan menghitung frekuensi jawaban, total skor, dan persentase untuk setiap butir pertanyaan. Rumus yang digunakan:
+Berdasarkan data yang diperoleh dari kuesioner pada tabel-tabel di atas, langkah selanjutnya adalah mengolah data tersebut untuk menghitung persentase tingkat penerimaan sesuai dengan pertanyaan yang diajukan. Analisis data dilakukan dengan menentukan nilai rata-rata dari jawaban responden berdasarkan skor yang diberikan untuk setiap pilihan jawaban. Proses pengolahan data tersebut dapat diuraikan sebagai berikut:
 
-$$\text{Jumlah skor ideal} = 5 \times 35 = 175$$
+* **Jumlah skor ideal untuk setiap item** = $5 \times \text{jumlah responden (35)}$
+* **Rumus persentase**:
+  $$P = \frac{\text{Jumlah skor}}{\text{Jumlah skor ideal}} \times 100\%$$
+* **Perhitungan Skor Ideal**:
+  $$\text{Jumlah skor ideal} = 5 \times 35 = 175$$
 
-$$P = \frac{\text{Jumlah skor}}{\text{Skor ideal}} \times 100\%$$
+Berikut adalah hasil pengolahan data dan analisis tingkat penerimaan untuk masing-masing butir pertanyaan kuesioner UAT:
 
-Berikut adalah hasil pengolahan data per butir pertanyaan:
 
 ---
 
