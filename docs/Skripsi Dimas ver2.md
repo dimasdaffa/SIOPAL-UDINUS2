@@ -1144,6 +1144,44 @@ Pengujian UAT dilakukan dengan menyebarkan kuesioner secara daring kepada **35 o
 
 Kuesioner terdiri dari **19 pertanyaan** yang mencakup lima aspek penilaian: Fungsionalitas (4 soal), Kemudahan Penggunaan (4 soal), Keandalan (3 soal), Efisiensi (3 soal), serta Kesesuaian Kebutuhan & Kepuasan (5 soal). Penilaian menggunakan **skala Likert 1–5** (Sangat Tidak Setuju hingga Sangat Setuju) dengan sumber referensi (Aliyah et al., 2025).
 
+Adapun bobot penilaian skala Likert yang digunakan dalam kuesioner ini adalah sebagai berikut:
+
+Tabel 20\. Bobot Penilaian Skala Likert
+
+| Bobot | Keterangan |
+| :---: | :--- |
+| 1 | Sangat Tidak Setuju (STS) |
+| 2 | Tidak Setuju (TS) |
+| 3 | Cukup Setuju (CS) |
+| 4 | Setuju (S) |
+| 5 | Sangat Setuju (SS) |
+
+Pada tabel di bawah ini menyajikan daftar pertanyaan evaluasi kuesioner berdasarkan (Aliyah et al., 2025) yang mencakup 5 variabel pengujian, yaitu: (1) Fungsionalitas, (2) Kemudahan Penggunaan, (3) Keandalan, (4) Efisiensi, dan (5) Kesesuaian Kebutuhan & Kepuasan. Berikut daftar pertanyaan P1 – P19 pada kuesioner:
+
+Tabel 21\. Daftar Pertanyaan Kuesioner UAT
+
+| No | Variabel (Aspek) | Pertanyaan | Kode |
+| :---: | :--- | :--- | :---: |
+| 1 | Fungsionalitas | Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah. | P1 |
+| 2 | | Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada. | P2 |
+| 3 | | Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar. | P3 |
+| 4 | | Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat). | P4 |
+| 5 | Kemudahan Penggunaan | Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan. | P5 |
+| 6 | | Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif. | P6 |
+| 7 | | Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif. | P7 |
+| 8 | | Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal. | P8 |
+| 9 | Keandalan | Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama. | P9 |
+| 10 | | Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia. | P10 |
+| 11 | | Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar. | P11 |
+| 12 | Efisiensi | Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu _loading_ yang lama). | P12 |
+| 13 | | Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala. | P13 |
+| 14 | | Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual. | P14 |
+| 15 | Kesesuaian Kebutuhan & Kepuasan | Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari. | P15 |
+| 16 | | Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan. | P16 |
+| 17 | | Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester. | P17 |
+| 18 | | Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL. | P18 |
+| 19 | | Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS. | P19 |
+
 **a. Hasil Pengolahan Data Kuesioner**
 
 Proses pengolahan data dilakukan dengan menghitung frekuensi jawaban, total skor, dan persentase untuk setiap butir pertanyaan. Rumus yang digunakan:
@@ -1160,7 +1198,7 @@ Berikut adalah hasil pengolahan data per butir pertanyaan:
 
 **P1. Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah.**
 
-Tabel 20\. Penilaian Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah.
+Tabel 22\. Penilaian Fitur penjadwalan otomatis (_Schedule Wizard_) dapat merekomendasikan laboratorium yang sesuai dengan kebutuhan _software_ mata kuliah.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1175,7 +1213,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P2. Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada.**
 
-Tabel 21\. Penilaian Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada.
+Tabel 23\. Penilaian Fitur penjadwalan otomatis dapat merekomendasikan slot waktu yang tidak bertabrakan (bentrok) dengan jadwal yang sudah ada.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1190,7 +1228,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P3. Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar.**
 
-Tabel 22\. Penilaian Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar.
+Tabel 24\. Penilaian Fitur _import_ massal jadwal via Excel dapat memproses banyak permintaan jadwal sekaligus dan menampilkan hasil _preview_ dengan benar.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1205,7 +1243,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P4. Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat).**
 
-Tabel 23\. Penilaian Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat).
+Tabel 25\. Penilaian Fitur _export_ jadwal ke Excel menghasilkan file yang sesuai dengan data jadwal di dalam sistem (data yang ditampilkan akurat).
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1224,7 +1262,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P5. Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan.**
 
-Tabel 24\. Penilaian Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan.
+Tabel 26\. Penilaian Antarmuka halaman Penjadwalan Otomatis (_Schedule Wizard_) mudah dipahami dan dioperasikan.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1239,7 +1277,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap an
 
 **P6. Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif.**
 
-Tabel 25\. Penilaian Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif.
+Tabel 27\. Penilaian Formulir input jadwal (Program Studi, Mata Kuliah, Dosen, Jumlah Siswa, Sesi Waktu) mudah diisi dan responsif.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1254,7 +1292,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fo
 
 **P7. Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif.**
 
-Tabel 26\. Penilaian Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif.
+Tabel 28\. Penilaian Tampilan kartu rekomendasi jadwal (Laboratorium, Hari, Waktu) mudah dibaca dan informatif.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1269,7 +1307,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap ta
 
 **P8. Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal.**
 
-Tabel 27\. Penilaian Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal.
+Tabel 29\. Penilaian Tampilan _Timetable Visual_ (jadwal dalam bentuk tabel per laboratorium per hari) mudah dipahami dan mempermudah pengecekan jadwal.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1288,7 +1326,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap ta
 
 **P9. Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama.**
 
-Tabel 28\. Penilaian Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama.
+Tabel 30\. Penilaian Sistem tidak pernah merekomendasikan jadwal yang bentrok (tumpang tindih) dengan jadwal yang sudah ada pada laboratorium dan waktu yang sama.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1303,7 +1341,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap si
 
 **P10. Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia.**
 
-Tabel 29\. Penilaian Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia.
+Tabel 31\. Penilaian Sistem menampilkan pesan/notifikasi yang jelas apabila terjadi kesalahan atau tidak ada slot waktu yang tersedia.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1318,7 +1356,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap si
 
 **P11. Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar.**
 
-Tabel 30\. Penilaian Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar.
+Tabel 32\. Penilaian Hasil penjadwalan konsisten — apabila dilakukan pencarian ulang dengan input yang sama, hasilnya tetap akurat dan tidak berubah secara tidak wajar.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1337,7 +1375,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap ha
 
 **P12. Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama).**
 
-Tabel 31\. Penilaian Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama).
+Tabel 33\. Penilaian Proses pencarian rekomendasi jadwal berjalan cepat (tidak membutuhkan waktu loading yang lama).
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1352,7 +1390,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap pr
 
 **P13. Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala.**
 
-Tabel 32\. Penilaian Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala.
+Tabel 34\. Penilaian Proses _import_ dan _export_ jadwal via Excel berjalan cepat dan lancar tanpa kendala.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1367,7 +1405,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap pr
 
 **P14. Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual.**
 
-Tabel 33\. Penilaian Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual.
+Tabel 35\. Penilaian Fitur penjadwalan otomatis ini dapat mengurangi waktu dan usaha yang diperlukan dibanding menyusun jadwal secara manual.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1386,7 +1424,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P15. Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari.**
 
-Tabel 34\. Penilaian Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari.
+Tabel 36\. Penilaian Fitur penjadwalan otomatis ini sesuai dengan kebutuhan operasional penjadwalan laboratorium sehari-hari.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1401,7 +1439,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P16. Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan.**
 
-Tabel 35\. Penilaian Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan.
+Tabel 37\. Penilaian Informasi yang ditampilkan pada jadwal (nama mata kuliah, dosen, laboratorium, kelompok, waktu) sudah lengkap dan sesuai kebutuhan.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1416,7 +1454,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap in
 
 **P17. Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester.**
 
-Tabel 36\. Penilaian Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester.
+Tabel 38\. Penilaian Fitur pengelolaan periode akademik (_Academic Period_) mempermudah pengelolaan jadwal per semester.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1431,7 +1469,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap fi
 
 **P18. Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL.**
 
-Tabel 37\. Penilaian Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL.
+Tabel 39\. Penilaian Secara keseluruhan, saya puas dengan fitur penjadwalan otomatis yang disediakan oleh sistem SIOPAL.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1446,7 +1484,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap se
 
 **P19. Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS.**
 
-Tabel 38\. Penilaian Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS.
+Tabel 40\. Penilaian Saya merekomendasikan fitur penjadwalan otomatis SIOPAL untuk digunakan secara operasional di Laboratorium Komputer FIK UDINUS.
 
 | Kategori Jawaban Responden | Frekuensi Jawaban | Skor | Total Skor |
 | :--- | :---: | :---: | :---: |
@@ -1465,7 +1503,7 @@ Dari hasil persentase yang didapatkan bahwa tanggapan dari responden terhadap sa
 
 Gambaran hasil pengolahan data seluruh jawaban responden sebagaimana berikut:
 
-Tabel 39\. Rekapitulasi Hasil Jawaban Responden UAT
+Tabel 41\. Rekapitulasi Hasil Jawaban Responden UAT
 
 | No | Aspek | Soal | Skor | Persentase (%) |
 | :---: | :--- | :---: | :---: | :---: |
@@ -1492,11 +1530,11 @@ Tabel 39\. Rekapitulasi Hasil Jawaban Responden UAT
 | **Skor Ideal** | | | **3325** | |
 | **Rata-Rata Keseluruhan** | | | | **92,8%** |
 
-Berdasarkan Tabel 39, diperoleh total skor **3084** dari skor ideal **3325** (5 × 19 × 35), sehingga rata-rata persentase keseluruhan mencapai **92,8%**.
+Berdasarkan Tabel 41, diperoleh total skor **3084** dari skor ideal **3325** (5 × 19 × 35), sehingga rata-rata persentase keseluruhan mencapai **92,8%**.
 
 **c. Hasil Akhir Pengolahan Data per Aspek**
 
-Tabel 40\. Hasil Akhir Pengolahan Data UAT per Aspek
+Tabel 42\. Hasil Akhir Pengolahan Data UAT per Aspek
 
 | No | Aspek yang Dinilai | Indikator | Jumlah Soal | Skor | Skor Ideal | Persentase (%) |
 | :---: | :--- | :--- | :---: | :---: | :---: | :---: |
@@ -1506,7 +1544,7 @@ Tabel 40\. Hasil Akhir Pengolahan Data UAT per Aspek
 | 4 | Penerimaan Sistem | Efisiensi | 3 | 488 | 525 | 93,0% |
 | 5 | Penerimaan Sistem | Kesesuaian & Kepuasan | 5 | 811 | 875 | 92,7% |
 
-Berdasarkan Tabel 40, kelima aspek penilaian menunjukkan persentase yang konsisten tinggi dengan uraian sebagai berikut:
+Berdasarkan Tabel 42, kelima aspek penilaian menunjukkan persentase yang konsisten tinggi dengan uraian sebagai berikut:
 
 * Untuk aspek **Fungsionalitas**, persentase mencapai **92,9%**, menunjukkan bahwa responden sangat setuju fitur penjadwalan otomatis — termasuk rekomendasi lab berdasarkan _software_, deteksi bentrok, serta fitur _import_ dan _export_ Excel — telah berfungsi dengan baik dan akurat.
 * Untuk aspek **Kemudahan Penggunaan**, persentase mencapai **92,9%**, menunjukkan bahwa responden sangat setuju bahwa antarmuka _Schedule Wizard_, formulir input, tampilan kartu rekomendasi, dan _Timetable Visual_ mudah dipahami dan dioperasikan.
