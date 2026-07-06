@@ -761,6 +761,241 @@ ERD di dalam sistem SIOPAL mencerminkan tata logis dari _database_ yang diterapk
 
 Relasi antar entitas ditunjukkan melalui hubungan yang jelas: satu **Program Studi** memiliki banyak **Mata Kuliah** (relasi _one-to-many_); satu **Mata Kuliah** dapat membutuhkan banyak **Software** dan sebaliknya (relasi _many-to-many_ melalui tabel `course_software`); satu **Laboratorium** dapat memiliki banyak **Software** terinstal dan sebaliknya (relasi _many-to-many_ melalui tabel `lab_software`); satu **Laboratorium** dapat memprioritaskan banyak **Program Studi** dan sebaliknya (relasi _many-to-many_ melalui tabel `lab_prodi_priority`); serta satu **Jadwal** menghubungkan satu **Mata Kuliah**, satu **Laboratorium**, satu **Dosen**, dan satu **Slot Waktu** (relasi _many-to-one_). Dengan adanya ERD ini, pengembang dapat memahami bagaimana data saling terhubung dan bagaimana informasi bergerak dalam sistem untuk menjaga integritas data serta mempermudah implementasi fitur penjadwalan otomatis.
 
+6. ### **Struktur Database** {#struktur-database}
+
+Penyusunan struktur basis data diorientasikan untuk memetakan skema penyimpanan serta tata letak data digital yang dikelola dalam _website_ Sistem Informasi Operasional Laboratorium Komputer (SIOPAL). _Database_ digunakan sebagai media penyimpanan seluruh data yang dibutuhkan oleh sistem, seperti data pengguna, data laboratorium, data mata kuliah, data jadwal, data _software_, hingga data periode akademik.
+
+Pada _website_ SIOPAL, _database_ dibangun menggunakan MySQL dan diimplementasikan melalui _framework_ Laravel dengan fitur _migration_. Perancangan _database_ dilakukan agar proses pengolahan data pada sistem dapat berjalan secara terstruktur, terintegrasi, dan mempermudah pengelolaan penjadwalan laboratorium.
+
+Berikut merupakan tabel-tabel utama yang digunakan pada _website_ Sistem Informasi Operasional Laboratorium Komputer (SIOPAL):
+
+**1. Tabel _Users_**
+
+Nama Tabel : `users`
+
+Keterangan : Tabel ini berfungsi mendokumentasikan informasi kredensial pengguna aplikasi, dalam hal ini administrator laboratorium (laboran). Atribut data yang ditampung mencakup nama lengkap, alamat _email_, Nomor Pokok Pegawai (NPP), kata sandi terenkripsi, nomor telepon, serta parameter _timestamp_ untuk kebutuhan autentikasi dan manajemen akun.
+
+Tabel 13\. Struktur Tabel _Users_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| name | varchar | 255 | Nama lengkap pengguna |
+| email | varchar | 255 | _Email_ pengguna (_unique_) |
+| no_phone | varchar | 255 | Nomor telepon pengguna |
+| npp | varchar | 255 | Nomor Pokok Pegawai (_unique_) |
+| password | varchar | 255 | Kata sandi terenkripsi |
+| foto | varchar | 255 | Path foto profil |
+| tanggal_masuk | date | - | Tanggal mulai bertugas |
+| tanggal_keluar | date | - | Tanggal selesai bertugas |
+| position | varchar | 255 | Jabatan/posisi pengguna |
+| remember_token | varchar | 100 | Token autentikasi _session_ |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**2. Tabel _Prodis_**
+
+Nama Tabel : `prodis`
+
+Keterangan : Tabel ini menyimpan data program studi yang terdaftar dalam sistem. Data program studi digunakan sebagai referensi relasi pada tabel mata kuliah (_courses_) dan sebagai acuan prioritas laboratorium melalui tabel pivot `lab_prodi_priority`.
+
+Tabel 14\. Struktur Tabel _Prodis_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| name | varchar | 255 | Nama program studi (_unique_) |
+| code | varchar | 255 | Kode program studi (_unique_, _nullable_) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**3. Tabel _Laboratoria_**
+
+Nama Tabel : `laboratoria`
+
+Keterangan : Tabel ini menyimpan data laboratorium komputer yang tersedia di lingkungan Fakultas Ilmu Komputer. Atribut yang ditampung mencakup nama ruang, kapasitas total, jumlah PC siap pakai, jumlah PC _backup_, status aktif, serta jam operasional. Tabel ini berperan krusial dalam algoritma penjadwalan karena menjadi objek utama yang difilter berdasarkan _constraint_ kapasitas (`pc_siap`) dan status aktif (`is_active`).
+
+Tabel 15\. Struktur Tabel _Laboratoria_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| kategori_id | bigint | 20 | _Foreign Key_ ke tabel `klasifikasi_labs` |
+| ruang | varchar | 255 | Nama/kode ruang laboratorium |
+| kapasitas | integer | 11 | Kapasitas total ruangan |
+| pc_siap | integer | 11 | Jumlah PC siap pakai (default: 0) |
+| pc_backup | integer | 11 | Jumlah PC _backup_ (default: 0) |
+| keterangan | varchar | 255 | Keterangan tambahan (_nullable_) |
+| is_active | boolean | 1 | Status aktif laboratorium (default: _true_) |
+| operating_start | time | - | Jam mulai operasional (default: 07:00) |
+| operating_end | time | - | Jam selesai operasional (default: 21:00) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**4. Tabel _Courses_**
+
+Nama Tabel : `courses`
+
+Keterangan : Tabel ini menyimpan data mata kuliah praktikum yang memerlukan penjadwalan laboratorium. Atribut mencakup kode mata kuliah, nama, bobot SKS, jumlah mahasiswa, dan relasi ke program studi. Bobot SKS menentukan jumlah slot waktu berturutan yang dibutuhkan (1 SKS = 1 slot = 50 menit), sedangkan jumlah mahasiswa digunakan sebagai _constraint_ kapasitas pada proses _filtering_.
+
+Tabel 16\. Struktur Tabel _Courses_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| code | varchar | 255 | Kode mata kuliah (_unique_, _nullable_) |
+| name | varchar | 255 | Nama mata kuliah |
+| sks | integer | 11 | Bobot SKS (menentukan jumlah slot) |
+| jumlah_mahasiswa | integer | 11 | Jumlah mahasiswa peserta (default: 0) |
+| prodi_id | bigint | 20 | _Foreign Key_ ke tabel `prodis` (_nullable_) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**5. Tabel _Software Details_**
+
+Nama Tabel : `software_details`
+
+Keterangan : Tabel ini menyimpan data detail perangkat lunak (_software_) yang terinstal di laboratorium. Setiap _software_ memiliki kode unik, nama, dan versi. Tabel ini terhubung dengan tabel `courses` melalui tabel pivot `course_software` (kebutuhan _software_ mata kuliah) dan dengan tabel `laboratoria` melalui tabel pivot `lab_software` (_software_ yang terinstal di lab). Relasi ini merupakan dasar dari _constraint_ ketersediaan _software_ pada algoritma penjadwalan.
+
+Tabel 17\. Struktur Tabel _Software Details_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| code | varchar | 255 | Kode _software_ (_unique_, _nullable_) |
+| nama | varchar | 255 | Nama _software_ (_nullable_) |
+| versi | varchar | 255 | Versi _software_ (_nullable_) |
+| keterangan | text | - | Keterangan tambahan (_nullable_) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**6. Tabel _Lecturers_**
+
+Nama Tabel : `lecturers`
+
+Keterangan : Tabel ini menyimpan data dosen pengampu mata kuliah praktikum. Tabel ini berelasi dengan tabel `schedules` untuk mencatat dosen pengampu pada setiap jadwal yang dibuat.
+
+Tabel 18\. Struktur Tabel _Lecturers_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| name | varchar | 255 | Nama dosen pengampu |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**7. Tabel _Time Slots_**
+
+Nama Tabel : `time_slots`
+
+Keterangan : Tabel ini menyimpan data pembagian slot waktu dengan interval 50 menit dari pukul 07:00 hingga 21:00. Setiap slot memiliki nomor urut (_slot\_number_) yang digunakan dalam algoritma deteksi konflik jadwal. Sistem mengecek ketersediaan slot berturutan berdasarkan nomor slot untuk memastikan jadwal tidak tumpang tindih. Data pada tabel ini di-_seed_ secara otomatis saat migrasi.
+
+Tabel 19\. Struktur Tabel _Time Slots_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| start_time | time | - | Waktu mulai slot |
+| end_time | time | - | Waktu selesai slot |
+| slot_number | integer | 11 | Nomor urut slot (untuk deteksi konflik) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**8. Tabel _Schedules_**
+
+Nama Tabel : `schedules`
+
+Keterangan : Tabel ini merupakan tabel inti yang menyimpan data jadwal praktikum laboratorium. Setiap baris merepresentasikan satu sesi jadwal yang menghubungkan mata kuliah, dosen, laboratorium, dan slot waktu pada hari tertentu. Tabel ini memiliki relasi _many-to-one_ ke empat tabel sekaligus (`courses`, `lecturers`, `laboratoria`, `time_slots`) dan menjadi objek utama dalam proses deteksi konflik jadwal serta validasi _constraint_.
+
+Tabel 20\. Struktur Tabel _Schedules_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| course_id | bigint | 20 | _Foreign Key_ ke tabel `courses` (_nullable_) |
+| lecturer_id | bigint | 20 | _Foreign Key_ ke tabel `lecturers` (_nullable_) |
+| laboratorium_id | bigint | 20 | _Foreign Key_ ke tabel `laboratoria` |
+| time_slot_id | bigint | 20 | _Foreign Key_ ke tabel `time_slots` (_nullable_) |
+| duration_slots | integer | 11 | Jumlah slot yang digunakan (default: 1) |
+| kelompok | varchar | 255 | Kode kelompok/kelas (_nullable_) |
+| jumlah_siswa | integer | 10 | Jumlah mahasiswa peserta (_nullable_) |
+| sesi | enum | - | Sesi waktu: 'pagi', 'siang', 'malam' (_nullable_) |
+| day | varchar | 255 | Hari penjadwalan (Senin–Jumat) |
+| start_time | time | - | Waktu mulai jadwal |
+| end_time | time | - | Waktu selesai jadwal |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**9. Tabel Pivot _Course Software_**
+
+Nama Tabel : `course_software`
+
+Keterangan : Tabel pivot ini merepresentasikan relasi _many-to-many_ antara mata kuliah dan _software_. Tabel ini mendefinisikan _software_ apa saja yang dibutuhkan oleh suatu mata kuliah praktikum. Data ini digunakan pada **Step 2** algoritma _filtering_ untuk memastikan laboratorium memiliki semua _software_ yang dibutuhkan.
+
+Tabel 21\. Struktur Tabel Pivot _Course Software_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| course_id | bigint | 20 | _Foreign Key_ ke tabel `courses` |
+| software_detail_id | bigint | 20 | _Foreign Key_ ke tabel `software_details` |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**10. Tabel Pivot _Lab Software_**
+
+Nama Tabel : `lab_software`
+
+Keterangan : Tabel pivot ini merepresentasikan relasi _many-to-many_ antara laboratorium dan _software_. Tabel ini mendefinisikan _software_ apa saja yang terinstal di suatu laboratorium beserta versinya. Kombinasi `laboratorium_id` dan `software_detail_id` bersifat _unique_ untuk mencegah duplikasi data. Data ini digunakan bersama tabel `course_software` pada proses pencocokan kebutuhan _software_.
+
+Tabel 22\. Struktur Tabel Pivot _Lab Software_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| laboratorium_id | bigint | 20 | _Foreign Key_ ke tabel `laboratoria` |
+| software_detail_id | bigint | 20 | _Foreign Key_ ke tabel `software_details` |
+| version | varchar | 255 | Versi _software_ yang terinstal (_nullable_) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
+---
+
+**11. Tabel Pivot _Lab Prodi Priority_**
+
+Nama Tabel : `lab_prodi_priority`
+
+Keterangan : Tabel pivot ini merepresentasikan relasi _many-to-many_ antara laboratorium dan program studi untuk menentukan prioritas alokasi. Laboratorium yang diprioritaskan untuk suatu program studi akan ditampilkan di posisi teratas (dengan indikator ⭐) pada hasil rekomendasi penjadwalan. Kombinasi `laboratorium_id` dan `prodi_id` bersifat _unique_. Data ini digunakan pada **Step 6** algoritma _filtering_ untuk pengurutan prioritas.
+
+Tabel 23\. Struktur Tabel Pivot _Lab Prodi Priority_
+
+| _Field_ | _Type_ | _Size_ | Keterangan |
+| :--- | :--- | :---: | :--- |
+| id | bigint | 20 | _Primary Key_ |
+| laboratorium_id | bigint | 20 | _Foreign Key_ ke tabel `laboratoria` |
+| prodi_id | bigint | 20 | _Foreign Key_ ke tabel `prodis` |
+| priority_level | integer | 11 | Tingkat prioritas (default: 1, semakin kecil semakin prioritas) |
+| created_at | timestamp | - | Waktu pembuatan data |
+| updated_at | timestamp | - | Waktu perubahan data |
+
 2. ## **Implementasi Sistem** {#implementasi-sistem}
 
 Pada sub-bab ini diuraikan proses implementasi rancangan sistem ke dalam perangkat lunak. Pembahasan mencakup persiapan lingkungan pengembangan, arsitektur komponen perangkat lunak, serta penjelasan alur logika dari setiap komponen utama yang berperan dalam fitur penjadwalan otomatis.
